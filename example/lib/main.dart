@@ -40,11 +40,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  _onSlideActionCompleted() {
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body:  Padding(
-        padding: EdgeInsets.all(31),
+        padding: EdgeInsets.symmetric(horizontal: 50),
         child: CircleSlideToActionButton(
           initialSlidingActionLabel: 'Testing',
           finalSlidingActionLabel: 'Done',

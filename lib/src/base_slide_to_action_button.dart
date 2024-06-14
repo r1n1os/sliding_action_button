@@ -96,51 +96,46 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final sliderRadius = widget.height / 2;
-        final xAxisMaxSliderPosition = widget.width - 2 * sliderRadius;
+        final xAxisMaxSliderPosition =  constraints.maxWidth - 2 * sliderRadius;
         final xAxisCurrentSliderPosition = xAxisMaxSliderPosition * _sliderPosition;
         _maxPosition = xAxisMaxSliderPosition;
         _current = xAxisCurrentSliderPosition;
-        print("dsf: $slidingReachTheMiddle");
-        return SizedBox(
-          height: widget.height,
-          width: widget.width,
-          child: Stack(
-            children: [
-              Container(
-                height: widget.height,
-                width: widget.width,
-                padding: widget.slidingActionLabelPadding,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Center(
-                  child: Text(
-                    slidingReachTheMiddle ? widget.finalSlidingActionLabel : widget.initialSlidingActionLabel,
-                    style: widget.initialSlidingActionLabelTextStyle,
-                  ),
+
+        return Stack(
+          children: [
+            Container(
+              height: widget.height,
+              padding: widget.slidingActionLabelPadding,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15)),
+              child: Center(
+                child: Text(
+                  slidingReachTheMiddle ? widget.finalSlidingActionLabel : widget.initialSlidingActionLabel,
+                  style: widget.initialSlidingActionLabelTextStyle,
                 ),
               ),
-              Positioned(
-                left: xAxisCurrentSliderPosition,
-                child: GestureDetector(
-                    onHorizontalDragStart: (dragDetails) {
-                      _onHorizontalDragStart(dragDetails,
-                          xCurrentPosition: xAxisCurrentSliderPosition);
-                    },
-                    onHorizontalDragUpdate: (dragDetails) {
-                      _onHorizontalDragUpdate(dragDetails,
-                          xCurrentPosition: xAxisCurrentSliderPosition,
-                          xMaxPosition: xAxisMaxSliderPosition);
-                    },
-                    onHorizontalDragEnd: (dragDetails) {
-                      _onHorizontalDragEnd(dragDetails,
-                          xCurrentPosition: xAxisCurrentSliderPosition,
-                          xMaxPosition: xAxisMaxSliderPosition);
-                    },
-                    child: widget.slideButtonWidget),
-              )
-            ],
-          ),
+            ),
+            Positioned(
+              left: xAxisCurrentSliderPosition,
+              child: GestureDetector(
+                  onHorizontalDragStart: (dragDetails) {
+                    _onHorizontalDragStart(dragDetails,
+                        xCurrentPosition: xAxisCurrentSliderPosition);
+                  },
+                  onHorizontalDragUpdate: (dragDetails) {
+                    _onHorizontalDragUpdate(dragDetails,
+                        xCurrentPosition: xAxisCurrentSliderPosition,
+                        xMaxPosition: xAxisMaxSliderPosition);
+                  },
+                  onHorizontalDragEnd: (dragDetails) {
+                    _onHorizontalDragEnd(dragDetails,
+                        xCurrentPosition: xAxisCurrentSliderPosition,
+                        xMaxPosition: xAxisMaxSliderPosition);
+                  },
+                  child: widget.slideButtonWidget),
+            )
+          ],
         );
       },
     );
@@ -154,8 +149,7 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
 
   void _onHorizontalDragUpdate(DragUpdateDetails dragDetails,
       {required double xCurrentPosition, required double xMaxPosition}) {
-    final newSliderPositionX =
-        _startingPositionAtX + dragDetails.localPosition.dx;
+    final newSliderPositionX = dragDetails.localPosition.dx;
     final newSliderRelativePosition = newSliderPositionX / xMaxPosition;
     setState(() {
       _sliderPosition = max(0, min(1, newSliderRelativePosition));

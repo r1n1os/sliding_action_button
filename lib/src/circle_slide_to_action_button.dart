@@ -54,13 +54,13 @@ class CircleSlideToActionButton extends StatefulWidget {
     required this.onSlideActionCanceled,
     this.height = 56,
     this.width = 240,
-    this.circleSlidingButtonSize = 50,
-    this.slidingBoxBackgroundColor,
-    this.circleSlidingButtonBackgroundColor,
     this.initialSlidingActionLabelTextStyle,
     this.finalSlidingActionLabelTextStyle,
+    this.slidingBoxBackgroundColor,
     this.slidingActionLabelPadding =
-        const EdgeInsets.symmetric(horizontal: 50.0),
+    const EdgeInsets.symmetric(horizontal: 50.0),
+    this.circleSlidingButtonSize = 50,
+    this.circleSlidingButtonBackgroundColor,
     this.circleButtonPadding =
         const EdgeInsets.symmetric(horizontal: 1.5, vertical: 3),
   });
@@ -80,6 +80,10 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
       finalSlidingActionLabel: widget.finalSlidingActionLabel,
       onSlideActionCompleted: widget.onSlideActionCompleted,
       onSlideActionCanceled: widget.onSlideActionCanceled,
+      height: widget.height,
+      width: widget.width,
+      slidingBoxBackgroundColor: widget.slidingBoxBackgroundColor,
+      slidingActionLabelPadding: widget.slidingActionLabelPadding,
     );
   }
 
@@ -87,7 +91,7 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
     return Container(
       height: widget.circleSlidingButtonSize,
       width: widget.circleSlidingButtonSize,
-      // margin: widget.circleButtonPadding,
+      margin: widget.circleButtonPadding,
       decoration: BoxDecoration(
           color: Colors.green, borderRadius: BorderRadius.circular(45)),
       child: widget.circleSlidingButtonIcon,
