@@ -78,6 +78,7 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
       slideButtonWidget: _buildCircleButton(),
       initialSlidingActionLabel: widget.initialSlidingActionLabel,
       finalSlidingActionLabel: widget.finalSlidingActionLabel,
+      slidingButtonWidth: widget.circleSlidingButtonSize,
       onSlideActionCompleted: widget.onSlideActionCompleted,
       onSlideActionCanceled: widget.onSlideActionCanceled,
       height: widget.height,

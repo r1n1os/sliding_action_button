@@ -10,6 +10,8 @@ class BaseSlideToActionButton extends StatefulWidget {
   ///This field will be the width of the whole widget
   final double width;
 
+  final double slidingButtonWidth;
+
   ///This field is responsible for the text appear in the button before the sliding action
   final String initialSlidingActionLabel;
 
@@ -42,6 +44,7 @@ class BaseSlideToActionButton extends StatefulWidget {
     required this.finalSlidingActionLabel,
     required this.onSlideActionCompleted,
     required this.onSlideActionCanceled,
+    required this.slidingButtonWidth,
     this.height = 56,
     this.width = 240,
     this.slidingBoxBackgroundColor,
@@ -58,49 +61,13 @@ class BaseSlideToActionButton extends StatefulWidget {
 
 class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     with SingleTickerProviderStateMixin {
-  double _startingPositionAtX = 0.0;
+
   double _sliderPosition = 0.0;
-  double _maxPosition = 0.0;
-  double _current = 0.0;
-  late final AnimationController _animationController;
-  late final Animation _sliderAnimation;
-  final animationDuration = const Duration(milliseconds: 300);
-
-  bool get slidingReachTheMiddle => _current >= _maxPosition / 2;
-
-  @override
-  void initState() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: animationDuration,
-    );
-    _sliderAnimation =
-        CurveTween(curve: Curves.easeInQuad).animate(_animationController);
-
-    _animationController.addListener(() {
-      setState(() {
-        _sliderPosition = _sliderAnimation.value;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
+  bool get hasSliderReachTheMiddle => _sliderPosition >= (widget.width - widget.slidingButtonWidth) / 2;
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final sliderRadius = widget.height / 2;
-        final xAxisMaxSliderPosition =  constraints.maxWidth - 2 * sliderRadius;
-        final xAxisCurrentSliderPosition = xAxisMaxSliderPosition * _sliderPosition;
-        _maxPosition = xAxisMaxSliderPosition;
-        _current = xAxisCurrentSliderPosition;
-
         return Stack(
           children: [
             Container(
@@ -111,27 +78,19 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
                   borderRadius: BorderRadius.circular(15)),
               child: Center(
                 child: Text(
-                  slidingReachTheMiddle ? widget.finalSlidingActionLabel : widget.initialSlidingActionLabel,
+                hasSliderReachTheMiddle ? widget.finalSlidingActionLabel : widget.initialSlidingActionLabel,
                   style: widget.initialSlidingActionLabelTextStyle,
                 ),
               ),
             ),
             Positioned(
-              left: xAxisCurrentSliderPosition,
+              left: _sliderPosition,
               child: GestureDetector(
-                  onHorizontalDragStart: (dragDetails) {
-                    _onHorizontalDragStart(dragDetails,
-                        xCurrentPosition: xAxisCurrentSliderPosition);
-                  },
                   onHorizontalDragUpdate: (dragDetails) {
-                    _onHorizontalDragUpdate(dragDetails,
-                        xCurrentPosition: xAxisCurrentSliderPosition,
-                        xMaxPosition: xAxisMaxSliderPosition);
+                    _onHorizontalDragUpdate(dragDetails,);
                   },
                   onHorizontalDragEnd: (dragDetails) {
-                    _onHorizontalDragEnd(dragDetails,
-                        xCurrentPosition: xAxisCurrentSliderPosition,
-                        xMaxPosition: xAxisMaxSliderPosition);
+                    _onHorizontalDragEnd(dragDetails);
                   },
                   child: widget.slideButtonWidget),
             )
@@ -141,32 +100,24 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     );
   }
 
-  void _onHorizontalDragStart(DragStartDetails dragDetails,
-      {required double xCurrentPosition}) {
-    _startingPositionAtX = xCurrentPosition;
-    _animationController.stop();
-  }
-
-  void _onHorizontalDragUpdate(DragUpdateDetails dragDetails,
-      {required double xCurrentPosition, required double xMaxPosition}) {
-    final newSliderPositionX = dragDetails.localPosition.dx;
-    final newSliderRelativePosition = newSliderPositionX / xMaxPosition;
+  void _onHorizontalDragUpdate(DragUpdateDetails dragDetails) {
     setState(() {
-      _sliderPosition = max(0, min(1, newSliderRelativePosition));
+      _sliderPosition += dragDetails.delta.dx;
+      if(_sliderPosition > widget.width - widget.slidingButtonWidth) {
+        _sliderPosition = widget.width - widget.slidingButtonWidth;
+      }
     });
   }
 
-  void _onHorizontalDragEnd(DragEndDetails dragDetails,
-      {required double xCurrentPosition, required double xMaxPosition}) {
-    if (xCurrentPosition >= xMaxPosition / 2) {
-      const newSliderRelativePosition = 1.0;
+  void _onHorizontalDragEnd(DragEndDetails dragDetails) {
+    if (_sliderPosition >= (widget.width - widget.slidingButtonWidth) / 2) {
       setState(() {
-        _sliderPosition = max(0, min(1, newSliderRelativePosition));
+        _sliderPosition = widget.width - widget.slidingButtonWidth;
       });
       widget.onSlideActionCompleted();
     } else {
       setState(() {
-        _sliderPosition = max(0, min(1, 0.0));
+        _sliderPosition = 0.0;
       });
       widget.onSlideActionCanceled();
     }

@@ -48,20 +48,19 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body:  Padding(
-        padding: EdgeInsets.symmetric(horizontal: 50),
-        child: CircleSlideToActionButton(
-          initialSlidingActionLabel: 'Testing',
-          finalSlidingActionLabel: 'Done',
-          circleSlidingButtonIcon: Icon(Icons.access_alarm),
-          onSlideActionCompleted: () {
-            print("Sliding action completed");
-          },
-          onSlideActionCanceled: () {
-            print("Sliding action cancelled");
+      body:  CircleSlideToActionButton(
+        width: 450,
+        circleSlidingButtonSize: 100,
+        initialSlidingActionLabel: 'Testing',
+        finalSlidingActionLabel: 'Done',
+        circleSlidingButtonIcon: Icon(Icons.access_alarm),
+        onSlideActionCompleted: () {
+          print("Sliding action completed");
+        },
+        onSlideActionCanceled: () {
+          print("Sliding action cancelled");
 
-          },
-        ),
+        },
       ),
     );
   }
