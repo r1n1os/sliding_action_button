@@ -77,7 +77,7 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
           decoration: BoxDecoration(
               color: Colors.red, borderRadius: BorderRadius.circular(15)),
           child: Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.center,
             child: Text(
               hasSliderReachTheMiddle
                   ? widget.finalSlidingActionLabel
