@@ -51,7 +51,7 @@ class BaseSlideToActionButton extends StatefulWidget {
     this.initialSlidingActionLabelTextStyle,
     this.finalSlidingActionLabelTextStyle,
     this.slidingActionLabelPadding =
-        const EdgeInsets.symmetric(horizontal: 50.0),
+        const EdgeInsets.only(right: 5.0),
   });
 
   @override
@@ -61,49 +61,52 @@ class BaseSlideToActionButton extends StatefulWidget {
 
 class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     with SingleTickerProviderStateMixin {
-
   double _sliderPosition = 0.0;
-  bool get hasSliderReachTheMiddle => _sliderPosition >= (widget.width - widget.slidingButtonWidth) / 2;
+
+  bool get hasSliderReachTheMiddle =>
+      _sliderPosition >= (widget.width - widget.slidingButtonWidth) / 2;
+
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return Stack(
-          children: [
-            Container(
-              height: widget.height,
-              padding: widget.slidingActionLabelPadding,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15)),
-              child: Center(
-                child: Text(
-                hasSliderReachTheMiddle ? widget.finalSlidingActionLabel : widget.initialSlidingActionLabel,
-                  style: widget.initialSlidingActionLabelTextStyle,
-                ),
-              ),
+    return Stack(
+      children: [
+        Container(
+          height: widget.height,
+          width: widget.width,
+          //padding: widget.slidingActionLabelPadding,
+          decoration: BoxDecoration(
+              color: Colors.red, borderRadius: BorderRadius.circular(15)),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              hasSliderReachTheMiddle
+                  ? widget.finalSlidingActionLabel
+                  : widget.initialSlidingActionLabel,
+              style: widget.initialSlidingActionLabelTextStyle,
             ),
-            Positioned(
-              left: _sliderPosition,
-              child: GestureDetector(
-                  onHorizontalDragUpdate: (dragDetails) {
-                    _onHorizontalDragUpdate(dragDetails,);
-                  },
-                  onHorizontalDragEnd: (dragDetails) {
-                    _onHorizontalDragEnd(dragDetails);
-                  },
-                  child: widget.slideButtonWidget),
-            )
-          ],
-        );
-      },
+          ),
+        ),
+        Positioned(
+          left: _sliderPosition,
+          child: GestureDetector(
+              onHorizontalDragUpdate: (dragDetails) {
+                _onHorizontalDragUpdate(
+                  dragDetails,
+                );
+              },
+              onHorizontalDragEnd: (dragDetails) {
+                _onHorizontalDragEnd(dragDetails);
+              },
+              child: widget.slideButtonWidget),
+        )
+      ],
     );
   }
 
   void _onHorizontalDragUpdate(DragUpdateDetails dragDetails) {
     setState(() {
       _sliderPosition += dragDetails.delta.dx;
-      if(_sliderPosition > widget.width - widget.slidingButtonWidth) {
+      if (_sliderPosition > widget.width - widget.slidingButtonWidth) {
         _sliderPosition = widget.width - widget.slidingButtonWidth;
       }
     });

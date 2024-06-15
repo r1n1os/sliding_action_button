@@ -49,8 +49,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body:  CircleSlideToActionButton(
-        width: 450,
-        circleSlidingButtonSize: 100,
+        width: 250,
+        circleSlidingButtonSize: 50,
         initialSlidingActionLabel: 'Testing',
         finalSlidingActionLabel: 'Done',
         circleSlidingButtonIcon: Icon(Icons.access_alarm),
