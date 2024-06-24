@@ -48,14 +48,16 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+      body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleSlideToActionButton(
               width: 270,
               parentBoxRadiusValue: 27,
-              circleSlidingButtonSize: 56,
+              circleSlidingButtonSize: 50,
+              leftEdgeSpacing: 2,
+              rightEdgeSpacing: 4,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added',
               circleSlidingButtonIcon: const Icon(Icons.add_shopping_cart),
@@ -74,11 +76,13 @@ class _MyHomePageState extends State<MyHomePage> {
               parentBoxRadiusValue: 15,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added',
-              squareSlidingButtonSize: 56,
+              squareSlidingButtonSize: 40,
               squareSlidingButtonIcon: const Icon(Icons.add_shopping_cart),
               squareSlidingButtonBackgroundColor: Colors.blue,
-              squareButtonMargin: EdgeInsets.zero,
-              rightEdgeSpacing: 0,
+              leftEdgeSpacing: 2,
+              rightEdgeSpacing: 4,
+              topEdgeSpacing:7,
+              bottomEdgeSpacing: 5,
               onSlideActionCompleted: () {
                 print("Sliding action completed");
               },

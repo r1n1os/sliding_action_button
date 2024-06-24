@@ -21,6 +21,11 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///This field will be the double value for the BorderRadius.circular() attribute
   final double circleSlidingButtonRadiusValue;
 
+  ///This will be used to align the left side of circle button.
+  ///We cannot do what we do with the other sides as the left attribute of Positioned widget is used to handle the
+  ///dragging of the button
+  final double leftEdgeSpacing;
+
   ///This field will determined the space between the sliding button and the parent widget on the right end.
   final double rightEdgeSpacing;
 
@@ -49,9 +54,6 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///This will be the background color of the circle sliding button
   final Color? circleSlidingButtonBackgroundColor;
 
-  ///This will be used to align the circle button
-  final EdgeInsets? circleButtonMargin;
-
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
 
@@ -73,12 +75,11 @@ class CircleSlideToActionButton extends StatefulWidget {
     this.slidingBoxBackgroundColor,
     this.circleSlidingButtonSize = 50,
     this.circleSlidingButtonRadiusValue = 45,
-    this.rightEdgeSpacing = 4,
+    this.leftEdgeSpacing = 0,
+    this.rightEdgeSpacing = 0,
     this.topEdgeSpacing = 0,
     this.bottomEdgeSpacing = 0,
     this.circleSlidingButtonBackgroundColor,
-    this.circleButtonMargin =
-        const EdgeInsets.only(left:2,),
   });
 
   @override
@@ -87,7 +88,6 @@ class CircleSlideToActionButton extends StatefulWidget {
 }
 
 class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
-
   @override
   Widget build(BuildContext context) {
     return BaseSlideToActionButton(
@@ -99,7 +99,8 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
       rightEdgeSpacing: widget.rightEdgeSpacing,
       initialSlidingActionLabel: widget.initialSlidingActionLabel,
       finalSlidingActionLabel: widget.finalSlidingActionLabel,
-      initialSlidingActionLabelTextStyle: widget.initialSlidingActionLabelTextStyle,
+      initialSlidingActionLabelTextStyle:
+          widget.initialSlidingActionLabelTextStyle,
       finalSlidingActionLabelTextStyle: widget.finalSlidingActionLabelTextStyle,
       onSlideActionCompleted: widget.onSlideActionCompleted,
       onSlideActionCanceled: widget.onSlideActionCanceled,
@@ -107,15 +108,17 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
     );
   }
 
-  Widget _buildCircleButton(){
+  Widget _buildCircleButton() {
     return Align(
       alignment: Alignment.center,
       child: Container(
         height: widget.circleSlidingButtonSize,
         width: widget.circleSlidingButtonSize,
-        margin: widget.circleButtonMargin,
+        margin: EdgeInsets.only(left: widget.leftEdgeSpacing),
         decoration: BoxDecoration(
-            color: Colors.green, borderRadius: BorderRadius.circular(widget.circleSlidingButtonRadiusValue)),
+            color: Colors.green,
+            borderRadius:
+                BorderRadius.circular(widget.circleSlidingButtonRadiusValue)),
         child: widget.circleSlidingButtonIcon,
       ),
     );
