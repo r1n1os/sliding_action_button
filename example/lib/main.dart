@@ -48,19 +48,22 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: CircleSlideToActionButton(
-        width: 250,
-        circleSlidingButtonSize: 50,
-        initialSlidingActionLabel: 'Testing',
-        finalSlidingActionLabel: 'Done',
-        circleSlidingButtonIcon: Icon(Icons.access_alarm),
-        onSlideActionCompleted: () {
-          print("Sliding action completed");
-        },
-        onSlideActionCanceled: () {
-          print("Sliding action cancelled");
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: CircleSlideToActionButton(
+          width: 270,
+          circleSlidingButtonSize: 56,
+          initialSlidingActionLabel: 'Add To Basket',
+          finalSlidingActionLabel: 'Added',
+          circleSlidingButtonIcon: const Icon(Icons.add_shopping_cart),
+          onSlideActionCompleted: () {
+            print("Sliding action completed");
+          },
+          onSlideActionCanceled: () {
+            print("Sliding action cancelled");
 
-        },
+          },
+        ),
       ),
     );
   }

@@ -1,16 +1,23 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 class BaseSlideToActionButton extends StatefulWidget {
-  final Widget slideButtonWidget;
-
   ///This field will be the height of the whole widget
   final double height;
 
   ///This field will be the width of the whole widget
   final double width;
 
+  ///This will be the background color of the parent box
+  final Color? slidingBoxBackgroundColor;
+
+  ///This field is passing the button widget which user can slide
+  final Widget slideButtonWidget;
+
+  ///This field will be the width and height of the sliding button
   final double slidingButtonWidth;
+
+  ///This field will determined the space between the sliding button and the parent widget on the right end.
+  final double rightEdgeSpacing;
 
   ///This field is responsible for the text appear in the button before the sliding action
   final String initialSlidingActionLabel;
@@ -18,18 +25,12 @@ class BaseSlideToActionButton extends StatefulWidget {
   ///This field is responsible for the text appear in the button after the swipe action
   final String finalSlidingActionLabel;
 
-  ///This will be the background color of the parent box
-  final Color? slidingBoxBackgroundColor;
-
   ///This will be the text styling of the label appear before the sliding action
   final TextStyle? initialSlidingActionLabelTextStyle;
 
   ///This will be the text styling of the label appear after the sliding action. In case this field is null the same style as the
   ///#initialSlidingActionLabelTextStyle will be used
   final TextStyle? finalSlidingActionLabelTextStyle;
-
-  ///This will be used to align the text of the button
-  final EdgeInsets? slidingActionLabelPadding;
 
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
@@ -47,11 +48,10 @@ class BaseSlideToActionButton extends StatefulWidget {
     required this.slidingButtonWidth,
     this.height = 56,
     this.width = 240,
+    this.rightEdgeSpacing = 10,
     this.slidingBoxBackgroundColor,
     this.initialSlidingActionLabelTextStyle,
     this.finalSlidingActionLabelTextStyle,
-    this.slidingActionLabelPadding =
-        const EdgeInsets.only(right: 5.0),
   });
 
   @override
@@ -61,11 +61,16 @@ class BaseSlideToActionButton extends StatefulWidget {
 
 class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     with SingleTickerProviderStateMixin {
-  double _sliderPosition = 0.0;
+  double _sliderPosition = 0;
 
   bool get hasSliderReachTheMiddle =>
       _sliderPosition >= (widget.width - widget.slidingButtonWidth) / 2;
 
+  bool hasDragFinish = false;
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -73,9 +78,8 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
         Container(
           height: widget.height,
           width: widget.width,
-          //padding: widget.slidingActionLabelPadding,
           decoration: BoxDecoration(
-              color: Colors.red, borderRadius: BorderRadius.circular(15)),
+              color: Colors.red, borderRadius: BorderRadius.circular(27)),
           child: Align(
             alignment: Alignment.center,
             child: Text(
@@ -107,15 +111,16 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     setState(() {
       _sliderPosition += dragDetails.delta.dx;
       if (_sliderPosition > widget.width - widget.slidingButtonWidth) {
-        _sliderPosition = widget.width - widget.slidingButtonWidth;
+        _sliderPosition = widget.width - widget.slidingButtonWidth - widget.rightEdgeSpacing;
       }
     });
   }
 
   void _onHorizontalDragEnd(DragEndDetails dragDetails) {
+    hasDragFinish = true;
     if (_sliderPosition >= (widget.width - widget.slidingButtonWidth) / 2) {
       setState(() {
-        _sliderPosition = widget.width - widget.slidingButtonWidth;
+        _sliderPosition = widget.width - widget.slidingButtonWidth - widget.rightEdgeSpacing;
       });
       widget.onSlideActionCompleted();
     } else {

@@ -8,23 +8,26 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///This field will be the width of the whole widget
   final double width;
 
+  ///This will be the background color of the parent box
+  final Color? slidingBoxBackgroundColor;
+
   ///This field will be the width and height of the circle(draggable) button
   final double circleSlidingButtonSize;
+
+  ///This field will be the double value for the BorderRadius.circular() attribute
+  final double circleSlidingButtonRadiusValue;
+
+  ///This field will determined the space between the sliding button and the parent widget on the right end.
+  final double rightEdgeSpacing;
 
   ///This field is responsible for the text appear in the button before the sliding action
   final String initialSlidingActionLabel;
 
-  ///This field is responsible for the text appear in the button after the swipe action
+  ///This field is responsible for the text appear in the button after the sliding action
   final String finalSlidingActionLabel;
 
   ///This will be the icon appear on the sliding button
   final Widget circleSlidingButtonIcon;
-
-  ///This will be the background color of the parent box
-  final Color? slidingBoxBackgroundColor;
-
-  ///This will be the background color of the circle sliding button
-  final Color? circleSlidingButtonBackgroundColor;
 
   ///This will be the text styling of the label appear before the sliding action
   final TextStyle? initialSlidingActionLabelTextStyle;
@@ -33,11 +36,11 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///#initialSlidingActionLabelTextStyle will be used
   final TextStyle? finalSlidingActionLabelTextStyle;
 
-  ///This will be used to align the text of the button
-  final EdgeInsets? slidingActionLabelPadding;
+  ///This will be the background color of the circle sliding button
+  final Color? circleSlidingButtonBackgroundColor;
 
   ///This will be used to align the circle button
-  final EdgeInsets? circleButtonPadding;
+  final EdgeInsets? circleButtonMargin;
 
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
@@ -57,12 +60,12 @@ class CircleSlideToActionButton extends StatefulWidget {
     this.initialSlidingActionLabelTextStyle,
     this.finalSlidingActionLabelTextStyle,
     this.slidingBoxBackgroundColor,
-    this.slidingActionLabelPadding =
-    const EdgeInsets.symmetric(horizontal: 50.0),
     this.circleSlidingButtonSize = 50,
+    this.circleSlidingButtonRadiusValue = 45,
+    this.rightEdgeSpacing = 10,
     this.circleSlidingButtonBackgroundColor,
-    this.circleButtonPadding =
-        const EdgeInsets.only(top: 4, bottom: 2),
+    this.circleButtonMargin =
+        const EdgeInsets.only(left: 5,),
   });
 
   @override
@@ -75,27 +78,32 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
   @override
   Widget build(BuildContext context) {
     return BaseSlideToActionButton(
-      slideButtonWidget: _buildCircleButton(),
-      initialSlidingActionLabel: widget.initialSlidingActionLabel,
-      finalSlidingActionLabel: widget.finalSlidingActionLabel,
-      slidingButtonWidth: widget.circleSlidingButtonSize,
-      onSlideActionCompleted: widget.onSlideActionCompleted,
-      onSlideActionCanceled: widget.onSlideActionCanceled,
       height: widget.height,
       width: widget.width,
+      slideButtonWidget: _buildCircleButton(),
+      slidingButtonWidth: widget.circleSlidingButtonSize,
+      rightEdgeSpacing: widget.rightEdgeSpacing,
+      initialSlidingActionLabel: widget.initialSlidingActionLabel,
+      finalSlidingActionLabel: widget.finalSlidingActionLabel,
+      initialSlidingActionLabelTextStyle: widget.initialSlidingActionLabelTextStyle,
+      finalSlidingActionLabelTextStyle: widget.finalSlidingActionLabelTextStyle,
+      onSlideActionCompleted: widget.onSlideActionCompleted,
+      onSlideActionCanceled: widget.onSlideActionCanceled,
       slidingBoxBackgroundColor: widget.slidingBoxBackgroundColor,
-      slidingActionLabelPadding: widget.slidingActionLabelPadding,
     );
   }
 
   Widget _buildCircleButton(){
-    return Container(
-      height: widget.circleSlidingButtonSize,
-      width: widget.circleSlidingButtonSize,
-      margin: widget.circleButtonPadding,
-      decoration: BoxDecoration(
-          color: Colors.green, borderRadius: BorderRadius.circular(45)),
-      child: widget.circleSlidingButtonIcon,
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        height: widget.circleSlidingButtonSize,
+        width: widget.circleSlidingButtonSize,
+        margin: widget.circleButtonMargin,
+        decoration: BoxDecoration(
+            color: Colors.green, borderRadius: BorderRadius.circular(widget.circleSlidingButtonRadiusValue)),
+        child: widget.circleSlidingButtonIcon,
+      ),
     );
   }
 }
