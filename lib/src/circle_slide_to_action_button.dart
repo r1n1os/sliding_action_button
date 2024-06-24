@@ -67,10 +67,10 @@ class CircleSlideToActionButton extends StatefulWidget {
     this.slidingBoxBackgroundColor,
     this.circleSlidingButtonSize = 50,
     this.circleSlidingButtonRadiusValue = 45,
-    this.rightEdgeSpacing = 10,
+    this.rightEdgeSpacing = 4,
     this.circleSlidingButtonBackgroundColor,
     this.circleButtonMargin =
-        const EdgeInsets.only(left: 5,),
+        const EdgeInsets.only(left:2,),
   });
 
   @override
