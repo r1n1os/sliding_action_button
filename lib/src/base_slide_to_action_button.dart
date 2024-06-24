@@ -71,11 +71,6 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
   bool get hasSliderReachTheMiddle =>
       _sliderPosition >= (widget.width - widget.slidingButtonWidth) / 2;
 
-  bool hasDragFinish = false;
-  @override
-  void initState() {
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -122,7 +117,6 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
   }
 
   void _onHorizontalDragEnd(DragEndDetails dragDetails) {
-    hasDragFinish = true;
     if (_sliderPosition >= (widget.width - widget.slidingButtonWidth) / 2) {
       setState(() {
         _sliderPosition = widget.width - widget.slidingButtonWidth - widget.rightEdgeSpacing;
