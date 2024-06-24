@@ -50,19 +50,43 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: CircleSlideToActionButton(
-          width: 270,
-          circleSlidingButtonSize: 56,
-          initialSlidingActionLabel: 'Add To Basket',
-          finalSlidingActionLabel: 'Added',
-          circleSlidingButtonIcon: const Icon(Icons.add_shopping_cart),
-          onSlideActionCompleted: () {
-            print("Sliding action completed");
-          },
-          onSlideActionCanceled: () {
-            print("Sliding action cancelled");
-
-          },
+        child: Column(
+          children: [
+            CircleSlideToActionButton(
+              width: 270,
+              parentBoxRadiusValue: 27,
+              circleSlidingButtonSize: 56,
+              initialSlidingActionLabel: 'Add To Basket',
+              finalSlidingActionLabel: 'Added',
+              circleSlidingButtonIcon: const Icon(Icons.add_shopping_cart),
+              onSlideActionCompleted: () {
+                print("Sliding action completed");
+              },
+              onSlideActionCanceled: () {
+                print("Sliding action cancelled");
+              },
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+            SquareSlideToActionButton(
+              width: 270,
+              parentBoxRadiusValue: 15,
+              initialSlidingActionLabel: 'Add To Basket',
+              finalSlidingActionLabel: 'Added',
+              squareSlidingButtonSize: 56,
+              squareSlidingButtonIcon: const Icon(Icons.add_shopping_cart),
+              squareSlidingButtonBackgroundColor: Colors.blue,
+              squareButtonMargin: EdgeInsets.zero,
+              rightEdgeSpacing: 0,
+              onSlideActionCompleted: () {
+                print("Sliding action completed");
+              },
+              onSlideActionCanceled: () {
+                print("Sliding action cancelled");
+              },
+            )
+          ],
         ),
       ),
     );

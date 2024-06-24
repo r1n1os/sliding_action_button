@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sliding_action_button/src/base_slide_to_action_button.dart';
 
-class CircleSlideToActionButton extends StatefulWidget {
+class SquareSlideToActionButton extends StatefulWidget {
   ///This field will be the height of the whole widget
   final double height;
 
@@ -15,11 +15,11 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///This will be the background color of the parent box
   final Color? slidingBoxBackgroundColor;
 
-  ///This field will be the width and height of the circle(draggable) button
-  final double circleSlidingButtonSize;
+  ///This field will be the width and height of the square(draggable) button
+  final double squareSlidingButtonSize;
 
   ///This field will be the double value for the BorderRadius.circular() attribute
-  final double circleSlidingButtonRadiusValue;
+  final double squareSlidingButtonRadiusValue;
 
   ///This field will determined the space between the sliding button and the parent widget on the right end.
   final double rightEdgeSpacing;
@@ -31,7 +31,7 @@ class CircleSlideToActionButton extends StatefulWidget {
   final String finalSlidingActionLabel;
 
   ///This will be the icon appear on the sliding button
-  final Widget circleSlidingButtonIcon;
+  final Widget squareSlidingButtonIcon;
 
   ///This will be the text styling of the label appear before the sliding action
   final TextStyle? initialSlidingActionLabelTextStyle;
@@ -41,10 +41,10 @@ class CircleSlideToActionButton extends StatefulWidget {
   final TextStyle? finalSlidingActionLabelTextStyle;
 
   ///This will be the background color of the circle sliding button
-  final Color? circleSlidingButtonBackgroundColor;
+  final Color? squareSlidingButtonBackgroundColor;
 
-  ///This will be used to align the circle button
-  final EdgeInsets? circleButtonMargin;
+  ///This will be used to align the square button
+  final EdgeInsets? squareButtonMargin;
 
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
@@ -52,11 +52,11 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///This Function is used to indicate the end of the sliding action with cancel
   final Function() onSlideActionCanceled;
 
-  const CircleSlideToActionButton({
+  const SquareSlideToActionButton({
     super.key,
     required this.initialSlidingActionLabel,
     required this.finalSlidingActionLabel,
-    required this.circleSlidingButtonIcon,
+    required this.squareSlidingButtonIcon,
     required this.onSlideActionCompleted,
     required this.onSlideActionCanceled,
     required this.parentBoxRadiusValue,
@@ -65,20 +65,20 @@ class CircleSlideToActionButton extends StatefulWidget {
     this.initialSlidingActionLabelTextStyle,
     this.finalSlidingActionLabelTextStyle,
     this.slidingBoxBackgroundColor,
-    this.circleSlidingButtonSize = 50,
-    this.circleSlidingButtonRadiusValue = 45,
+    this.squareSlidingButtonSize = 50,
+    this.squareSlidingButtonRadiusValue = 10,
     this.rightEdgeSpacing = 10,
-    this.circleSlidingButtonBackgroundColor,
-    this.circleButtonMargin =
+    this.squareSlidingButtonBackgroundColor,
+    this.squareButtonMargin =
         const EdgeInsets.only(left: 5,),
   });
 
   @override
-  State<CircleSlideToActionButton> createState() =>
+  State<SquareSlideToActionButton> createState() =>
       _CircleSlideToActionButtonState();
 }
 
-class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
+class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
       width: widget.width,
       parentBoxRadiusValue: widget.parentBoxRadiusValue,
       slideButtonWidget: _buildCircleButton(),
-      slidingButtonWidth: widget.circleSlidingButtonSize,
+      slidingButtonWidth: widget.squareSlidingButtonSize,
       rightEdgeSpacing: widget.rightEdgeSpacing,
       initialSlidingActionLabel: widget.initialSlidingActionLabel,
       finalSlidingActionLabel: widget.finalSlidingActionLabel,
@@ -103,12 +103,12 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
     return Align(
       alignment: Alignment.center,
       child: Container(
-        height: widget.circleSlidingButtonSize,
-        width: widget.circleSlidingButtonSize,
-        margin: widget.circleButtonMargin,
+        height: widget.squareSlidingButtonSize,
+        width: widget.squareSlidingButtonSize,
+        margin: widget.squareButtonMargin,
         decoration: BoxDecoration(
-            color: Colors.green, borderRadius: BorderRadius.circular(widget.circleSlidingButtonRadiusValue)),
-        child: widget.circleSlidingButtonIcon,
+            color: widget.squareSlidingButtonBackgroundColor, borderRadius: BorderRadius.circular(widget.squareSlidingButtonRadiusValue)),
+        child: widget.squareSlidingButtonIcon,
       ),
     );
   }

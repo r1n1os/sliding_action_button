@@ -7,6 +7,10 @@ class BaseSlideToActionButton extends StatefulWidget {
   ///This field will be the width of the whole widget
   final double width;
 
+  ///This field will be the double value for the BorderRadius.circular() attribute to configure the cornenrs
+  ///of parent box
+  final double parentBoxRadiusValue;
+
   ///This will be the background color of the parent box
   final Color? slidingBoxBackgroundColor;
 
@@ -46,6 +50,7 @@ class BaseSlideToActionButton extends StatefulWidget {
     required this.onSlideActionCompleted,
     required this.onSlideActionCanceled,
     required this.slidingButtonWidth,
+    required this.parentBoxRadiusValue,
     this.height = 56,
     this.width = 240,
     this.rightEdgeSpacing = 10,
@@ -79,7 +84,7 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
           height: widget.height,
           width: widget.width,
           decoration: BoxDecoration(
-              color: Colors.red, borderRadius: BorderRadius.circular(27)),
+              color: Colors.red, borderRadius: BorderRadius.circular(widget.parentBoxRadiusValue)),
           child: Align(
             alignment: Alignment.center,
             child: Text(
