@@ -23,6 +23,12 @@ class BaseSlideToActionButton extends StatefulWidget {
   ///This field will determined the space between the sliding button and the parent widget on the right end.
   final double rightEdgeSpacing;
 
+  ///This field will determined the space between the sliding button and the parent widget on the top.
+  final double topEdgeSpacing;
+
+  ///This field will determined the space between the sliding button and the parent widget on the bottom.
+  final double bottomEdgeSpacing;
+
   ///This field is responsible for the text appear in the button before the sliding action
   final String initialSlidingActionLabel;
 
@@ -53,7 +59,9 @@ class BaseSlideToActionButton extends StatefulWidget {
     required this.parentBoxRadiusValue,
     this.height = 56,
     this.width = 240,
-    this.rightEdgeSpacing = 10,
+    this.rightEdgeSpacing = 0,
+    this.topEdgeSpacing = 0,
+    this.bottomEdgeSpacing = 0,
     this.slidingBoxBackgroundColor,
     this.initialSlidingActionLabelTextStyle,
     this.finalSlidingActionLabelTextStyle,
@@ -92,6 +100,8 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
         ),
         Positioned(
           left: _sliderPosition,
+          top: widget.topEdgeSpacing,
+          bottom: widget.bottomEdgeSpacing,
           child: GestureDetector(
               onHorizontalDragUpdate: (dragDetails) {
                 _onHorizontalDragUpdate(

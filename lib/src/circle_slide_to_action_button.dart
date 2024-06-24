@@ -24,6 +24,12 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///This field will determined the space between the sliding button and the parent widget on the right end.
   final double rightEdgeSpacing;
 
+  ///This field will determined the space between the sliding button and the parent widget on the top.
+  final double topEdgeSpacing;
+
+  ///This field will determined the space between the sliding button and the parent widget on the bottom.
+  final double bottomEdgeSpacing;
+
   ///This field is responsible for the text appear in the button before the sliding action
   final String initialSlidingActionLabel;
 
@@ -68,6 +74,8 @@ class CircleSlideToActionButton extends StatefulWidget {
     this.circleSlidingButtonSize = 50,
     this.circleSlidingButtonRadiusValue = 45,
     this.rightEdgeSpacing = 4,
+    this.topEdgeSpacing = 0,
+    this.bottomEdgeSpacing = 0,
     this.circleSlidingButtonBackgroundColor,
     this.circleButtonMargin =
         const EdgeInsets.only(left:2,),

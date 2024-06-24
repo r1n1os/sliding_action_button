@@ -24,6 +24,12 @@ class SquareSlideToActionButton extends StatefulWidget {
   ///This field will determined the space between the sliding button and the parent widget on the right end.
   final double rightEdgeSpacing;
 
+  ///This field will determined the space between the sliding button and the parent widget on the top.
+  final double topEdgeSpacing;
+
+  ///This field will determined the space between the sliding button and the parent widget on the bottom.
+  final double bottomEdgeSpacing;
+
   ///This field is responsible for the text appear in the button before the sliding action
   final String initialSlidingActionLabel;
 
@@ -68,6 +74,8 @@ class SquareSlideToActionButton extends StatefulWidget {
     this.squareSlidingButtonSize = 50,
     this.squareSlidingButtonRadiusValue = 10,
     this.rightEdgeSpacing = 10,
+    this.topEdgeSpacing = 0,
+    this.bottomEdgeSpacing = 0,
     this.squareSlidingButtonBackgroundColor,
     this.squareButtonMargin =
         const EdgeInsets.only(left: 5,),
@@ -89,6 +97,8 @@ class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
       slideButtonWidget: _buildCircleButton(),
       slidingButtonWidth: widget.squareSlidingButtonSize,
       rightEdgeSpacing: widget.rightEdgeSpacing,
+      topEdgeSpacing: widget.topEdgeSpacing,
+      bottomEdgeSpacing: widget.bottomEdgeSpacing,
       initialSlidingActionLabel: widget.initialSlidingActionLabel,
       finalSlidingActionLabel: widget.finalSlidingActionLabel,
       initialSlidingActionLabelTextStyle: widget.initialSlidingActionLabelTextStyle,
@@ -100,16 +110,18 @@ class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
   }
 
   Widget _buildCircleButton(){
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        height: widget.squareSlidingButtonSize,
-        width: widget.squareSlidingButtonSize,
-        margin: widget.squareButtonMargin,
-        decoration: BoxDecoration(
-            color: widget.squareSlidingButtonBackgroundColor, borderRadius: BorderRadius.circular(widget.squareSlidingButtonRadiusValue)),
-        child: widget.squareSlidingButtonIcon,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          height: widget.squareSlidingButtonSize,
+          width: widget.squareSlidingButtonSize,
+          //margin: widget.squareButtonMargin,
+          decoration: BoxDecoration(
+              color: widget.squareSlidingButtonBackgroundColor, borderRadius: BorderRadius.circular(widget.squareSlidingButtonRadiusValue)),
+          child: widget.squareSlidingButtonIcon,
+        ),
+      ],
     );
   }
 }
