@@ -51,8 +51,15 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///#initialSlidingActionLabelTextStyle will be used
   final TextStyle? finalSlidingActionLabelTextStyle;
 
-  ///This will be the background color of the circle sliding button
+  ///This will be the background color of the circle sliding button when isEnable = True
   final Color? circleSlidingButtonBackgroundColor;
+
+  ///This will be the background color of the circle sliding button when isEnable = False
+  final Color? circleSlidingButtonDisableBackgroundColor;
+
+  ///This field is used to enable or disable the circle sliding button(The slide action)
+  ///By default is True
+  final bool isEnable;
 
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
@@ -60,27 +67,28 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///This Function is used to indicate the end of the sliding action with cancel
   final Function() onSlideActionCanceled;
 
-  const CircleSlideToActionButton({
-    super.key,
-    required this.initialSlidingActionLabel,
-    required this.finalSlidingActionLabel,
-    required this.circleSlidingButtonIcon,
-    required this.onSlideActionCompleted,
-    required this.onSlideActionCanceled,
-    required this.parentBoxRadiusValue,
-    this.height = 56,
-    this.width = 240,
-    this.initialSlidingActionLabelTextStyle,
-    this.finalSlidingActionLabelTextStyle,
-    this.slidingBoxBackgroundColor,
-    this.circleSlidingButtonSize = 50,
-    this.circleSlidingButtonRadiusValue = 45,
-    this.leftEdgeSpacing = 0,
-    this.rightEdgeSpacing = 0,
-    this.topEdgeSpacing = 0,
-    this.bottomEdgeSpacing = 0,
-    this.circleSlidingButtonBackgroundColor,
-  });
+  const CircleSlideToActionButton(
+      {super.key,
+      required this.initialSlidingActionLabel,
+      required this.finalSlidingActionLabel,
+      required this.circleSlidingButtonIcon,
+      required this.onSlideActionCompleted,
+      required this.onSlideActionCanceled,
+      required this.parentBoxRadiusValue,
+      this.height = 56,
+      this.width = 240,
+      this.initialSlidingActionLabelTextStyle,
+      this.finalSlidingActionLabelTextStyle,
+      this.slidingBoxBackgroundColor,
+      this.circleSlidingButtonSize = 50,
+      this.circleSlidingButtonRadiusValue = 45,
+      this.leftEdgeSpacing = 0,
+      this.rightEdgeSpacing = 0,
+      this.topEdgeSpacing = 0,
+      this.bottomEdgeSpacing = 0,
+      this.circleSlidingButtonBackgroundColor = Colors.green,
+      this.circleSlidingButtonDisableBackgroundColor = Colors.black12,
+      this.isEnable = true});
 
   @override
   State<CircleSlideToActionButton> createState() =>
@@ -105,6 +113,7 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
       onSlideActionCompleted: widget.onSlideActionCompleted,
       onSlideActionCanceled: widget.onSlideActionCanceled,
       slidingBoxBackgroundColor: widget.slidingBoxBackgroundColor,
+      isEnable: widget.isEnable,
     );
   }
 
@@ -116,7 +125,9 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
         width: widget.circleSlidingButtonSize,
         margin: EdgeInsets.only(left: widget.leftEdgeSpacing),
         decoration: BoxDecoration(
-            color: Colors.green,
+            color: widget.isEnable
+                ? widget.circleSlidingButtonBackgroundColor
+                : widget.circleSlidingButtonDisableBackgroundColor,
             borderRadius:
                 BorderRadius.circular(widget.circleSlidingButtonRadiusValue)),
         child: widget.circleSlidingButtonIcon,

@@ -13,25 +13,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Sliding Action Button'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -43,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amberAccent,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
@@ -53,14 +44,16 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleSlideToActionButton(
-              width: 270,
+              width: 250,
               parentBoxRadiusValue: 27,
               circleSlidingButtonSize: 50,
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added',
-              circleSlidingButtonIcon: const Icon(Icons.add_shopping_cart),
+              circleSlidingButtonIcon: const Icon(Icons.add_shopping_cart, color: Colors.orange,),
+              slidingBoxBackgroundColor: Colors.orange,
+              circleSlidingButtonBackgroundColor: Colors.white,
               onSlideActionCompleted: () {
                 print("Sliding action completed");
               },
@@ -72,13 +65,14 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 100,
             ),
             SquareSlideToActionButton(
-              width: 270,
+              width: 250,
               parentBoxRadiusValue: 15,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added',
               squareSlidingButtonSize: 40,
-              squareSlidingButtonIcon: const Icon(Icons.add_shopping_cart),
-              squareSlidingButtonBackgroundColor: Colors.blue,
+              squareSlidingButtonIcon: const Icon(Icons.add_shopping_cart, color: Colors.orange,),
+              squareSlidingButtonBackgroundColor: Colors.white,
+              slidingBoxBackgroundColor: Colors.orange,
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
               topEdgeSpacing:7,

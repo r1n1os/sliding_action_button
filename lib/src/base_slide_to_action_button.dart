@@ -11,8 +11,11 @@ class BaseSlideToActionButton extends StatefulWidget {
   ///of parent box
   final double parentBoxRadiusValue;
 
-  ///This will be the background color of the parent box
+  ///This will be the background color of the parent box when isEnable is True
   final Color? slidingBoxBackgroundColor;
+
+  ///This will be the background color of the parent box when isEnable is False
+  final Color? slidingBoxDisableBackgroundColor;
 
   ///This field is passing the button widget which user can slide
   final Widget slideButtonWidget;
@@ -42,30 +45,35 @@ class BaseSlideToActionButton extends StatefulWidget {
   ///#initialSlidingActionLabelTextStyle will be used
   final TextStyle? finalSlidingActionLabelTextStyle;
 
+  ///This field is used to enable or disable the sliding button(The slide action)
+  ///By default is True
+  final bool isEnable;
+
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
 
   ///This Function is used to indicate the end of the sliding action with cancel
   final Function() onSlideActionCanceled;
 
-  const BaseSlideToActionButton({
-    super.key,
-    required this.slideButtonWidget,
-    required this.initialSlidingActionLabel,
-    required this.finalSlidingActionLabel,
-    required this.onSlideActionCompleted,
-    required this.onSlideActionCanceled,
-    required this.slidingButtonWidth,
-    required this.parentBoxRadiusValue,
-    this.height = 56,
-    this.width = 240,
-    this.rightEdgeSpacing = 0,
-    this.topEdgeSpacing = 0,
-    this.bottomEdgeSpacing = 0,
-    this.slidingBoxBackgroundColor,
-    this.initialSlidingActionLabelTextStyle,
-    this.finalSlidingActionLabelTextStyle,
-  });
+  const BaseSlideToActionButton(
+      {super.key,
+      required this.slideButtonWidget,
+      required this.initialSlidingActionLabel,
+      required this.finalSlidingActionLabel,
+      required this.onSlideActionCompleted,
+      required this.onSlideActionCanceled,
+      required this.slidingButtonWidth,
+      required this.parentBoxRadiusValue,
+      this.height = 56,
+      this.width = 240,
+      this.rightEdgeSpacing = 0,
+      this.topEdgeSpacing = 0,
+      this.bottomEdgeSpacing = 0,
+      this.slidingBoxBackgroundColor = Colors.cyan,
+      this.slidingBoxDisableBackgroundColor = Colors.black12,
+      this.initialSlidingActionLabelTextStyle,
+      this.finalSlidingActionLabelTextStyle,
+      this.isEnable = true});
 
   @override
   State<BaseSlideToActionButton> createState() =>
@@ -87,7 +95,10 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
           height: widget.height,
           width: widget.width,
           decoration: BoxDecoration(
-              color: Colors.red, borderRadius: BorderRadius.circular(widget.parentBoxRadiusValue)),
+              color: widget.isEnable
+                  ? widget.slidingBoxBackgroundColor
+                  : widget.slidingBoxDisableBackgroundColor,
+              borderRadius: BorderRadius.circular(widget.parentBoxRadiusValue)),
           child: Align(
             alignment: Alignment.center,
             child: Text(
@@ -103,14 +114,18 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
           top: widget.topEdgeSpacing,
           bottom: widget.bottomEdgeSpacing,
           child: GestureDetector(
-              onHorizontalDragUpdate: (dragDetails) {
-                _onHorizontalDragUpdate(
-                  dragDetails,
-                );
-              },
-              onHorizontalDragEnd: (dragDetails) {
-                _onHorizontalDragEnd(dragDetails);
-              },
+              onHorizontalDragUpdate: widget.isEnable
+                  ? (dragDetails) {
+                      _onHorizontalDragUpdate(
+                        dragDetails,
+                      );
+                    }
+                  : null,
+              onHorizontalDragEnd: widget.isEnable
+                  ? (dragDetails) {
+                      _onHorizontalDragEnd(dragDetails);
+                    }
+                  : null,
               child: widget.slideButtonWidget),
         )
       ],
@@ -121,7 +136,8 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     setState(() {
       _sliderPosition += dragDetails.delta.dx;
       if (_sliderPosition > widget.width - widget.slidingButtonWidth) {
-        _sliderPosition = widget.width - widget.slidingButtonWidth - widget.rightEdgeSpacing;
+        _sliderPosition =
+            widget.width - widget.slidingButtonWidth - widget.rightEdgeSpacing;
       }
     });
   }
@@ -129,7 +145,8 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
   void _onHorizontalDragEnd(DragEndDetails dragDetails) {
     if (_sliderPosition >= (widget.width - widget.slidingButtonWidth) / 2) {
       setState(() {
-        _sliderPosition = widget.width - widget.slidingButtonWidth - widget.rightEdgeSpacing;
+        _sliderPosition =
+            widget.width - widget.slidingButtonWidth - widget.rightEdgeSpacing;
       });
       widget.onSlideActionCompleted();
     } else {

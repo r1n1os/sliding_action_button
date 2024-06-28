@@ -55,33 +55,41 @@ class SquareSlideToActionButton extends StatefulWidget {
   ///This will be the background color of the circle sliding button
   final Color? squareSlidingButtonBackgroundColor;
 
+  ///This will be the background color of the square sliding button when isEnable = False
+  final Color? squareSlidingButtonDisableBackgroundColor;
+
+  ///This field is used to enable or disable the sliding square button(The slide action)
+  ///By default is True
+  final bool isEnable;
+
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
 
   ///This Function is used to indicate the end of the sliding action with cancel
   final Function() onSlideActionCanceled;
 
-  const SquareSlideToActionButton({
-    super.key,
-    required this.initialSlidingActionLabel,
-    required this.finalSlidingActionLabel,
-    required this.squareSlidingButtonIcon,
-    required this.onSlideActionCompleted,
-    required this.onSlideActionCanceled,
-    required this.parentBoxRadiusValue,
-    this.height = 56,
-    this.width = 240,
-    this.initialSlidingActionLabelTextStyle,
-    this.finalSlidingActionLabelTextStyle,
-    this.slidingBoxBackgroundColor,
-    this.squareSlidingButtonSize = 50,
-    this.squareSlidingButtonRadiusValue = 10,
-    this.rightEdgeSpacing = 10,
-    this.topEdgeSpacing = 0,
-    this.bottomEdgeSpacing = 0,
-    this.squareSlidingButtonBackgroundColor,
-    this.leftEdgeSpacing = 0,
-  });
+  const SquareSlideToActionButton(
+      {super.key,
+      required this.initialSlidingActionLabel,
+      required this.finalSlidingActionLabel,
+      required this.squareSlidingButtonIcon,
+      required this.onSlideActionCompleted,
+      required this.onSlideActionCanceled,
+      required this.parentBoxRadiusValue,
+      this.height = 56,
+      this.width = 240,
+      this.initialSlidingActionLabelTextStyle,
+      this.finalSlidingActionLabelTextStyle,
+      this.slidingBoxBackgroundColor,
+      this.squareSlidingButtonSize = 50,
+      this.squareSlidingButtonRadiusValue = 10,
+      this.rightEdgeSpacing = 10,
+      this.topEdgeSpacing = 0,
+      this.bottomEdgeSpacing = 0,
+      this.squareSlidingButtonBackgroundColor = Colors.green,
+      this.squareSlidingButtonDisableBackgroundColor = Colors.black12,
+      this.leftEdgeSpacing = 0,
+      this.isEnable = true});
 
   @override
   State<SquareSlideToActionButton> createState() =>
@@ -108,6 +116,7 @@ class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
       onSlideActionCompleted: widget.onSlideActionCompleted,
       onSlideActionCanceled: widget.onSlideActionCanceled,
       slidingBoxBackgroundColor: widget.slidingBoxBackgroundColor,
+      isEnable: widget.isEnable,
     );
   }
 
@@ -120,7 +129,9 @@ class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
           width: widget.squareSlidingButtonSize,
           margin: EdgeInsets.only(left: widget.leftEdgeSpacing),
           decoration: BoxDecoration(
-              color: widget.squareSlidingButtonBackgroundColor,
+              color: widget.isEnable
+                  ? widget.squareSlidingButtonBackgroundColor
+                  : widget.squareSlidingButtonDisableBackgroundColor,
               borderRadius:
                   BorderRadius.circular(widget.squareSlidingButtonRadiusValue)),
           child: widget.squareSlidingButtonIcon,
