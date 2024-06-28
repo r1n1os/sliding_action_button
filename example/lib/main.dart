@@ -52,8 +52,15 @@ class _MyHomePageState extends State<MyHomePage> {
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added',
               circleSlidingButtonIcon: const Icon(Icons.add_shopping_cart, color: Colors.orange,),
-              slidingBoxBackgroundColor: Colors.orange,
+              //slidingBoxBackgroundColor: Colors.orange,
+              slidingBoxGradientBackgroundColor: LinearGradient(
+                colors: [Colors.red, Colors.white]
+              ),
+              slidingBoxDisableGradientBackgroundColor: LinearGradient(
+                  colors: [Colors.red, Colors.white]
+              ),
               circleSlidingButtonBackgroundColor: Colors.white,
+              isEnable: false,
               onSlideActionCompleted: () {
                 print("Sliding action completed");
               },
@@ -73,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
               squareSlidingButtonIcon: const Icon(Icons.add_shopping_cart, color: Colors.orange,),
               squareSlidingButtonBackgroundColor: Colors.white,
               slidingBoxBackgroundColor: Colors.orange,
+              slidingBoxDisableBackgroundColor: Colors.grey,
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
               topEdgeSpacing:7,

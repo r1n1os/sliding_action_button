@@ -8,12 +8,23 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///This field will be the width of the whole widget
   final double width;
 
-  ///This field will be the double value for the BorderRadius.circular() attribute to configure the cornenrs
+  ///This field will be the double value for the BorderRadius.circular() attribute to configure the corners
   ///of parent box
   final double parentBoxRadiusValue;
 
-  ///This will be the background color of the parent box
+  ///This will be the background color of the parent box when isEnable is True
   final Color? slidingBoxBackgroundColor;
+
+  ///This will be the background color of the parent box when isEnable is False
+  final Color? slidingBoxDisableBackgroundColor;
+
+  ///This will be the background color of the parent box in case you want to use gradient when isEnable is True.
+  ///You cannot have both slidingBoxBackgroundColor and slidingBoxGradientBackgroundColor
+  final Gradient? slidingBoxGradientBackgroundColor;
+
+  ///This will be the background color of the parent box in case you want to use gradient when isEnable is False.
+  ///You cannot have both slidingBoxBackgroundColor and slidingBoxGradientBackgroundColor
+  final Gradient? slidingBoxDisableGradientBackgroundColor;
 
   ///This field will be the width and height of the circle(draggable) button
   final double circleSlidingButtonSize;
@@ -80,6 +91,9 @@ class CircleSlideToActionButton extends StatefulWidget {
       this.initialSlidingActionLabelTextStyle,
       this.finalSlidingActionLabelTextStyle,
       this.slidingBoxBackgroundColor,
+      this.slidingBoxDisableBackgroundColor,
+      this.slidingBoxGradientBackgroundColor,
+      this.slidingBoxDisableGradientBackgroundColor,
       this.circleSlidingButtonSize = 50,
       this.circleSlidingButtonRadiusValue = 45,
       this.leftEdgeSpacing = 0,
@@ -113,6 +127,11 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
       onSlideActionCompleted: widget.onSlideActionCompleted,
       onSlideActionCanceled: widget.onSlideActionCanceled,
       slidingBoxBackgroundColor: widget.slidingBoxBackgroundColor,
+      slidingBoxDisableBackgroundColor: widget.slidingBoxDisableBackgroundColor,
+      slidingBoxGradientBackgroundColor:
+          widget.slidingBoxGradientBackgroundColor,
+      slidingBoxDisableGradientBackgroundColor:
+          widget.slidingBoxDisableGradientBackgroundColor,
       isEnable: widget.isEnable,
     );
   }

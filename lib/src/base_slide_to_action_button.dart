@@ -7,7 +7,7 @@ class BaseSlideToActionButton extends StatefulWidget {
   ///This field will be the width of the whole widget
   final double width;
 
-  ///This field will be the double value for the BorderRadius.circular() attribute to configure the cornenrs
+  ///This field will be the double value for the BorderRadius.circular() attribute to configure the corners
   ///of parent box
   final double parentBoxRadiusValue;
 
@@ -16,6 +16,14 @@ class BaseSlideToActionButton extends StatefulWidget {
 
   ///This will be the background color of the parent box when isEnable is False
   final Color? slidingBoxDisableBackgroundColor;
+
+  ///This will be the background color of the parent box in case you want to use gradient when isEnable is True.
+  ///You cannot have both slidingBoxBackgroundColor and slidingBoxGradientBackgroundColor
+  final Gradient? slidingBoxGradientBackgroundColor;
+
+  ///This will be the background color of the parent box in case you want to use gradient when isEnable is False.
+  ///You cannot have both slidingBoxBackgroundColor and slidingBoxGradientBackgroundColor
+  final Gradient? slidingBoxDisableGradientBackgroundColor;
 
   ///This field is passing the button widget which user can slide
   final Widget slideButtonWidget;
@@ -71,9 +79,23 @@ class BaseSlideToActionButton extends StatefulWidget {
       this.bottomEdgeSpacing = 0,
       this.slidingBoxBackgroundColor = Colors.cyan,
       this.slidingBoxDisableBackgroundColor = Colors.black12,
+      this.slidingBoxGradientBackgroundColor,
+      this.slidingBoxDisableGradientBackgroundColor,
       this.initialSlidingActionLabelTextStyle,
       this.finalSlidingActionLabelTextStyle,
-      this.isEnable = true});
+      this.isEnable = true})
+      : assert(
+            (slidingBoxBackgroundColor != null &&
+                    slidingBoxGradientBackgroundColor == null) ||
+                (slidingBoxBackgroundColor == null &&
+                    slidingBoxGradientBackgroundColor != null),
+            "Please make sure you have set either slidingBoxBackgroundColor or slidingBoxGradientBackgroundColor. You cannot set both at the same time"),
+        assert(
+        (slidingBoxBackgroundColor != null &&
+            slidingBoxDisableBackgroundColor != null) ||
+            (slidingBoxGradientBackgroundColor != null &&
+                slidingBoxDisableGradientBackgroundColor != null),
+        "Please make sure you have set either slidingBoxBackgroundColor or slidingBoxGradientBackgroundColor. You cannot set both at the same time");
 
   @override
   State<BaseSlideToActionButton> createState() =>
@@ -95,6 +117,9 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
           height: widget.height,
           width: widget.width,
           decoration: BoxDecoration(
+              gradient: widget.isEnable
+                  ? widget.slidingBoxGradientBackgroundColor
+                  : widget.slidingBoxDisableGradientBackgroundColor,
               color: widget.isEnable
                   ? widget.slidingBoxBackgroundColor
                   : widget.slidingBoxDisableBackgroundColor,
