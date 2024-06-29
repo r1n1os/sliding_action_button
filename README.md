@@ -11,20 +11,23 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+This package provide an easy implementation of sliding(swipe) action button.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+With this package you can easily implement sliding action button. Currently, it is offering two pre-defined methods. 
+- CircleSlidingActionButton
+- SquareSliding ActionButton <br/><br/>
+With many customizations like changing button container color, adding custom icon to draggable buttons, enable or disable button with applying different color per status. 
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Minimum Flutter SDK: 3.0.0
 
 ## Usage
-
+<p align="left">
+  <a title="simulator_image"><img src="https://github.com/r1n1os/sliding_action_button/blob/master/screenshots/sliding_action_button_example.gif" height="530" width="250"></a>
+</p>
 TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder.
 
