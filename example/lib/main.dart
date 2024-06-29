@@ -43,6 +43,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Text(
+              'Circle Slide To Action Button Example',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
             CircleSlideToActionButton(
               width: 250,
               parentBoxRadiusValue: 27,
@@ -50,18 +57,19 @@ class _MyHomePageState extends State<MyHomePage> {
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
               initialSlidingActionLabel: 'Add To Basket',
-              finalSlidingActionLabel: 'Added',
+              finalSlidingActionLabel: 'Added To Basket',
               circleSlidingButtonIcon: const Icon(
                 Icons.add_shopping_cart,
                 color: Colors.orange,
               ),
-              //slidingBoxBackgroundColor: Colors.orange,
-              parentBoxGradientBackgroundColor:
+              parentBoxBackgroundColor: Colors.orange,
+              parentBoxDisableBackgroundColor: Colors.grey,
+              /*  parentBoxGradientBackgroundColor:
                   LinearGradient(colors: [Colors.red, Colors.white]),
               parentBoxDisableGradientBackgroundColor:
-                  LinearGradient(colors: [Colors.red, Colors.white]),
+                  LinearGradient(colors: [Colors.red, Colors.white]),*/
               circleSlidingButtonBackgroundColor: Colors.white,
-              isEnable: false,
+              isEnable: true,
               onSlideActionCompleted: () {
                 print("Sliding action completed");
               },
@@ -72,11 +80,18 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 100,
             ),
+            const Text(
+              'Square Slide To Action Button Example',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
             SquareSlideToActionButton(
               width: 250,
               parentBoxRadiusValue: 15,
               initialSlidingActionLabel: 'Add To Basket',
-              finalSlidingActionLabel: 'Added',
+              finalSlidingActionLabel: 'Added To Basket',
               squareSlidingButtonSize: 40,
               squareSlidingButtonIcon: const Icon(
                 Icons.add_shopping_cart,
