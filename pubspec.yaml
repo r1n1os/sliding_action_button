@@ -1,11 +1,11 @@
 name: sliding_action_button
-description: "A new Flutter package project."
+description: "Sliding action button package provide pre build functionality for sliding(swipe) action button with some pre define shapes"
 version: 0.0.1
-homepage:
+homepage: https://github.com/r1n1os/sliding_action_button
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
-  flutter: ">=1.17.0"
+  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
@@ -14,7 +14,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
