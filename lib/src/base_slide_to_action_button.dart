@@ -12,26 +12,26 @@ class BaseSlideToActionButton extends StatefulWidget {
   final double parentBoxRadiusValue;
 
   ///This will be the background color of the parent box when isEnable is True
-  final Color? slidingBoxBackgroundColor;
+  final Color? parentBoxBackgroundColor;
 
   ///This will be the background color of the parent box when isEnable is False
-  final Color? slidingBoxDisableBackgroundColor;
+  final Color? parentBoxDisableBackgroundColor;
 
   ///This will be the background color of the parent box in case you want to use gradient when isEnable is True.
   ///You cannot have both slidingBoxBackgroundColor and slidingBoxGradientBackgroundColor
-  final Gradient? slidingBoxGradientBackgroundColor;
+  final Gradient? parentBoxGradientBackgroundColor;
 
   ///This will be the background color of the parent box in case you want to use gradient when isEnable is False.
   ///You cannot have both slidingBoxBackgroundColor and slidingBoxGradientBackgroundColor
-  final Gradient? slidingBoxDisableGradientBackgroundColor;
+  final Gradient? parentBoxDisableGradientBackgroundColor;
 
   ///This field is passing the button widget which user can slide
   final Widget slideButtonWidget;
 
   ///This field will be the width and height of the sliding button
-  final double slidingButtonWidth;
+  final double slidingButtonSize;
 
-  ///This field will determined the space between the sliding button and the parent widget on the right end.
+  ///This field will determined the space between the sliding button widget and the parent widget on the right end.
   final double rightEdgeSpacing;
 
   ///This field will determined the space between the sliding button and the parent widget on the top.
@@ -40,16 +40,16 @@ class BaseSlideToActionButton extends StatefulWidget {
   ///This field will determined the space between the sliding button and the parent widget on the bottom.
   final double bottomEdgeSpacing;
 
-  ///This field is responsible for the text appear in the button before the sliding action
+  ///This field is responsible for the text appear in the parent box before the sliding action
   final String initialSlidingActionLabel;
 
-  ///This field is responsible for the text appear in the button after the swipe action
+  ///This field is responsible for the text appear in the parent box after the swipe action
   final String finalSlidingActionLabel;
 
-  ///This will be the text styling of the label appear before the sliding action
+  ///This will be the text styling of the label appear before the sliding action (initialSlidingActionLabel)
   final TextStyle? initialSlidingActionLabelTextStyle;
 
-  ///This will be the text styling of the label appear after the sliding action. In case this field is null the same style as the
+  ///This will be the text styling of the label appear after the sliding action (finalSlidingActionLabel). In case this field is null the same style as the
   ///#initialSlidingActionLabelTextStyle will be used
   final TextStyle? finalSlidingActionLabelTextStyle;
 
@@ -70,32 +70,32 @@ class BaseSlideToActionButton extends StatefulWidget {
       required this.finalSlidingActionLabel,
       required this.onSlideActionCompleted,
       required this.onSlideActionCanceled,
-      required this.slidingButtonWidth,
+      required this.slidingButtonSize,
       required this.parentBoxRadiusValue,
       this.height = 56,
       this.width = 240,
       this.rightEdgeSpacing = 0,
       this.topEdgeSpacing = 0,
       this.bottomEdgeSpacing = 0,
-      this.slidingBoxBackgroundColor = Colors.cyan,
-      this.slidingBoxDisableBackgroundColor = Colors.black12,
-      this.slidingBoxGradientBackgroundColor,
-      this.slidingBoxDisableGradientBackgroundColor,
+      this.parentBoxBackgroundColor,
+      this.parentBoxDisableBackgroundColor,
+      this.parentBoxGradientBackgroundColor,
+      this.parentBoxDisableGradientBackgroundColor,
       this.initialSlidingActionLabelTextStyle,
       this.finalSlidingActionLabelTextStyle,
       this.isEnable = true})
       : assert(
-            (slidingBoxBackgroundColor != null &&
-                    slidingBoxGradientBackgroundColor == null) ||
-                (slidingBoxBackgroundColor == null &&
-                    slidingBoxGradientBackgroundColor != null),
+            (parentBoxBackgroundColor != null &&
+                    parentBoxGradientBackgroundColor == null) ||
+                (parentBoxBackgroundColor == null &&
+                    parentBoxGradientBackgroundColor != null),
             "Please make sure you have set either slidingBoxBackgroundColor or slidingBoxGradientBackgroundColor. You cannot set both at the same time"),
         assert(
-        (slidingBoxBackgroundColor != null &&
-            slidingBoxDisableBackgroundColor != null) ||
-            (slidingBoxGradientBackgroundColor != null &&
-                slidingBoxDisableGradientBackgroundColor != null),
-        "Please make sure you have set either slidingBoxBackgroundColor or slidingBoxGradientBackgroundColor. You cannot set both at the same time");
+            (parentBoxBackgroundColor != null &&
+                    parentBoxDisableBackgroundColor != null) ||
+                (parentBoxGradientBackgroundColor != null &&
+                    parentBoxDisableGradientBackgroundColor != null),
+            "Please make sure you have set either slidingBoxBackgroundColor or slidingBoxGradientBackgroundColor. You cannot set both at the same time");
 
   @override
   State<BaseSlideToActionButton> createState() =>
@@ -104,10 +104,12 @@ class BaseSlideToActionButton extends StatefulWidget {
 
 class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     with SingleTickerProviderStateMixin {
+  ///This variable is holding the current sliding position when user is dragging the button
   double _sliderPosition = 0;
 
+  ///Detecting when the user slide the button in the half of the parent box
   bool get hasSliderReachTheMiddle =>
-      _sliderPosition >= (widget.width - widget.slidingButtonWidth) / 2;
+      _sliderPosition >= (widget.width - widget.slidingButtonSize) / 2;
 
   @override
   Widget build(BuildContext context) {
@@ -118,11 +120,11 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
           width: widget.width,
           decoration: BoxDecoration(
               gradient: widget.isEnable
-                  ? widget.slidingBoxGradientBackgroundColor
-                  : widget.slidingBoxDisableGradientBackgroundColor,
+                  ? widget.parentBoxGradientBackgroundColor
+                  : widget.parentBoxDisableGradientBackgroundColor,
               color: widget.isEnable
-                  ? widget.slidingBoxBackgroundColor
-                  : widget.slidingBoxDisableBackgroundColor,
+                  ? widget.parentBoxBackgroundColor
+                  : widget.parentBoxDisableBackgroundColor,
               borderRadius: BorderRadius.circular(widget.parentBoxRadiusValue)),
           child: Align(
             alignment: Alignment.center,
@@ -160,18 +162,18 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
   void _onHorizontalDragUpdate(DragUpdateDetails dragDetails) {
     setState(() {
       _sliderPosition += dragDetails.delta.dx;
-      if (_sliderPosition > widget.width - widget.slidingButtonWidth) {
+      if (_sliderPosition > widget.width - widget.slidingButtonSize) {
         _sliderPosition =
-            widget.width - widget.slidingButtonWidth - widget.rightEdgeSpacing;
+            widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
       }
     });
   }
 
   void _onHorizontalDragEnd(DragEndDetails dragDetails) {
-    if (_sliderPosition >= (widget.width - widget.slidingButtonWidth) / 2) {
+    if (_sliderPosition >= (widget.width - widget.slidingButtonSize) / 2) {
       setState(() {
         _sliderPosition =
-            widget.width - widget.slidingButtonWidth - widget.rightEdgeSpacing;
+            widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
       });
       widget.onSlideActionCompleted();
     } else {

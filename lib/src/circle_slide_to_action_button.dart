@@ -13,18 +13,18 @@ class CircleSlideToActionButton extends StatefulWidget {
   final double parentBoxRadiusValue;
 
   ///This will be the background color of the parent box when isEnable is True
-  final Color? slidingBoxBackgroundColor;
+  final Color? parentBoxBackgroundColor;
 
   ///This will be the background color of the parent box when isEnable is False
-  final Color? slidingBoxDisableBackgroundColor;
+  final Color? parentBoxDisableBackgroundColor;
 
   ///This will be the background color of the parent box in case you want to use gradient when isEnable is True.
-  ///You cannot have both slidingBoxBackgroundColor and slidingBoxGradientBackgroundColor
-  final Gradient? slidingBoxGradientBackgroundColor;
+  ///You cannot have both parentBoxBackgroundColor and parentBoxGradientBackgroundColor
+  final Gradient? parentBoxGradientBackgroundColor;
 
   ///This will be the background color of the parent box in case you want to use gradient when isEnable is False.
-  ///You cannot have both slidingBoxBackgroundColor and slidingBoxGradientBackgroundColor
-  final Gradient? slidingBoxDisableGradientBackgroundColor;
+  ///You cannot have both parentBoxDisableBackgroundColor and parentBoxDisableGradientBackgroundColor
+  final Gradient? parentBoxDisableGradientBackgroundColor;
 
   ///This field will be the width and height of the circle(draggable) button
   final double circleSlidingButtonSize;
@@ -37,23 +37,21 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///dragging of the button
   final double leftEdgeSpacing;
 
-  ///This field will determined the space between the sliding button and the parent widget on the right end.
+  ///This field will determined the space between the circle sliding button widget and the parent widget on the right end.
+  ///In case you have Padding left
   final double rightEdgeSpacing;
 
-  ///This field will determined the space between the sliding button and the parent widget on the top.
+  ///This field will determined the space between the circle sliding button and the parent widget on the top.
   final double topEdgeSpacing;
 
-  ///This field will determined the space between the sliding button and the parent widget on the bottom.
+  ///This field will determined the space between the circle sliding button and the parent widget on the bottom.
   final double bottomEdgeSpacing;
 
-  ///This field is responsible for the text appear in the button before the sliding action
+  ///This field is responsible for the text appear in the parent box before the sliding action
   final String initialSlidingActionLabel;
 
-  ///This field is responsible for the text appear in the button after the sliding action
+  ///This field is responsible for the text appear in the parent box after the swipe action
   final String finalSlidingActionLabel;
-
-  ///This will be the icon appear on the sliding button
-  final Widget circleSlidingButtonIcon;
 
   ///This will be the text styling of the label appear before the sliding action
   final TextStyle? initialSlidingActionLabelTextStyle;
@@ -61,6 +59,9 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///This will be the text styling of the label appear after the sliding action. In case this field is null the same style as the
   ///#initialSlidingActionLabelTextStyle will be used
   final TextStyle? finalSlidingActionLabelTextStyle;
+
+  ///This will be the icon appear on the sliding button
+  final Widget circleSlidingButtonIcon;
 
   ///This will be the background color of the circle sliding button when isEnable = True
   final Color? circleSlidingButtonBackgroundColor;
@@ -90,10 +91,10 @@ class CircleSlideToActionButton extends StatefulWidget {
       this.width = 240,
       this.initialSlidingActionLabelTextStyle,
       this.finalSlidingActionLabelTextStyle,
-      this.slidingBoxBackgroundColor,
-      this.slidingBoxDisableBackgroundColor,
-      this.slidingBoxGradientBackgroundColor,
-      this.slidingBoxDisableGradientBackgroundColor,
+      this.parentBoxBackgroundColor,
+      this.parentBoxDisableBackgroundColor,
+      this.parentBoxGradientBackgroundColor,
+      this.parentBoxDisableGradientBackgroundColor,
       this.circleSlidingButtonSize = 50,
       this.circleSlidingButtonRadiusValue = 45,
       this.leftEdgeSpacing = 0,
@@ -116,23 +117,24 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
       height: widget.height,
       width: widget.width,
       parentBoxRadiusValue: widget.parentBoxRadiusValue,
-      slideButtonWidget: _buildCircleButton(),
-      slidingButtonWidth: widget.circleSlidingButtonSize,
+      parentBoxBackgroundColor: widget.parentBoxBackgroundColor,
+      parentBoxDisableBackgroundColor: widget.parentBoxDisableBackgroundColor,
+      parentBoxGradientBackgroundColor: widget.parentBoxGradientBackgroundColor,
+      parentBoxDisableGradientBackgroundColor:
+          widget.parentBoxDisableGradientBackgroundColor,
       rightEdgeSpacing: widget.rightEdgeSpacing,
+      topEdgeSpacing: widget.topEdgeSpacing,
+      bottomEdgeSpacing: widget.bottomEdgeSpacing,
       initialSlidingActionLabel: widget.initialSlidingActionLabel,
       finalSlidingActionLabel: widget.finalSlidingActionLabel,
       initialSlidingActionLabelTextStyle:
           widget.initialSlidingActionLabelTextStyle,
       finalSlidingActionLabelTextStyle: widget.finalSlidingActionLabelTextStyle,
+      isEnable: widget.isEnable,
       onSlideActionCompleted: widget.onSlideActionCompleted,
       onSlideActionCanceled: widget.onSlideActionCanceled,
-      slidingBoxBackgroundColor: widget.slidingBoxBackgroundColor,
-      slidingBoxDisableBackgroundColor: widget.slidingBoxDisableBackgroundColor,
-      slidingBoxGradientBackgroundColor:
-          widget.slidingBoxGradientBackgroundColor,
-      slidingBoxDisableGradientBackgroundColor:
-          widget.slidingBoxDisableGradientBackgroundColor,
-      isEnable: widget.isEnable,
+      slidingButtonSize: widget.circleSlidingButtonSize,
+      slideButtonWidget: _buildCircleButton(),
     );
   }
 

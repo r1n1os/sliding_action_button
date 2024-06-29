@@ -8,23 +8,23 @@ class SquareSlideToActionButton extends StatefulWidget {
   ///This field will be the width of the whole widget
   final double width;
 
-  ///This field will be the double value for the BorderRadius.circular() attribute to configure the cornenrs
+  ///This field will be the double value for the BorderRadius.circular() attribute to configure the corners
   ///of parent box
   final double parentBoxRadiusValue;
 
   ///This will be the background color of the parent box when isEnable is True
-  final Color? slidingBoxBackgroundColor;
+  final Color? parentBoxBackgroundColor;
 
   ///This will be the background color of the parent box when isEnable is False
-  final Color? slidingBoxDisableBackgroundColor;
+  final Color? parentBoxDisableBackgroundColor;
 
   ///This will be the background color of the parent box in case you want to use gradient when isEnable is True.
-  ///You cannot have both slidingBoxBackgroundColor and slidingBoxGradientBackgroundColor
-  final Gradient? slidingBoxGradientBackgroundColor;
+  ///You cannot have both parentBoxBackgroundColor and parentBoxGradientBackgroundColor
+  final Gradient? parentBoxGradientBackgroundColor;
 
   ///This will be the background color of the parent box in case you want to use gradient when isEnable is False.
-  ///You cannot have both slidingBoxBackgroundColor and slidingBoxGradientBackgroundColor
-  final Gradient? slidingBoxDisableGradientBackgroundColor;
+  ///You cannot have both parentBoxDisableBackgroundColor and parentBoxDisableGradientBackgroundColor
+  final Gradient? parentBoxDisableGradientBackgroundColor;
 
   ///This field will be the width and height of the square(draggable) button
   final double squareSlidingButtonSize;
@@ -37,24 +37,21 @@ class SquareSlideToActionButton extends StatefulWidget {
   ///dragging of the button
   final double leftEdgeSpacing;
 
-  ///This field will determined the space between the sliding button and the parent widget on the right end.
+  ///This field will determined the space between the square sliding button widget and the parent widget on the right end.
   ///In case you have Padding left
   final double rightEdgeSpacing;
 
-  ///This field will determined the space between the sliding button and the parent widget on the top.
+  ///This field will determined the space between the square sliding button and the parent widget on the top.
   final double topEdgeSpacing;
 
-  ///This field will determined the space between the sliding button and the parent widget on the bottom.
+  ///This field will determined the space between the square sliding button and the parent widget on the bottom.
   final double bottomEdgeSpacing;
 
-  ///This field is responsible for the text appear in the button before the sliding action
+  ///This field is responsible for the text appear in the parent box before the sliding action
   final String initialSlidingActionLabel;
 
-  ///This field is responsible for the text appear in the button after the sliding action
+  ///This field is responsible for the text appear in the parent box after the swipe action
   final String finalSlidingActionLabel;
-
-  ///This will be the icon appear on the sliding button
-  final Widget squareSlidingButtonIcon;
 
   ///This will be the text styling of the label appear before the sliding action
   final TextStyle? initialSlidingActionLabelTextStyle;
@@ -63,7 +60,10 @@ class SquareSlideToActionButton extends StatefulWidget {
   ///#initialSlidingActionLabelTextStyle will be used
   final TextStyle? finalSlidingActionLabelTextStyle;
 
-  ///This will be the background color of the circle sliding button
+  ///This will be the icon appear on the sliding button
+  final Widget squareSlidingButtonIcon;
+
+  ///This will be the background color of the circle sliding button when isEnable = False
   final Color? squareSlidingButtonBackgroundColor;
 
   ///This will be the background color of the square sliding button when isEnable = False
@@ -91,10 +91,10 @@ class SquareSlideToActionButton extends StatefulWidget {
       this.width = 240,
       this.initialSlidingActionLabelTextStyle,
       this.finalSlidingActionLabelTextStyle,
-      this.slidingBoxBackgroundColor,
-      this.slidingBoxDisableBackgroundColor,
-      this.slidingBoxGradientBackgroundColor,
-      this.slidingBoxDisableGradientBackgroundColor,
+      this.parentBoxBackgroundColor,
+      this.parentBoxDisableBackgroundColor,
+      this.parentBoxGradientBackgroundColor,
+      this.parentBoxDisableGradientBackgroundColor,
       this.squareSlidingButtonSize = 50,
       this.squareSlidingButtonRadiusValue = 10,
       this.rightEdgeSpacing = 10,
@@ -117,8 +117,11 @@ class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
       height: widget.height,
       width: widget.width,
       parentBoxRadiusValue: widget.parentBoxRadiusValue,
-      slideButtonWidget: _buildSquareButton(),
-      slidingButtonWidth: widget.squareSlidingButtonSize,
+      parentBoxBackgroundColor: widget.parentBoxBackgroundColor,
+      parentBoxDisableBackgroundColor: widget.parentBoxDisableBackgroundColor,
+      parentBoxGradientBackgroundColor: widget.parentBoxGradientBackgroundColor,
+      parentBoxDisableGradientBackgroundColor:
+          widget.parentBoxDisableGradientBackgroundColor,
       rightEdgeSpacing: widget.rightEdgeSpacing,
       topEdgeSpacing: widget.topEdgeSpacing,
       bottomEdgeSpacing: widget.bottomEdgeSpacing,
@@ -127,14 +130,11 @@ class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
       initialSlidingActionLabelTextStyle:
           widget.initialSlidingActionLabelTextStyle,
       finalSlidingActionLabelTextStyle: widget.finalSlidingActionLabelTextStyle,
+      isEnable: widget.isEnable,
       onSlideActionCompleted: widget.onSlideActionCompleted,
       onSlideActionCanceled: widget.onSlideActionCanceled,
-      slidingBoxBackgroundColor: widget.slidingBoxBackgroundColor,
-      slidingBoxDisableBackgroundColor: widget.slidingBoxDisableBackgroundColor,
-      slidingBoxGradientBackgroundColor:
-          widget.slidingBoxGradientBackgroundColor,
-      slidingBoxDisableGradientBackgroundColor: widget.slidingBoxDisableGradientBackgroundColor,
-      isEnable: widget.isEnable,
+      slidingButtonSize: widget.squareSlidingButtonSize,
+      slideButtonWidget: _buildSquareButton(),
     );
   }
 

@@ -51,14 +51,15 @@ class _MyHomePageState extends State<MyHomePage> {
               rightEdgeSpacing: 4,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added',
-              circleSlidingButtonIcon: const Icon(Icons.add_shopping_cart, color: Colors.orange,),
+              circleSlidingButtonIcon: const Icon(
+                Icons.add_shopping_cart,
+                color: Colors.orange,
+              ),
               //slidingBoxBackgroundColor: Colors.orange,
-              slidingBoxGradientBackgroundColor: LinearGradient(
-                colors: [Colors.red, Colors.white]
-              ),
-              slidingBoxDisableGradientBackgroundColor: LinearGradient(
-                  colors: [Colors.red, Colors.white]
-              ),
+              parentBoxGradientBackgroundColor:
+                  LinearGradient(colors: [Colors.red, Colors.white]),
+              parentBoxDisableGradientBackgroundColor:
+                  LinearGradient(colors: [Colors.red, Colors.white]),
               circleSlidingButtonBackgroundColor: Colors.white,
               isEnable: false,
               onSlideActionCompleted: () {
@@ -77,13 +78,16 @@ class _MyHomePageState extends State<MyHomePage> {
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added',
               squareSlidingButtonSize: 40,
-              squareSlidingButtonIcon: const Icon(Icons.add_shopping_cart, color: Colors.orange,),
+              squareSlidingButtonIcon: const Icon(
+                Icons.add_shopping_cart,
+                color: Colors.orange,
+              ),
               squareSlidingButtonBackgroundColor: Colors.white,
-              slidingBoxBackgroundColor: Colors.orange,
-              slidingBoxDisableBackgroundColor: Colors.grey,
+              parentBoxBackgroundColor: Colors.orange,
+              parentBoxDisableBackgroundColor: Colors.grey,
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
-              topEdgeSpacing:7,
+              topEdgeSpacing: 7,
               bottomEdgeSpacing: 5,
               onSlideActionCompleted: () {
                 print("Sliding action completed");
