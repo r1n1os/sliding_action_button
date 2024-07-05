@@ -168,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
               squareSlidingButtonBackgroundColor: Colors.white,
               parentBoxGradientBackgroundColor: LinearGradient(
                   colors: [
-                    Colors.deepOrange,
+                    Colors.orange,
                     Colors.grey.withOpacity(0.5)
                   ]
               ),
