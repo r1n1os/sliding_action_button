@@ -1,9 +1,11 @@
 ## Features
 
-With this package you can easily implement sliding action button. Currently, it is offering two pre-defined methods. 
+With this package you can easily implement sliding action button. Currently, it is offering two pre-defined methods with many customizations like changing button container color, adding custom icon to draggable buttons, enable or disable button with applying different color per status.<br/> 
+
+### Available methods:
 - CircleSlidingActionButton
 - SquareSlidingActionButton <br/><br/>
-With many customizations like changing button container color, adding custom icon to draggable buttons, enable or disable button with applying different color per status. 
+
 
 ## Getting started
 
