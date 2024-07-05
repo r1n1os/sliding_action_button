@@ -47,6 +47,40 @@ Minimum Flutter SDK: 3.0.0
 | circleSlidingButtonBackgroundColor  | This is the background color of the circle sliding button when `isEnable = True`|
 | circleSlidingButtonDisableBackgroundColor | Thisis the background color of the circle sliding button when `isEnable = False`|
 
+```dart
+            CircleSlideToActionButton(
+              width: 250,
+              parentBoxRadiusValue: 27,
+              circleSlidingButtonSize: 50,
+              leftEdgeSpacing: 2,
+              rightEdgeSpacing: 4,
+              initialSlidingActionLabel: 'Add To Basket',
+              finalSlidingActionLabel: 'Added To Basket',
+              circleSlidingButtonIcon: const Icon(
+                Icons.add_shopping_cart,
+                color: Colors.orange,
+              ),
+              parentBoxBackgroundColor: Colors.orange,
+              parentBoxDisableBackgroundColor: Colors.grey,
+               /*
+              In case you want to use gradient colors instead of single color uncomment those lines.
+              Reminder that you have to remove the lines configuring single color
+              (parentBoxBackgroundColor, parentBoxDisableBackgroundColor)
+              parentBoxGradientBackgroundColor:
+                  LinearGradient(colors: [Colors.red, Colors.white]),
+              parentBoxDisableGradientBackgroundColor:
+                  LinearGradient(colors: [Colors.red, Colors.white]),*/
+              circleSlidingButtonBackgroundColor: Colors.white,
+              isEnable: true,
+              onSlideActionCompleted: () {
+                print("Sliding action completed");
+              },
+              onSlideActionCanceled: () {
+                print("Sliding action cancelled");
+              },
+            );
+```
+
 ### SquareSlidingActionButton
 | Parameters                          | Description                                                                                                          |
 |-------------------------------------|----------------------------------------------------------------------------------------------------------------------|
@@ -60,10 +94,39 @@ Minimum Flutter SDK: 3.0.0
 | squareSlidingButtonBackgroundColor  | This is the background color of the square sliding button when `isEnable = True`                                      |
 | squareSlidingButtonDisableBackgroundColor | Thisis the background color of the square sliding button `when isEnable = False`                                       |
 
+```dart
+            SquareSlideToActionButton(
+              width: 250,
+              parentBoxRadiusValue: 15,
+              initialSlidingActionLabel: 'Add To Basket',
+              finalSlidingActionLabel: 'Added To Basket',
+              squareSlidingButtonSize: 50,
+              squareSlidingButtonIcon: const Icon(
+                Icons.add_shopping_cart,
+                color: Colors.orange,
+              ),
+              squareSlidingButtonBackgroundColor: Colors.white,
+              parentBoxGradientBackgroundColor: LinearGradient(
+                  colors: [Colors.orange, Colors.grey.withOpacity(0.5)]),
+              parentBoxDisableGradientBackgroundColor: LinearGradient(colors: [
+                Colors.grey,
+              ]),
+              leftEdgeSpacing: 2,
+              rightEdgeSpacing: 4,
+              topEdgeSpacing: 3,
+              bottomEdgeSpacing: 0,
+              onSlideActionCompleted: () {
+                print("Sliding action completed");
+              },
+              onSlideActionCanceled: () {
+                print("Sliding action cancelled");
+              },
+            );
+```
 
 ## Additional information
 
-New features are comming! 
+New features are coming! 
 
 Thank you for your interest in my package. If you have any feedback, found a bug or need something that is missing feel free to create an issue in the following link. 
 https://github.com/r1n1os/sliding_action_button/issues
