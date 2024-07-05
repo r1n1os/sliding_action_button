@@ -81,6 +81,40 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 100,
             ),
             const Text(
+              'Circle Slide To Action Disable Button Example',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            CircleSlideToActionButton(
+              width: 250,
+              parentBoxRadiusValue: 27,
+              circleSlidingButtonSize: 50,
+              leftEdgeSpacing: 2,
+              rightEdgeSpacing: 4,
+              initialSlidingActionLabel: 'Add To Basket',
+              finalSlidingActionLabel: 'Added To Basket',
+              circleSlidingButtonIcon: const Icon(
+                Icons.add_shopping_cart,
+                color: Colors.orange,
+              ),
+              parentBoxBackgroundColor: Colors.orange,
+              parentBoxDisableBackgroundColor: Colors.grey.withOpacity(0.5),
+              circleSlidingButtonBackgroundColor: Colors.white,
+              circleSlidingButtonDisableBackgroundColor: Colors.white,
+              isEnable: false,
+              onSlideActionCompleted: () {
+                print("Sliding action completed");
+              },
+              onSlideActionCanceled: () {
+                print("Sliding action cancelled");
+              },
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+            const Text(
               'Square Slide To Action Button Example',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -92,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
               parentBoxRadiusValue: 15,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added To Basket',
-              squareSlidingButtonSize: 40,
+              squareSlidingButtonSize: 50,
               squareSlidingButtonIcon: const Icon(
                 Icons.add_shopping_cart,
                 color: Colors.orange,
@@ -102,8 +136,51 @@ class _MyHomePageState extends State<MyHomePage> {
               parentBoxDisableBackgroundColor: Colors.grey,
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
-              topEdgeSpacing: 7,
-              bottomEdgeSpacing: 5,
+              topEdgeSpacing: 3,
+              bottomEdgeSpacing: 0,
+              onSlideActionCompleted: () {
+                print("Sliding action completed");
+              },
+              onSlideActionCanceled: () {
+                print("Sliding action cancelled");
+              },
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+            const Text(
+              'Square Slide To Action Button with Gradient Example',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            SquareSlideToActionButton(
+              width: 250,
+              parentBoxRadiusValue: 15,
+              initialSlidingActionLabel: 'Add To Basket',
+              finalSlidingActionLabel: 'Added To Basket',
+              squareSlidingButtonSize: 50,
+              squareSlidingButtonIcon: const Icon(
+                Icons.add_shopping_cart,
+                color: Colors.orange,
+              ),
+              squareSlidingButtonBackgroundColor: Colors.white,
+              parentBoxGradientBackgroundColor: LinearGradient(
+                  colors: [
+                    Colors.deepOrange,
+                    Colors.grey.withOpacity(0.5)
+                  ]
+              ),
+              parentBoxDisableGradientBackgroundColor: LinearGradient(
+                  colors: [
+                    Colors.grey,
+                  ]
+              ),
+              leftEdgeSpacing: 2,
+              rightEdgeSpacing: 4,
+              topEdgeSpacing: 3,
+              bottomEdgeSpacing: 0,
               onSlideActionCompleted: () {
                 print("Sliding action completed");
               },
