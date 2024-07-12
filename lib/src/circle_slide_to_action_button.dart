@@ -139,20 +139,22 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
   }
 
   Widget _buildCircleButton() {
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        height: widget.circleSlidingButtonSize,
-        width: widget.circleSlidingButtonSize,
-        margin: EdgeInsets.only(left: widget.leftEdgeSpacing),
-        decoration: BoxDecoration(
-            color: widget.isEnable
-                ? widget.circleSlidingButtonBackgroundColor
-                : widget.circleSlidingButtonDisableBackgroundColor,
-            borderRadius:
-                BorderRadius.circular(widget.circleSlidingButtonRadiusValue)),
-        child: widget.circleSlidingButtonIcon,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          height: widget.circleSlidingButtonSize,
+          width: widget.circleSlidingButtonSize,
+          margin: EdgeInsets.only(left: widget.leftEdgeSpacing),
+          decoration: BoxDecoration(
+              color: widget.isEnable
+                  ? widget.circleSlidingButtonBackgroundColor
+                  : widget.circleSlidingButtonDisableBackgroundColor,
+              borderRadius:
+                  BorderRadius.circular(widget.circleSlidingButtonRadiusValue)),
+          child: widget.circleSlidingButtonIcon,
+        ),
+      ],
     );
   }
 }

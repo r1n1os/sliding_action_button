@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
@@ -56,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
               circleSlidingButtonSize: 50,
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
+              topEdgeSpacing: 3,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added To Basket',
               circleSlidingButtonIcon: const Icon(
@@ -93,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
               circleSlidingButtonSize: 50,
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
+              topEdgeSpacing: 3,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added To Basket',
               circleSlidingButtonIcon: const Icon(
