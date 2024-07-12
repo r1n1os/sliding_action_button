@@ -13,7 +13,7 @@ Minimum Flutter SDK: 3.0.0
 
 ## Usage
 <p align="left">
-  <a title="simulator_image"><img src="https://github.com/r1n1os/sliding_action_button/blob/master/screenshots/sliding_action_button_example.gif" height="530" width="250"></a>
+  <a title="simulator_image"><img src="https://github.com/r1n1os/sliding_action_button/raw/master/screenshots/sliding_action_button_example.gif" height="530" width="250"></a>
 </p>
 
 ### General parameters used in all options 
