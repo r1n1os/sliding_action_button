@@ -95,7 +95,8 @@ class BaseSlideToActionButton extends StatefulWidget {
                     parentBoxDisableBackgroundColor != null) ||
                 (parentBoxGradientBackgroundColor != null &&
                     parentBoxDisableGradientBackgroundColor != null),
-            "Please make sure you have set either slidingBoxBackgroundColor or slidingBoxGradientBackgroundColor. You cannot set both at the same time");
+            "Please make sure you have set either slidingBoxBackgroundColor or slidingBoxGradientBackgroundColor. You cannot set both at the same time"),
+  assert(width != double.infinity, "Please replace double.infinity with MediaQuery.of(context).size.width");
 
   @override
   State<BaseSlideToActionButton> createState() =>

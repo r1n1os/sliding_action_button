@@ -52,12 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 15,
             ),
             CircleSlideToActionButton(
-              width: 250,
+              width: MediaQuery.of(context).size.width,
               parentBoxRadiusValue: 27,
               circleSlidingButtonSize: 50,
-              leftEdgeSpacing: 2,
-              rightEdgeSpacing: 4,
-              topEdgeSpacing: 3,
+              leftEdgeSpacing: 0,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added To Basket',
               circleSlidingButtonIcon: const Icon(
