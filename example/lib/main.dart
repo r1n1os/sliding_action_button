@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
             CircleSlideToActionButton(
               width: 250,
               parentBoxRadiusValue: 27,
-              circleSlidingButtonSize: 50,
+              circleSlidingButtonSize: 45,
               leftEdgeSpacing: 20,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added To Basket',

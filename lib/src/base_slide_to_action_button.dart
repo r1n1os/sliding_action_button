@@ -184,6 +184,8 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
       if (_sliderPosition > widget.width - widget.slidingButtonSize) {
         _sliderPosition =
             widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
+      } else if (_sliderPosition <= widget.leftEdgeSpacing) {
+        _sliderPosition = widget.leftEdgeSpacing;
       }
     });
   }
@@ -197,7 +199,7 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
       widget.onSlideActionCompleted();
     } else {
       setState(() {
-        _sliderPosition = 0.0;
+        _sliderPosition = widget.leftEdgeSpacing;
       });
       widget.onSlideActionCanceled();
     }
