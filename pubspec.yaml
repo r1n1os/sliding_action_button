@@ -1,6 +1,6 @@
 name: sliding_action_button
 description: "Sliding action button package provide pre build functionality for sliding(swipe) action button with some pre define shapes"
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/r1n1os/sliding_action_button
 
 environment:
