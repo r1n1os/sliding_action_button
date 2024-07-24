@@ -153,7 +153,12 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
                       _onHorizontalDragEnd(dragDetails);
                     }
                   : null,
-              child: widget.slideButtonWidget),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  widget.slideButtonWidget,
+                ],
+              )),
         )
       ],
     );
