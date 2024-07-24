@@ -122,6 +122,7 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
       parentBoxGradientBackgroundColor: widget.parentBoxGradientBackgroundColor,
       parentBoxDisableGradientBackgroundColor:
           widget.parentBoxDisableGradientBackgroundColor,
+      leftEdgeSpacing: widget.leftEdgeSpacing,
       rightEdgeSpacing: widget.rightEdgeSpacing,
       topEdgeSpacing: widget.topEdgeSpacing,
       bottomEdgeSpacing: widget.bottomEdgeSpacing,
@@ -145,7 +146,6 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
         Container(
           height: widget.circleSlidingButtonSize,
           width: widget.circleSlidingButtonSize,
-          margin: EdgeInsets.only(left: widget.leftEdgeSpacing),
           decoration: BoxDecoration(
               color: widget.isEnable
                   ? widget.circleSlidingButtonBackgroundColor
