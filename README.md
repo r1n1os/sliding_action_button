@@ -41,19 +41,19 @@ Minimum Flutter SDK: 3.0.0
 | circleSlidingButtonRadiusValue      | This is the double value for the `BorderRadius.circular()` attribute on the circle button|
 | leftEdgeSpacing                     | This is used to align the left side of circle button.|
 | rightEdgeSpacing                    | This is used to determined the space between the circle sliding button widget and the parent widget on the right end. |
-| topEdgeSpacing                      | This is used to determined the space between the circle sliding button and the parent widget on the top.|
-| bottomEdgeSpacing                   | This is used to determined the space between the circle sliding button and the parent widget on the bottom.|
 | circleSlidingButtonIcon             | This is the icon appear on the sliding button|
 | circleSlidingButtonBackgroundColor  | This is the background color of the circle sliding button when `isEnable = True`|
 | circleSlidingButtonDisableBackgroundColor | Thisis the background color of the circle sliding button when `isEnable = False`|
+<!---| topEdgeSpacing                      | This is used to determined the space between the circle sliding button and the parent widget on the top.|
+| bottomEdgeSpacing                   | This is used to determined the space between the circle sliding button and the parent widget on the bottom.--->
+
 
 ```dart
             CircleSlideToActionButton(
               width: 250,
               parentBoxRadiusValue: 27,
-              circleSlidingButtonSize: 50,
-              leftEdgeSpacing: 2,
-              rightEdgeSpacing: 4,
+              circleSlidingButtonSize: 47,
+              leftEdgeSpacing: 3,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added To Basket',
               circleSlidingButtonIcon: const Icon(
@@ -62,11 +62,7 @@ Minimum Flutter SDK: 3.0.0
               ),
               parentBoxBackgroundColor: Colors.orange,
               parentBoxDisableBackgroundColor: Colors.grey,
-               /*
-              In case you want to use gradient colors instead of single color uncomment those lines.
-              Reminder that you have to remove the lines configuring single color
-              (parentBoxBackgroundColor, parentBoxDisableBackgroundColor)
-              parentBoxGradientBackgroundColor:
+              /*  parentBoxGradientBackgroundColor:
                   LinearGradient(colors: [Colors.red, Colors.white]),
               parentBoxDisableGradientBackgroundColor:
                   LinearGradient(colors: [Colors.red, Colors.white]),*/
@@ -78,7 +74,7 @@ Minimum Flutter SDK: 3.0.0
               onSlideActionCanceled: () {
                 print("Sliding action cancelled");
               },
-            );
+            ),
 ```
 
 ### SquareSlidingActionButton
@@ -88,11 +84,11 @@ Minimum Flutter SDK: 3.0.0
 | squareSlidingButtonRadiusValue      | This is the double value for the `BorderRadius.circular()` attribute on the square button                            |
 | leftEdgeSpacing                     | This is used to align the left side of square button.                                                                |
 | rightEdgeSpacing                    | This is used to determined the space between the square sliding button widget and the parent widget on the right end. |
-| topEdgeSpacing                      | This is used to determined the space between the square sliding button and the parent widget on the top.             |
-| bottomEdgeSpacing                   | This is used to determined the space between the square sliding button and the parent widget on the bottom.          |
 | squareSlidingButtonIcon             | This is the icon appear on the sliding button                                                                        |
 | squareSlidingButtonBackgroundColor  | This is the background color of the square sliding button when `isEnable = True`                                      |
 | squareSlidingButtonDisableBackgroundColor | Thisis the background color of the square sliding button `when isEnable = False`                                       |
+<!---| topEdgeSpacing                      | This is used to determined the space between the square sliding button and the parent widget on the top.             |
+| bottomEdgeSpacing                   | This is used to determined the space between the square sliding button and the parent widget on the bottom.--->
 
 ```dart
             SquareSlideToActionButton(
@@ -113,8 +109,6 @@ Minimum Flutter SDK: 3.0.0
               ]),
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
-              topEdgeSpacing: 3,
-              bottomEdgeSpacing: 0,
               onSlideActionCompleted: () {
                 print("Sliding action completed");
               },
