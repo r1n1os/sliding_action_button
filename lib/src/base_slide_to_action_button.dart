@@ -152,8 +152,8 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
         ),
         Positioned(
           left: _sliderPosition,
-          top: widget.topEdgeSpacing,
-          bottom: widget.bottomEdgeSpacing,
+          top: 0,
+          bottom: 0,
           child: GestureDetector(
               onHorizontalDragUpdate: widget.isEnable
                   ? (dragDetails) {

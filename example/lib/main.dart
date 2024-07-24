@@ -54,8 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
             CircleSlideToActionButton(
               width: 250,
               parentBoxRadiusValue: 27,
-              circleSlidingButtonSize: 45,
-              leftEdgeSpacing: 20,
+              circleSlidingButtonSize: 47,
+              leftEdgeSpacing: 3,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added To Basket',
               circleSlidingButtonIcon: const Icon(
@@ -93,7 +93,6 @@ class _MyHomePageState extends State<MyHomePage> {
               circleSlidingButtonSize: 50,
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
-              topEdgeSpacing: 3,
               initialSlidingActionLabel: 'Add To Basket',
               finalSlidingActionLabel: 'Added To Basket',
               circleSlidingButtonIcon: const Icon(
@@ -137,8 +136,6 @@ class _MyHomePageState extends State<MyHomePage> {
               parentBoxDisableBackgroundColor: Colors.grey,
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
-              topEdgeSpacing: 3,
-              bottomEdgeSpacing: 0,
               onSlideActionCompleted: () {
                 print("Sliding action completed");
               },
@@ -174,8 +171,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ]),
               leftEdgeSpacing: 2,
               rightEdgeSpacing: 4,
-              topEdgeSpacing: 3,
-              bottomEdgeSpacing: 0,
               onSlideActionCompleted: () {
                 print("Sliding action completed");
               },

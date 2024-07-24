@@ -41,11 +41,11 @@ class SquareSlideToActionButton extends StatefulWidget {
   ///In case you have Padding left
   final double rightEdgeSpacing;
 
-  ///This field will determined the space between the square sliding button and the parent widget on the top.
+  /*///This field will determined the space between the square sliding button and the parent widget on the top.
   final double topEdgeSpacing;
 
   ///This field will determined the space between the square sliding button and the parent widget on the bottom.
-  final double bottomEdgeSpacing;
+  final double bottomEdgeSpacing;*/
 
   ///This field is responsible for the text appear in the parent box before the sliding action
   final String initialSlidingActionLabel;
@@ -98,8 +98,8 @@ class SquareSlideToActionButton extends StatefulWidget {
       this.squareSlidingButtonSize = 50,
       this.squareSlidingButtonRadiusValue = 10,
       this.rightEdgeSpacing = 10,
-      this.topEdgeSpacing = 0,
-      this.bottomEdgeSpacing = 0,
+      /*this.topEdgeSpacing = 0,
+      this.bottomEdgeSpacing = 0,*/
       this.squareSlidingButtonBackgroundColor = Colors.green,
       this.squareSlidingButtonDisableBackgroundColor = Colors.black12,
       this.leftEdgeSpacing = 0,
@@ -124,8 +124,8 @@ class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
           widget.parentBoxDisableGradientBackgroundColor,
       leftEdgeSpacing: widget.leftEdgeSpacing,
       rightEdgeSpacing: widget.rightEdgeSpacing,
-      topEdgeSpacing: widget.topEdgeSpacing,
-      bottomEdgeSpacing: widget.bottomEdgeSpacing,
+     /* topEdgeSpacing: widget.topEdgeSpacing,
+      bottomEdgeSpacing: widget.bottomEdgeSpacing,*/
       initialSlidingActionLabel: widget.initialSlidingActionLabel,
       finalSlidingActionLabel: widget.finalSlidingActionLabel,
       initialSlidingActionLabelTextStyle:

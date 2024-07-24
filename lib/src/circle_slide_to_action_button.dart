@@ -41,11 +41,11 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///In case you have Padding left
   final double rightEdgeSpacing;
 
-  ///This field will determined the space between the circle sliding button and the parent widget on the top.
+ /* ///This field will determined the space between the circle sliding button and the parent widget on the top.
   final double topEdgeSpacing;
 
   ///This field will determined the space between the circle sliding button and the parent widget on the bottom.
-  final double bottomEdgeSpacing;
+  final double bottomEdgeSpacing;*/
 
   ///This field is responsible for the text appear in the parent box before the sliding action
   final String initialSlidingActionLabel;
@@ -99,8 +99,8 @@ class CircleSlideToActionButton extends StatefulWidget {
       this.circleSlidingButtonRadiusValue = 45,
       this.leftEdgeSpacing = 0,
       this.rightEdgeSpacing = 0,
-      this.topEdgeSpacing = 0,
-      this.bottomEdgeSpacing = 0,
+     /* this.topEdgeSpacing = 0,
+      this.bottomEdgeSpacing = 0,*/
       this.circleSlidingButtonBackgroundColor = Colors.green,
       this.circleSlidingButtonDisableBackgroundColor = Colors.black12,
       this.isEnable = true});
@@ -124,8 +124,8 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
           widget.parentBoxDisableGradientBackgroundColor,
       leftEdgeSpacing: widget.leftEdgeSpacing,
       rightEdgeSpacing: widget.rightEdgeSpacing,
-      topEdgeSpacing: widget.topEdgeSpacing,
-      bottomEdgeSpacing: widget.bottomEdgeSpacing,
+      /*topEdgeSpacing: widget.topEdgeSpacing,
+      bottomEdgeSpacing: widget.bottomEdgeSpacing,*/
       initialSlidingActionLabel: widget.initialSlidingActionLabel,
       finalSlidingActionLabel: widget.finalSlidingActionLabel,
       initialSlidingActionLabelTextStyle:
