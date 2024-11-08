@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sliding_action_button/src/base_slide_to_action_button.dart';
+import 'package:sliding_action_button/src/slide_to_action_with_loader/base_slide_to_action_with_loader_button.dart';
+import 'package:sliding_action_button/src/utils/enums/slide_action_button_type.dart';
 
 class CircleSlideToActionButton extends StatefulWidget {
   ///This field will be the height of the whole widget
@@ -41,12 +43,6 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///In case you have Padding left
   final double rightEdgeSpacing;
 
-  /* ///This field will determined the space between the circle sliding button and the parent widget on the top.
-  final double topEdgeSpacing;
-
-  ///This field will determined the space between the circle sliding button and the parent widget on the bottom.
-  final double bottomEdgeSpacing;*/
-
   ///This field is responsible for the text appear in the parent box before the sliding action
   final String initialSlidingActionLabel;
 
@@ -73,37 +69,51 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///By default is True
   final bool isEnable;
 
+  ///This field indicating the basic behavior of the slide action (Type)
+  ///By default is basicSlideActionButton
+  final SlideActionButtonType slideActionButtonType;
+
+  ///This field is styling the color of the loader
+  ///ByD default is white
+  final Color loaderColor;
+
+  ///This field is configure the time needed for container to change to loader
+  ///By default is 700 milliseconds
+  final Duration animationDuration;
+
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
 
   ///This Function is used to indicate the end of the sliding action with cancel
   final Function() onSlideActionCanceled;
 
-  const CircleSlideToActionButton(
-      {super.key,
-      required this.initialSlidingActionLabel,
-      required this.finalSlidingActionLabel,
-      required this.circleSlidingButtonIcon,
-      required this.onSlideActionCompleted,
-      required this.onSlideActionCanceled,
-      required this.parentBoxRadiusValue,
-      this.height = 56,
-      this.width = 240,
-      this.initialSlidingActionLabelTextStyle,
-      this.finalSlidingActionLabelTextStyle,
-      this.parentBoxBackgroundColor,
-      this.parentBoxDisableBackgroundColor,
-      this.parentBoxGradientBackgroundColor,
-      this.parentBoxDisableGradientBackgroundColor,
-      this.circleSlidingButtonSize = 50,
-      this.circleSlidingButtonRadiusValue = 45,
-      this.leftEdgeSpacing = 0,
-      this.rightEdgeSpacing = 0,
-      /* this.topEdgeSpacing = 0,
-      this.bottomEdgeSpacing = 0,*/
-      this.circleSlidingButtonBackgroundColor = Colors.green,
-      this.circleSlidingButtonDisableBackgroundColor = Colors.black12,
-      this.isEnable = true});
+  const CircleSlideToActionButton({
+    super.key,
+    required this.initialSlidingActionLabel,
+    required this.finalSlidingActionLabel,
+    required this.circleSlidingButtonIcon,
+    required this.onSlideActionCompleted,
+    required this.onSlideActionCanceled,
+    required this.parentBoxRadiusValue,
+    this.height = 56,
+    this.width = 240,
+    this.initialSlidingActionLabelTextStyle,
+    this.finalSlidingActionLabelTextStyle,
+    this.parentBoxBackgroundColor,
+    this.parentBoxDisableBackgroundColor,
+    this.parentBoxGradientBackgroundColor,
+    this.parentBoxDisableGradientBackgroundColor,
+    this.circleSlidingButtonSize = 50,
+    this.circleSlidingButtonRadiusValue = 45,
+    this.leftEdgeSpacing = 0,
+    this.rightEdgeSpacing = 0,
+    this.circleSlidingButtonBackgroundColor = Colors.green,
+    this.circleSlidingButtonDisableBackgroundColor = Colors.black12,
+    this.isEnable = true,
+    this.slideActionButtonType = SlideActionButtonType.basicSlideActionButton,
+    this.loaderColor = Colors.white,
+    this.animationDuration = const Duration(milliseconds: 700),
+  });
 
   @override
   State<CircleSlideToActionButton> createState() =>
@@ -113,30 +123,66 @@ class CircleSlideToActionButton extends StatefulWidget {
 class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
   @override
   Widget build(BuildContext context) {
-    return BaseSlideToActionButton(
-      height: widget.height,
-      width: widget.width,
-      parentBoxRadiusValue: widget.parentBoxRadiusValue,
-      parentBoxBackgroundColor: widget.parentBoxBackgroundColor,
-      parentBoxDisableBackgroundColor: widget.parentBoxDisableBackgroundColor,
-      parentBoxGradientBackgroundColor: widget.parentBoxGradientBackgroundColor,
-      parentBoxDisableGradientBackgroundColor:
-          widget.parentBoxDisableGradientBackgroundColor,
-      leftEdgeSpacing: widget.leftEdgeSpacing,
-      rightEdgeSpacing: widget.rightEdgeSpacing,
-      /*topEdgeSpacing: widget.topEdgeSpacing,
-      bottomEdgeSpacing: widget.bottomEdgeSpacing,*/
-      initialSlidingActionLabel: widget.initialSlidingActionLabel,
-      finalSlidingActionLabel: widget.finalSlidingActionLabel,
-      initialSlidingActionLabelTextStyle:
-          widget.initialSlidingActionLabelTextStyle,
-      finalSlidingActionLabelTextStyle: widget.finalSlidingActionLabelTextStyle,
-      isEnable: widget.isEnable,
-      onSlideActionCompleted: widget.onSlideActionCompleted,
-      onSlideActionCanceled: widget.onSlideActionCanceled,
-      slidingButtonSize: widget.circleSlidingButtonSize,
-      slideButtonWidget: _buildCircleButton(),
-    );
+    return _buildBaseSlideActionWidget();
+  }
+
+  Widget _buildBaseSlideActionWidget() {
+    switch (widget.slideActionButtonType) {
+      case SlideActionButtonType.basicSlideActionButton:
+        return BaseSlideToActionButton(
+          height: widget.height,
+          width: widget.width,
+          parentBoxRadiusValue: widget.parentBoxRadiusValue,
+          parentBoxBackgroundColor: widget.parentBoxBackgroundColor,
+          parentBoxDisableBackgroundColor:
+              widget.parentBoxDisableBackgroundColor,
+          parentBoxGradientBackgroundColor:
+              widget.parentBoxGradientBackgroundColor,
+          parentBoxDisableGradientBackgroundColor:
+              widget.parentBoxDisableGradientBackgroundColor,
+          leftEdgeSpacing: widget.leftEdgeSpacing,
+          rightEdgeSpacing: widget.rightEdgeSpacing,
+          initialSlidingActionLabel: widget.initialSlidingActionLabel,
+          finalSlidingActionLabel: widget.finalSlidingActionLabel,
+          initialSlidingActionLabelTextStyle:
+              widget.initialSlidingActionLabelTextStyle,
+          finalSlidingActionLabelTextStyle:
+              widget.finalSlidingActionLabelTextStyle,
+          isEnable: widget.isEnable,
+          onSlideActionCompleted: widget.onSlideActionCompleted,
+          onSlideActionCanceled: widget.onSlideActionCanceled,
+          slidingButtonSize: widget.circleSlidingButtonSize,
+          slideButtonWidget: _buildCircleButton(),
+        );
+      case SlideActionButtonType.slideActionWithLoaderButton:
+        return BaseSlideToActionWithLoaderButton(
+          height: widget.height,
+          width: widget.width,
+          parentBoxRadiusValue: widget.parentBoxRadiusValue,
+          parentBoxBackgroundColor: widget.parentBoxBackgroundColor,
+          parentBoxDisableBackgroundColor:
+              widget.parentBoxDisableBackgroundColor,
+          parentBoxGradientBackgroundColor:
+              widget.parentBoxGradientBackgroundColor,
+          parentBoxDisableGradientBackgroundColor:
+              widget.parentBoxDisableGradientBackgroundColor,
+          leftEdgeSpacing: widget.leftEdgeSpacing,
+          rightEdgeSpacing: widget.rightEdgeSpacing,
+          initialSlidingActionLabel: widget.initialSlidingActionLabel,
+          finalSlidingActionLabel: widget.finalSlidingActionLabel,
+          initialSlidingActionLabelTextStyle:
+              widget.initialSlidingActionLabelTextStyle,
+          finalSlidingActionLabelTextStyle:
+              widget.finalSlidingActionLabelTextStyle,
+          isEnable: widget.isEnable,
+          loaderColor: widget.loaderColor,
+          animationDuration: widget.animationDuration,
+          onSlideActionCompleted: widget.onSlideActionCompleted,
+          onSlideActionCanceled: widget.onSlideActionCanceled,
+          slidingButtonSize: widget.circleSlidingButtonSize,
+          slideButtonWidget: _buildCircleButton(),
+        );
+    }
   }
 
   Widget _buildCircleButton() {

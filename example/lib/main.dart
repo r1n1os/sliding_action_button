@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Circle Slide To Action Button Example',
+              'Circle Basic Slide To Action Button Example',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(
@@ -80,6 +80,41 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 100,
             ),
+
+            const Text(
+              'Circle Slide To Action With Loader Button Example',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            CircleSlideToActionButton(
+              width: 250,
+              parentBoxRadiusValue: 27,
+              circleSlidingButtonSize: 47,
+              leftEdgeSpacing: 3,
+              initialSlidingActionLabel: 'Add To Basket',
+              finalSlidingActionLabel: 'Added To Basket',
+              circleSlidingButtonIcon: const Icon(
+                Icons.add_shopping_cart,
+                color: Colors.orange,
+              ),
+              parentBoxBackgroundColor: Colors.orange,
+              parentBoxDisableBackgroundColor: Colors.grey,
+              circleSlidingButtonBackgroundColor: Colors.white,
+              isEnable: true,
+              slideActionButtonType: SlideActionButtonType.slideActionWithLoaderButton,
+              onSlideActionCompleted: () {
+                print("Sliding action completed");
+              },
+              onSlideActionCanceled: () {
+                print("Sliding action cancelled");
+              },
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+
             const Text(
               'Circle Slide To Action Disable Button Example',
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -87,6 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 15,
             ),
+
             CircleSlideToActionButton(
               width: 250,
               parentBoxRadiusValue: 27,

@@ -1,0 +1,4 @@
+enum SlideActionButtonType {
+  basicSlideActionButton,
+  slideActionWithLoaderButton,
+}
