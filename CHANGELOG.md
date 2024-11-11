@@ -1,3 +1,8 @@
+## 0.0.5
+* Add SlideToActionWithLoader on completion (New Feature)
+* Update Example Project and ReadMe files (Update)
+* Update Example project Android dependencies and gradle configurations (Update)
+
 ## 0.0.4
 * Minor bug fixes
 
