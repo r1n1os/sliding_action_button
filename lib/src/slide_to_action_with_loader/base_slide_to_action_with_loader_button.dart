@@ -126,9 +126,8 @@ class _BaseSlideToActionWithLoaderButtonState
     with SingleTickerProviderStateMixin {
   ///This variable is holding the current sliding position when user is dragging the button
   double _sliderPosition = 0;
-
+  ///This variable is used to indicate that the sliding action is completed
   bool _hasSlidingActionCompleted = false;
-
   ///Detecting when the user slide the button in the half of the parent box
   bool get hasSliderReachTheMiddle =>
       _sliderPosition >= (widget.width - widget.slidingButtonSize) / 2;
