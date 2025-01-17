@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sliding_action_button/src/utils/custom_painter/custom_painter.dart';
 
 class BaseSlideToActionButton extends StatefulWidget {
   ///This field will be the height of the whole widget
@@ -140,8 +141,12 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
                   ? widget.parentBoxBackgroundColor
                   : widget.parentBoxDisableBackgroundColor,
               borderRadius: BorderRadius.circular(widget.parentBoxRadiusValue)),
-          child: Align(
-            alignment: Alignment.center,
+          child: CustomPaint(
+            painter: CirclePainter(
+                currentState: _sliderPosition.toDouble(),
+                color: Colors.red,
+            isCompleted: isCompleted,
+            sizeOfButton: widget.slidingButtonSize),
             child: Text(
               hasSliderReachTheMiddle
                   ? widget.finalSlidingActionLabel
@@ -190,17 +195,21 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     });
   }
 
+  bool isCompleted = false;
+
   void _onHorizontalDragEnd(DragEndDetails dragDetails) {
     if (_sliderPosition >= (widget.width - widget.slidingButtonSize) / 2) {
       setState(() {
         _sliderPosition =
             widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
       });
+      isCompleted = true;
       widget.onSlideActionCompleted();
     } else {
       setState(() {
         _sliderPosition = widget.leftEdgeSpacing;
       });
+      isCompleted = false;
       widget.onSlideActionCanceled();
     }
   }
