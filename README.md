@@ -1,20 +1,25 @@
-## Features
+## About This Package
+Slide action button package developed to provide an easy way to flutter developers implemending button that slides to perform an action. It is customizable by providing the option to change button container color, adding custom icon to draggable buttons, enable or disable button with applying different color per status.<br/> 
 
-This package provides an easy implementation of sliding action button. Currently, it is offering two pre-defined types with many customizations like changing button container color, adding custom icon to draggable buttons, enable or disable button with applying different color per status.<br/> 
-
-### Available methods:
+### Available Features:
 - CircleSlidingActionButton
-- SquareSlidingActionButton <br/><br/>
+- SquareSlidingActionButton 
+- The above options with the ability to show loading state when the sliding action is completed <br/>
 
+### What are the benefits of using this package:
+- Save development time
+- With only few lines of code you can have the sliding action functionaly
 
-## Getting started
-
+## Requirements
 Minimum Flutter SDK: 3.0.0
+##
 
-## Usage
+### Example usage of the current supported features
 <p align="left">
   <a title="simulator_image"><img src="https://github.com/r1n1os/sliding_action_button/raw/master/screenshots/sliding_action_button_example.gif" height="530" width="250"></a>
 </p>
+
+## Configurations
 
 ### General parameters used in all options 
 | Parameters                              | Description                                                                                                                                                                                                              |
