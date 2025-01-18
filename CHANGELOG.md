@@ -1,3 +1,10 @@
+## 0.0.6
+* Update Example Project and ReadMe files (Update)
+* Update Example project Android (Update)
+    * Project dependencies
+    * Gradle version: 8.8.0
+    * Kotlin version: 2.1.0  
+
 ## 0.0.5
 * Add SlideToActionWithLoader on completion (New Feature)
 * Update Example Project and ReadMe files (Update)
