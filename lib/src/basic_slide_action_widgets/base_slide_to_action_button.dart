@@ -141,7 +141,7 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
                   ? widget.parentBoxBackgroundColor
                   : widget.parentBoxDisableBackgroundColor,
               borderRadius: BorderRadius.circular(widget.parentBoxRadiusValue)),
-          child: CustomPaint(
+          child: CustomPaint( ///TODO: Remove Painter from here and create new file or add check weather needs to be used
             painter: CirclePainter(
                 currentState: _sliderPosition.toDouble(),
                 color: Colors.red,
