@@ -119,7 +119,7 @@ class SquareSlideToActionButton extends StatefulWidget {
     this.leftEdgeSpacing = 0,
     this.isEnable = true,
     this.slideActionButtonType = SlideActionButtonType.basicSlideActionButton,
-    this.loaderColor =  Colors.white,
+    this.loaderColor = Colors.white,
     this.animationDuration = const Duration(milliseconds: 700),
   });
 

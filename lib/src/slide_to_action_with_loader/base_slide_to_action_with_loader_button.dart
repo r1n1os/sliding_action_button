@@ -76,32 +76,31 @@ class BaseSlideToActionWithLoaderButton extends StatefulWidget {
   ///This Function is used to indicate the end of the sliding action with cancel
   final Function() onSlideActionCanceled;
 
-  const BaseSlideToActionWithLoaderButton(
-      {super.key,
-      required this.slideButtonWidget,
-      required this.initialSlidingActionLabel,
-      required this.finalSlidingActionLabel,
-      required this.onSlideActionCompleted,
-      required this.onSlideActionCanceled,
-      required this.slidingButtonSize,
-      required this.parentBoxRadiusValue,
-      this.height = 56,
-      this.width = 240,
-      this.leftEdgeSpacing = 0,
-      this.rightEdgeSpacing = 0,
-      this.topEdgeSpacing = 0,
-      this.bottomEdgeSpacing = 0,
-      this.parentBoxBackgroundColor,
-      this.parentBoxDisableBackgroundColor,
-      this.parentBoxGradientBackgroundColor,
-      this.parentBoxDisableGradientBackgroundColor,
-      this.initialSlidingActionLabelTextStyle,
-      this.finalSlidingActionLabelTextStyle,
-      this.isEnable = true,
-      this.loaderColor = Colors.white,
-      this.animationDuration = const Duration(milliseconds: 700),
-      })
-      : assert(
+  const BaseSlideToActionWithLoaderButton({
+    super.key,
+    required this.slideButtonWidget,
+    required this.initialSlidingActionLabel,
+    required this.finalSlidingActionLabel,
+    required this.onSlideActionCompleted,
+    required this.onSlideActionCanceled,
+    required this.slidingButtonSize,
+    required this.parentBoxRadiusValue,
+    this.height = 56,
+    this.width = 240,
+    this.leftEdgeSpacing = 0,
+    this.rightEdgeSpacing = 0,
+    this.topEdgeSpacing = 0,
+    this.bottomEdgeSpacing = 0,
+    this.parentBoxBackgroundColor,
+    this.parentBoxDisableBackgroundColor,
+    this.parentBoxGradientBackgroundColor,
+    this.parentBoxDisableGradientBackgroundColor,
+    this.initialSlidingActionLabelTextStyle,
+    this.finalSlidingActionLabelTextStyle,
+    this.isEnable = true,
+    this.loaderColor = Colors.white,
+    this.animationDuration = const Duration(milliseconds: 700),
+  })  : assert(
             (parentBoxBackgroundColor != null &&
                     parentBoxGradientBackgroundColor == null) ||
                 (parentBoxBackgroundColor == null &&
@@ -126,8 +125,10 @@ class _BaseSlideToActionWithLoaderButtonState
     with SingleTickerProviderStateMixin {
   ///This variable is holding the current sliding position when user is dragging the button
   double _sliderPosition = 0;
+
   ///This variable is used to indicate that the sliding action is completed
   bool _hasSlidingActionCompleted = false;
+
   ///Detecting when the user slide the button in the half of the parent box
   bool get hasSliderReachTheMiddle =>
       _sliderPosition >= (widget.width - widget.slidingButtonSize) / 2;
@@ -144,9 +145,10 @@ class _BaseSlideToActionWithLoaderButtonState
       children: [
         AnimatedContainer(
           height: widget.height,
+
           ///To make the loader perfect circle when loader is activated
           ///I'm setting the width to be the same as the height
-          width: _hasSlidingActionCompleted ?  widget.height : widget.width,
+          width: _hasSlidingActionCompleted ? widget.height : widget.width,
           duration: widget.animationDuration,
           decoration: BoxDecoration(
               gradient: widget.isEnable
@@ -160,8 +162,8 @@ class _BaseSlideToActionWithLoaderButtonState
             alignment: Alignment.center,
             child: _hasSlidingActionCompleted
                 ? CircularProgressIndicator(
-              color: widget.loaderColor,
-            )
+                    color: widget.loaderColor,
+                  )
                 : Text(
                     hasSliderReachTheMiddle
                         ? widget.finalSlidingActionLabel

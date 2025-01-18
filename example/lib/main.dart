@@ -82,7 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(
                 height: 100,
               ),
-
               const Text(
                 'Circle Slide To Action With Loader Button Example',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -105,7 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 parentBoxDisableBackgroundColor: Colors.grey,
                 circleSlidingButtonBackgroundColor: Colors.white,
                 isEnable: true,
-                slideActionButtonType: SlideActionButtonType.slideActionWithLoaderButton,
+                slideActionButtonType:
+                    SlideActionButtonType.slideActionWithLoaderButton,
                 onSlideActionCompleted: () {
                   print("Sliding action completed");
                 },
@@ -116,7 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(
                 height: 100,
               ),
-
               const Text(
                 'Circle Slide To Action Disable Button Example',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -124,7 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(
                 height: 15,
               ),
-
               CircleSlideToActionButton(
                 width: 250,
                 parentBoxRadiusValue: 27,
@@ -204,7 +202,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 squareSlidingButtonBackgroundColor: Colors.white,
                 parentBoxGradientBackgroundColor: LinearGradient(
                     colors: [Colors.orange, Colors.grey.withOpacity(0.5)]),
-                parentBoxDisableGradientBackgroundColor: LinearGradient(colors: [
+                parentBoxDisableGradientBackgroundColor:
+                    LinearGradient(colors: [
                   Colors.grey,
                 ]),
                 leftEdgeSpacing: 2,
