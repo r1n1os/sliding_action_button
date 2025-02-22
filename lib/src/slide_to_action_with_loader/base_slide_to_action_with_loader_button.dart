@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sliding_action_button/src/slide_to_action_with_loader/utils/enum/loader_button_enum_states.dart';
 
 class BaseSlideToActionWithLoaderButton extends StatefulWidget {
   ///This field will be the height of the whole widget
@@ -70,6 +71,10 @@ class BaseSlideToActionWithLoaderButton extends StatefulWidget {
   ///By default is 700 milliseconds
   final Duration animationDuration;
 
+  ///This field is used to change the different states of the button
+  ///i.e initial(Default state) loading, gone(Not visible)
+  final LoaderButtonEnumStates loaderButtonEnumStates;
+
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
 
@@ -100,6 +105,7 @@ class BaseSlideToActionWithLoaderButton extends StatefulWidget {
     this.isEnable = true,
     this.loaderColor = Colors.white,
     this.animationDuration = const Duration(milliseconds: 700),
+    this.loaderButtonEnumStates = LoaderButtonEnumStates.initial,
   })  : assert(
             (parentBoxBackgroundColor != null &&
                     parentBoxGradientBackgroundColor == null) ||
@@ -133,10 +139,34 @@ class _BaseSlideToActionWithLoaderButtonState
   bool get hasSliderReachTheMiddle =>
       _sliderPosition >= (widget.width - widget.slidingButtonSize) / 2;
 
-  @override
+  LoaderButtonEnumStates loaderButtonEnumStates =
+      LoaderButtonEnumStates.initial;
+
+  bool get _shouldShowLoadingState =>
+      _hasSlidingActionCompleted &&
+      loaderButtonEnumStates == LoaderButtonEnumStates.loading;
+
+  /* @override
   void initState() {
     _sliderPosition = widget.leftEdgeSpacing;
+    _isLoading = widget.isLoading;
     super.initState();
+  }*/
+
+  /**
+   * The purpose of this method is to detect when the widget is updated
+   * and check if user decited to stop the loading action.
+   * One case is when API gives an error.
+   * */
+  @override
+  void didUpdateWidget(covariant BaseSlideToActionWithLoaderButton oldWidget) {
+    setState(() {
+      loaderButtonEnumStates = widget.loaderButtonEnumStates;
+      if (loaderButtonEnumStates == LoaderButtonEnumStates.initial) {
+        _sliderPosition = widget.leftEdgeSpacing;
+      }
+    });
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -148,7 +178,7 @@ class _BaseSlideToActionWithLoaderButtonState
 
           ///To make the loader perfect circle when loader is activated
           ///I'm setting the width to be the same as the height
-          width: _hasSlidingActionCompleted ? widget.height : widget.width,
+          width: _shouldShowLoadingState ? widget.height : widget.width,
           duration: widget.animationDuration,
           decoration: BoxDecoration(
               gradient: widget.isEnable
@@ -160,7 +190,7 @@ class _BaseSlideToActionWithLoaderButtonState
               borderRadius: BorderRadius.circular(widget.parentBoxRadiusValue)),
           child: Align(
             alignment: Alignment.center,
-            child: _hasSlidingActionCompleted
+            child: _shouldShowLoadingState
                 ? CircularProgressIndicator(
                     color: widget.loaderColor,
                   )
@@ -172,7 +202,7 @@ class _BaseSlideToActionWithLoaderButtonState
                   ),
           ),
         ),
-        if (!_hasSlidingActionCompleted)
+        if (!_shouldShowLoadingState)
           Positioned(
             left: _sliderPosition,
             top: 0,
@@ -206,6 +236,7 @@ class _BaseSlideToActionWithLoaderButtonState
       _sliderPosition += dragDetails.delta.dx;
       if (_sliderPosition > widget.width - widget.slidingButtonSize) {
         _hasSlidingActionCompleted = true;
+        loaderButtonEnumStates = LoaderButtonEnumStates.loading;
         _sliderPosition =
             widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
       } else if (_sliderPosition <= widget.leftEdgeSpacing) {
@@ -218,6 +249,7 @@ class _BaseSlideToActionWithLoaderButtonState
     if (_sliderPosition >= (widget.width - widget.slidingButtonSize) / 2) {
       setState(() {
         _hasSlidingActionCompleted = true;
+        loaderButtonEnumStates = LoaderButtonEnumStates.loading;
         _sliderPosition =
             widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
       });

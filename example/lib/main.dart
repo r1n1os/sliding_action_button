@@ -5,9 +5,14 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,6 +37,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  LoaderButtonEnumStates loaderButtonEnumStates =
+      LoaderButtonEnumStates.initial;
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 5), () async {
+      setState(() {
+        loaderButtonEnumStates = LoaderButtonEnumStates.initial;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Icons.add_shopping_cart,
                   color: Colors.orange,
                 ),
+                loaderButtonEnumStates: loaderButtonEnumStates,
                 parentBoxBackgroundColor: Colors.orange,
                 parentBoxDisableBackgroundColor: Colors.grey,
                 /*  parentBoxGradientBackgroundColor:

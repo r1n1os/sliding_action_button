@@ -4,3 +4,4 @@ export 'sliding_action_button.dart';
 export 'src/circle_slide_to_action_button.dart';
 export 'src/square_slide_to_action_button.dart';
 export 'src/utils/enums/slide_action_button_type.dart';
+export 'src/slide_to_action_with_loader/utils/enum/loader_button_enum_states.dart';

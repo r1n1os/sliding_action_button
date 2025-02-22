@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sliding_action_button/src/basic_slide_action_widgets/base_slide_to_action_button.dart';
 import 'package:sliding_action_button/src/slide_to_action_with_loader/base_slide_to_action_with_loader_button.dart';
+import 'package:sliding_action_button/src/slide_to_action_with_loader/utils/enum/loader_button_enum_states.dart';
 import 'package:sliding_action_button/src/utils/enums/slide_action_button_type.dart';
 
 class CircleSlideToActionButton extends StatefulWidget {
@@ -81,6 +82,10 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///By default is 700 milliseconds
   final Duration animationDuration;
 
+  ///This field is used to change the different states of the button
+  ///i.e initial(Default state) loading, gone(Not visible)
+  final LoaderButtonEnumStates loaderButtonEnumStates;
+
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
 
@@ -113,6 +118,7 @@ class CircleSlideToActionButton extends StatefulWidget {
     this.slideActionButtonType = SlideActionButtonType.basicSlideActionButton,
     this.loaderColor = Colors.white,
     this.animationDuration = const Duration(milliseconds: 700),
+    this.loaderButtonEnumStates = LoaderButtonEnumStates.initial,
   });
 
   @override
@@ -177,6 +183,7 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
           isEnable: widget.isEnable,
           loaderColor: widget.loaderColor,
           animationDuration: widget.animationDuration,
+          loaderButtonEnumStates: widget.loaderButtonEnumStates,
           onSlideActionCompleted: widget.onSlideActionCompleted,
           onSlideActionCanceled: widget.onSlideActionCanceled,
           slidingButtonSize: widget.circleSlidingButtonSize,
