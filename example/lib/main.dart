@@ -33,6 +33,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final SlideToActionController controller = SlideToActionController();
+  final SlideToActionController controller2 = SlideToActionController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               CircleSlideToActionButton(
-                controller: SlideToActionController(),
+                controller: controller2,
                 width: 250,
                 parentBoxRadiusValue: 27,
                 circleSlidingButtonSize: 47,

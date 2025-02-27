@@ -3,7 +3,7 @@ import 'package:sliding_action_button/src/utils/loader_button_enum_states.dart';
 
 class SlideToActionController extends ChangeNotifier {
   ///This variable is holding the current sliding position when user is dragging the button
-  double _sliderPosition = 0;
+  late double _sliderPosition = 0;
 
   ///This variable is a flag used to avoid callback getting called more than one
   bool _isSlideActionCompletedCallbackCalled = false;
