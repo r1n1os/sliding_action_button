@@ -133,10 +133,20 @@ class _BaseSlideToActionWithLoaderButtonState
   bool get hasSliderReachTheMiddle =>
       _sliderPosition >= (widget.width - widget.slidingButtonSize) / 2;
 
+  bool _isSlideActionCompletedCallbackCalled = false;
+
   @override
   void initState() {
     _sliderPosition = widget.leftEdgeSpacing;
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant BaseSlideToActionWithLoaderButton oldWidget) {
+    if (oldWidget.key != widget.key) {
+      _isSlideActionCompletedCallbackCalled = false;
+      _sliderPosition = widget.leftEdgeSpacing;
+    }    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -208,7 +218,12 @@ class _BaseSlideToActionWithLoaderButtonState
         _hasSlidingActionCompleted = true;
         _sliderPosition =
             widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
+        if(!_isSlideActionCompletedCallbackCalled) {
+          _isSlideActionCompletedCallbackCalled = true;
+          widget.onSlideActionCompleted();
+        }
       } else if (_sliderPosition <= widget.leftEdgeSpacing) {
+        _isSlideActionCompletedCallbackCalled = false;
         _sliderPosition = widget.leftEdgeSpacing;
       }
     });
@@ -221,8 +236,12 @@ class _BaseSlideToActionWithLoaderButtonState
         _sliderPosition =
             widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
       });
-      widget.onSlideActionCompleted();
+      if(!_isSlideActionCompletedCallbackCalled) {
+        _isSlideActionCompletedCallbackCalled = true;
+        widget.onSlideActionCompleted();
+      }
     } else {
+      _isSlideActionCompletedCallbackCalled = false;
       setState(() {
         _sliderPosition = widget.leftEdgeSpacing;
       });

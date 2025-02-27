@@ -119,10 +119,20 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
   bool get hasSliderReachTheMiddle =>
       _sliderPosition >= (widget.width - widget.slidingButtonSize) / 2;
 
+  bool _isSlideActionCompletedCallbackCalled = false;
+
   @override
   void initState() {
     _sliderPosition = widget.leftEdgeSpacing;
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant BaseSlideToActionButton oldWidget) {
+    if (oldWidget.key != widget.key) {
+      _isSlideActionCompletedCallbackCalled = false;
+      _sliderPosition = widget.leftEdgeSpacing;
+    }    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -184,7 +194,12 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
       if (_sliderPosition > widget.width - widget.slidingButtonSize) {
         _sliderPosition =
             widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
+        if(!_isSlideActionCompletedCallbackCalled) {
+          _isSlideActionCompletedCallbackCalled = true;
+          widget.onSlideActionCompleted();
+        }
       } else if (_sliderPosition <= widget.leftEdgeSpacing) {
+        _isSlideActionCompletedCallbackCalled = false;
         _sliderPosition = widget.leftEdgeSpacing;
       }
     });
@@ -196,8 +211,12 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
         _sliderPosition =
             widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
       });
-      widget.onSlideActionCompleted();
+      if(!_isSlideActionCompletedCallbackCalled) {
+        _isSlideActionCompletedCallbackCalled = true;
+        widget.onSlideActionCompleted();
+      }
     } else {
+      _isSlideActionCompletedCallbackCalled = false;
       setState(() {
         _sliderPosition = widget.leftEdgeSpacing;
       });
