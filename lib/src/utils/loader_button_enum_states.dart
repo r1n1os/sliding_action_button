@@ -1,0 +1,4 @@
+enum LoaderButtonEnumStates {
+  initial,
+  loading
+}

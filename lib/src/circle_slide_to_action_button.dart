@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sliding_action_button/src/basic_slide_action_widgets/base_slide_to_action_button.dart';
 import 'package:sliding_action_button/src/slide_to_action_with_loader/base_slide_to_action_with_loader_button.dart';
 import 'package:sliding_action_button/src/utils/enums/slide_action_button_type.dart';
+import 'package:sliding_action_button/src/utils/slide_to_action_controller.dart';
 
 class CircleSlideToActionButton extends StatefulWidget {
   ///This field will be the height of the whole widget
@@ -81,6 +82,8 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///By default is 700 milliseconds
   final Duration animationDuration;
 
+  final SlideToActionController controller;
+
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
 
@@ -95,6 +98,7 @@ class CircleSlideToActionButton extends StatefulWidget {
     required this.onSlideActionCompleted,
     required this.onSlideActionCanceled,
     required this.parentBoxRadiusValue,
+    required this.controller,
     this.height = 56,
     this.width = 240,
     this.initialSlidingActionLabelTextStyle,
@@ -130,6 +134,7 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
     switch (widget.slideActionButtonType) {
       case SlideActionButtonType.basicSlideActionButton:
         return BaseSlideToActionButton(
+          slideToActionController: widget.controller,
           height: widget.height,
           width: widget.width,
           parentBoxRadiusValue: widget.parentBoxRadiusValue,
@@ -156,6 +161,7 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
         );
       case SlideActionButtonType.slideActionWithLoaderButton:
         return BaseSlideToActionWithLoaderButton(
+          slideToActionController: widget.controller,
           height: widget.height,
           width: widget.width,
           parentBoxRadiusValue: widget.parentBoxRadiusValue,

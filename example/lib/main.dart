@@ -32,6 +32,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final SlideToActionController controller = SlideToActionController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               CircleSlideToActionButton(
+                controller: SlideToActionController(),
                 width: 250,
                 parentBoxRadiusValue: 27,
                 circleSlidingButtonSize: 47,
@@ -90,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               CircleSlideToActionButton(
+                controller: controller,
                 width: 250,
                 parentBoxRadiusValue: 27,
                 circleSlidingButtonSize: 47,
@@ -106,7 +110,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 isEnable: true,
                 slideActionButtonType:
                     SlideActionButtonType.slideActionWithLoaderButton,
-                onSlideActionCompleted: () {
+                onSlideActionCompleted: () async {
+                  controller.loading();
+                  await Future.delayed(const Duration(seconds: 3), () {
+                    controller.reset(3);
+                  });
                   print("Sliding action completed");
                 },
                 onSlideActionCanceled: () {
@@ -124,6 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               CircleSlideToActionButton(
+                controller: SlideToActionController(),
                 width: 250,
                 parentBoxRadiusValue: 27,
                 circleSlidingButtonSize: 50,
@@ -158,6 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               SquareSlideToActionButton(
+                controller: SlideToActionController(),
                 width: 250,
                 parentBoxRadiusValue: 15,
                 initialSlidingActionLabel: 'Add To Basket',
@@ -190,6 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               SquareSlideToActionButton(
+                controller: SlideToActionController(),
                 width: 250,
                 parentBoxRadiusValue: 15,
                 initialSlidingActionLabel: 'Add To Basket',
