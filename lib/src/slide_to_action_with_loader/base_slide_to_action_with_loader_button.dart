@@ -141,6 +141,9 @@ class _BaseSlideToActionWithLoaderButtonState
   bool get _shouldShowLoadingState =>
       _controller.loaderButtonEnumStates == LoaderButtonEnumStates.loading;
 
+  ///This variable is used to control when to show the text on the sliding action button.
+  bool _showText = true;
+
   @override
   void initState() {
     _controller.reset(widget.leftEdgeSpacing);
@@ -155,6 +158,19 @@ class _BaseSlideToActionWithLoaderButtonState
   }
 
   void _onControllerChanged() {
+    if (_controller.loaderButtonEnumStates == LoaderButtonEnumStates.loading) {
+      setState(() {
+        _showText = false;
+      });
+    } else if (_controller.loaderButtonEnumStates ==
+        LoaderButtonEnumStates.reset) {
+      Future.delayed(
+          widget.animationDuration + const Duration(milliseconds: 3000), () {
+        setState(() {
+          _showText = true;
+        });
+      });
+    }
     setState(() {});
   }
 
@@ -189,11 +205,15 @@ class _BaseSlideToActionWithLoaderButtonState
                 ? CircularProgressIndicator(
                     color: widget.loaderColor,
                   )
-                : Text(
-                    hasSliderReachTheMiddle
-                        ? widget.finalSlidingActionLabel
-                        : widget.initialSlidingActionLabel,
-                    style: widget.initialSlidingActionLabelTextStyle,
+                : AnimatedOpacity(
+                    opacity: _showText ? 1.0 : 0.0,
+                    duration: widget.animationDuration,
+                    child: Text(
+                      hasSliderReachTheMiddle
+                          ? widget.finalSlidingActionLabel
+                          : widget.initialSlidingActionLabel,
+                      style: widget.initialSlidingActionLabelTextStyle,
+                    ),
                   ),
           ),
         ),

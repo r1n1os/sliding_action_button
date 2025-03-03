@@ -36,7 +36,7 @@ class SlideToActionController extends ChangeNotifier {
 
   void reset(double leftEdgeSpacing) {
     _isSlideActionCompletedCallbackCalled = false;
-    _loaderButtonEnumStates = LoaderButtonEnumStates.initial;
+    _loaderButtonEnumStates = LoaderButtonEnumStates.reset;
     _sliderPosition = leftEdgeSpacing;
     notifyListeners();
   }

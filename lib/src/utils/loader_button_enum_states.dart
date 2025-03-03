@@ -1,4 +1,5 @@
 enum LoaderButtonEnumStates {
   initial,
-  loading
+  loading,
+  reset
 }
