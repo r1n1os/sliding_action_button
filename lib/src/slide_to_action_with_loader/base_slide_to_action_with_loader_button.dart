@@ -163,9 +163,9 @@ class _BaseSlideToActionWithLoaderButtonState
         _showText = false;
       });
     } else if (_controller.loaderButtonEnumStates ==
-        LoaderButtonEnumStates.reset) {
+        LoaderButtonEnumStates.reset && _showText == false) {
       Future.delayed(
-          widget.animationDuration + const Duration(milliseconds: 3000), () {
+          widget.animationDuration + const Duration(milliseconds: 300), () {
         setState(() {
           _showText = true;
         });
@@ -177,7 +177,7 @@ class _BaseSlideToActionWithLoaderButtonState
   @override
   void didUpdateWidget(covariant BaseSlideToActionWithLoaderButton oldWidget) {
     if (oldWidget.key != widget.key) {
-      _controller.reset(widget.leftEdgeSpacing);
+      //_controller.reset(widget.leftEdgeSpacing);
     }    super.didUpdateWidget(oldWidget);
   }
 
