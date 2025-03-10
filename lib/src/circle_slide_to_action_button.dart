@@ -82,7 +82,7 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///By default is 700 milliseconds
   final Duration animationDuration;
 
-  final SlideToActionController controller;
+  final SlideToActionController? slideToActionController;
 
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
@@ -98,7 +98,7 @@ class CircleSlideToActionButton extends StatefulWidget {
     required this.onSlideActionCompleted,
     required this.onSlideActionCanceled,
     required this.parentBoxRadiusValue,
-    required this.controller,
+    this.slideToActionController,
     this.height = 56,
     this.width = 240,
     this.initialSlidingActionLabelTextStyle,
@@ -134,7 +134,7 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
     switch (widget.slideActionButtonType) {
       case SlideActionButtonType.basicSlideActionButton:
         return BaseSlideToActionButton(
-          slideToActionController: widget.controller,
+          slideToActionController: widget.slideToActionController ?? SlideToActionController(),
           height: widget.height,
           width: widget.width,
           parentBoxRadiusValue: widget.parentBoxRadiusValue,
@@ -161,7 +161,7 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
         );
       case SlideActionButtonType.slideActionWithLoaderButton:
         return BaseSlideToActionWithLoaderButton(
-          slideToActionController: widget.controller,
+          slideToActionController: widget.slideToActionController ?? SlideToActionController(),
           height: widget.height,
           width: widget.width,
           parentBoxRadiusValue: widget.parentBoxRadiusValue,

@@ -33,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final SlideToActionController controller = SlideToActionController();
-  final SlideToActionController controller2 = SlideToActionController();
+  //final SlideToActionController controller2 = SlideToActionController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               CircleSlideToActionButton(
-                controller: controller2,
+                //slideToActionController: controller2,
                 width: 250,
                 parentBoxRadiusValue: 27,
                 circleSlidingButtonSize: 47,
@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               CircleSlideToActionButton(
-                controller: controller,
+                slideToActionController: controller,
                 width: 250,
                 parentBoxRadiusValue: 27,
                 circleSlidingButtonSize: 47,
@@ -133,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               CircleSlideToActionButton(
-                controller: SlideToActionController(),
+                slideToActionController: SlideToActionController(),
                 width: 250,
                 parentBoxRadiusValue: 27,
                 circleSlidingButtonSize: 50,
@@ -168,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               SquareSlideToActionButton(
-                controller: SlideToActionController(),
+                slideToActionController: SlideToActionController(),
                 width: 250,
                 parentBoxRadiusValue: 15,
                 initialSlidingActionLabel: 'Add To Basket',
@@ -201,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               SquareSlideToActionButton(
-                controller: SlideToActionController(),
+                //slideToActionController: SlideToActionController(),
                 width: 250,
                 parentBoxRadiusValue: 15,
                 initialSlidingActionLabel: 'Add To Basket',

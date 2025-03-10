@@ -88,7 +88,7 @@ class SquareSlideToActionButton extends StatefulWidget {
   ///By default is 700 milliseconds
   final Duration animationDuration;
 
-  final SlideToActionController controller;
+  final SlideToActionController? slideToActionController;
 
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
@@ -104,7 +104,7 @@ class SquareSlideToActionButton extends StatefulWidget {
     required this.onSlideActionCompleted,
     required this.onSlideActionCanceled,
     required this.parentBoxRadiusValue,
-    required this.controller,
+    this.slideToActionController,
     this.height = 56,
     this.width = 240,
     this.initialSlidingActionLabelTextStyle,
@@ -168,7 +168,7 @@ class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
         );
       case SlideActionButtonType.slideActionWithLoaderButton:
         return BaseSlideToActionWithLoaderButton(
-          slideToActionController: widget.controller,
+          slideToActionController: widget.slideToActionController ?? SlideToActionController(),
           height: widget.height,
           width: widget.width,
           parentBoxRadiusValue: widget.parentBoxRadiusValue,
