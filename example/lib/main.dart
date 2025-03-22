@@ -32,8 +32,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final SlideToActionController controller = SlideToActionController();
-  //final SlideToActionController controller2 = SlideToActionController();
+  ///This is the controller used to control the circle sliding action state (Loading, resetting etc)
+  final SlideToActionController _circleSlideToActionController = SlideToActionController();
+  ///This is the controller used to control the square sliding action state (Loading, resetting etc)
+  final SlideToActionController _squareSlidToActionController = SlideToActionController();
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               CircleSlideToActionButton(
-                slideToActionController: controller,
+                slideToActionController: _circleSlideToActionController,
                 width: 250,
                 parentBoxRadiusValue: 27,
                 circleSlidingButtonSize: 47,
@@ -112,9 +114,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 slideActionButtonType:
                     SlideActionButtonType.slideActionWithLoaderButton,
                 onSlideActionCompleted: () async {
-                  controller.loading();
+                  _circleSlideToActionController.loading();
                   await Future.delayed(const Duration(seconds: 3), () {
-                    controller.reset(3);
+                    _circleSlideToActionController.reset(3);
                   });
                   print("Sliding action completed");
                 },
@@ -168,7 +170,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 15,
               ),
               SquareSlideToActionButton(
-                slideToActionController: SlideToActionController(),
                 width: 250,
                 parentBoxRadiusValue: 15,
                 initialSlidingActionLabel: 'Add To Basket',
@@ -184,6 +185,45 @@ class _MyHomePageState extends State<MyHomePage> {
                 leftEdgeSpacing: 2,
                 rightEdgeSpacing: 4,
                 onSlideActionCompleted: () {
+                  print("Sliding action completed");
+                },
+                onSlideActionCanceled: () {
+                  print("Sliding action cancelled");
+                },
+              ),
+              const SizedBox(
+                height: 100,
+              ),
+              const Text(
+                'Square Slide To Action With Loader Button Example',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              SquareSlideToActionButton(
+                slideToActionController: _squareSlidToActionController,
+                width: 250,
+                parentBoxRadiusValue: 15,
+                squareSlidingButtonSize: 50,
+                leftEdgeSpacing: 3,
+                initialSlidingActionLabel: 'Add To Basket',
+                finalSlidingActionLabel: 'Added To Basket',
+                squareSlidingButtonIcon: const Icon(
+                  Icons.add_shopping_cart,
+                  color: Colors.orange,
+                ),
+                parentBoxBackgroundColor: Colors.orange,
+                parentBoxDisableBackgroundColor: Colors.grey,
+                squareSlidingButtonBackgroundColor: Colors.white,
+                isEnable: true,
+                slideActionButtonType:
+                SlideActionButtonType.slideActionWithLoaderButton,
+                onSlideActionCompleted: () async {
+                  _squareSlidToActionController.loading();
+                  await Future.delayed(const Duration(seconds: 3), () {
+                    _squareSlidToActionController.reset(3);
+                  });
                   print("Sliding action completed");
                 },
                 onSlideActionCanceled: () {

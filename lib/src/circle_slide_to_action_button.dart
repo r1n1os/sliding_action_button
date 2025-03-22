@@ -82,6 +82,8 @@ class CircleSlideToActionButton extends StatefulWidget {
   ///By default is 700 milliseconds
   final Duration animationDuration;
 
+  ///This field is used to control the circle sliding action state (Loading, resetting etc)
+  ///And controlling the slider position
   final SlideToActionController? slideToActionController;
 
   ///This Function is used to indicate the end of the sliding action with success

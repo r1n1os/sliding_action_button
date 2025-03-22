@@ -136,6 +136,7 @@ class _BaseSlideToActionWithLoaderButtonState
       _controller.sliderPosition >=
       (widget.width - widget.slidingButtonSize) / 2;
 
+  ///This is the private controller which used to handle the slider position
   SlideToActionController get _controller => widget.slideToActionController;
 
   bool get _shouldShowLoadingState =>
