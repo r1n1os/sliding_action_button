@@ -118,10 +118,10 @@ class BaseSlideToActionButton extends StatefulWidget {
 
 class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     with SingleTickerProviderStateMixin {
-
   ///Detecting when the user slide the button in the half of the parent box
   bool get hasSliderReachTheMiddle =>
-      _controller.sliderPosition >= (widget.width - widget.slidingButtonSize) / 2;
+      _controller.sliderPosition >=
+      (widget.width - widget.slidingButtonSize) / 2;
 
   SlideToActionController get _controller =>
       widget.slideToActionController ?? SlideToActionController();
@@ -206,12 +206,13 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
       if (!_controller.isSlideActionCompletedCallbackCalled) {
         widget.onSlideActionCompleted();
       }
-    }/* else if (_controller.sliderPosition <
+    } /* else if (_controller.sliderPosition <
         widget.width + widget.leftEdgeSpacing) {
       setState(() {
         _controller.reset(widget.leftEdgeSpacing);
       });
-    }*/ else {
+    }*/
+    else {
       setState(() {
         _controller.updateSliderPosition(
             _controller.sliderPosition + dragDetails.delta.dx);

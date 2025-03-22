@@ -33,9 +33,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   ///This is the controller used to control the circle sliding action state (Loading, resetting etc)
-  final SlideToActionController _circleSlideToActionController = SlideToActionController();
+  final SlideToActionController _circleSlideToActionController =
+      SlideToActionController();
+
   ///This is the controller used to control the square sliding action state (Loading, resetting etc)
-  final SlideToActionController _squareSlidToActionController = SlideToActionController();
+  final SlideToActionController _squareSlidToActionController =
+      SlideToActionController();
 
   @override
   Widget build(BuildContext context) {
@@ -218,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 squareSlidingButtonBackgroundColor: Colors.white,
                 isEnable: true,
                 slideActionButtonType:
-                SlideActionButtonType.slideActionWithLoaderButton,
+                    SlideActionButtonType.slideActionWithLoaderButton,
                 onSlideActionCompleted: () async {
                   _squareSlidToActionController.loading();
                   await Future.delayed(const Duration(seconds: 3), () {

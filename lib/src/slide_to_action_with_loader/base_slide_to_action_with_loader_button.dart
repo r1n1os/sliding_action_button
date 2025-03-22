@@ -130,7 +130,6 @@ class BaseSlideToActionWithLoaderButton extends StatefulWidget {
 class _BaseSlideToActionWithLoaderButtonState
     extends State<BaseSlideToActionWithLoaderButton>
     with SingleTickerProviderStateMixin {
-
   ///Detecting when the user slide the button in the half of the parent box
   bool get hasSliderReachTheMiddle =>
       _controller.sliderPosition >=
@@ -164,7 +163,8 @@ class _BaseSlideToActionWithLoaderButtonState
         _showText = false;
       });
     } else if (_controller.loaderButtonEnumStates ==
-        LoaderButtonEnumStates.reset && _showText == false) {
+            LoaderButtonEnumStates.reset &&
+        _showText == false) {
       Future.delayed(
           widget.animationDuration + const Duration(milliseconds: 300), () {
         setState(() {
@@ -179,7 +179,8 @@ class _BaseSlideToActionWithLoaderButtonState
   void didUpdateWidget(covariant BaseSlideToActionWithLoaderButton oldWidget) {
     if (oldWidget.key != widget.key) {
       //_controller.reset(widget.leftEdgeSpacing);
-    }    super.didUpdateWidget(oldWidget);
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -188,6 +189,7 @@ class _BaseSlideToActionWithLoaderButtonState
       children: [
         AnimatedContainer(
           height: widget.height,
+
           ///To make the loader perfect circle when loader is activated
           ///I'm setting the width to be the same as the height
           width: _shouldShowLoadingState ? widget.height : widget.width,
@@ -257,12 +259,13 @@ class _BaseSlideToActionWithLoaderButtonState
       if (!_controller.isSlideActionCompletedCallbackCalled) {
         widget.onSlideActionCompleted();
       }
-    }/* else if (_controller.sliderPosition <
+    } /* else if (_controller.sliderPosition <
         widget.width + widget.leftEdgeSpacing) {
       setState(() {
         _controller.reset(widget.leftEdgeSpacing);
       });
-    }*/ else {
+    }*/
+    else {
       setState(() {
         _controller.updateSliderPosition(
             _controller.sliderPosition + dragDetails.delta.dx);

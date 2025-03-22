@@ -136,7 +136,8 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
     switch (widget.slideActionButtonType) {
       case SlideActionButtonType.basicSlideActionButton:
         return BaseSlideToActionButton(
-          slideToActionController: widget.slideToActionController ?? SlideToActionController(),
+          slideToActionController:
+              widget.slideToActionController ?? SlideToActionController(),
           height: widget.height,
           width: widget.width,
           parentBoxRadiusValue: widget.parentBoxRadiusValue,
@@ -163,7 +164,8 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
         );
       case SlideActionButtonType.slideActionWithLoaderButton:
         return BaseSlideToActionWithLoaderButton(
-          slideToActionController: widget.slideToActionController ?? SlideToActionController(),
+          slideToActionController:
+              widget.slideToActionController ?? SlideToActionController(),
           height: widget.height,
           width: widget.width,
           parentBoxRadiusValue: widget.parentBoxRadiusValue,

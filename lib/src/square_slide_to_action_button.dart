@@ -144,25 +144,26 @@ class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
     switch (widget.slideActionButtonType) {
       case SlideActionButtonType.basicSlideActionButton:
         return BaseSlideToActionButton(
-          slideToActionController: widget.slideToActionController ?? SlideToActionController(),
+          slideToActionController:
+              widget.slideToActionController ?? SlideToActionController(),
           height: widget.height,
           width: widget.width,
           parentBoxRadiusValue: widget.parentBoxRadiusValue,
           parentBoxBackgroundColor: widget.parentBoxBackgroundColor,
           parentBoxDisableBackgroundColor:
-          widget.parentBoxDisableBackgroundColor,
+              widget.parentBoxDisableBackgroundColor,
           parentBoxGradientBackgroundColor:
-          widget.parentBoxGradientBackgroundColor,
+              widget.parentBoxGradientBackgroundColor,
           parentBoxDisableGradientBackgroundColor:
-          widget.parentBoxDisableGradientBackgroundColor,
+              widget.parentBoxDisableGradientBackgroundColor,
           leftEdgeSpacing: widget.leftEdgeSpacing,
           rightEdgeSpacing: widget.rightEdgeSpacing,
           initialSlidingActionLabel: widget.initialSlidingActionLabel,
           finalSlidingActionLabel: widget.finalSlidingActionLabel,
           initialSlidingActionLabelTextStyle:
-          widget.initialSlidingActionLabelTextStyle,
+              widget.initialSlidingActionLabelTextStyle,
           finalSlidingActionLabelTextStyle:
-          widget.finalSlidingActionLabelTextStyle,
+              widget.finalSlidingActionLabelTextStyle,
           isEnable: widget.isEnable,
           onSlideActionCompleted: widget.onSlideActionCompleted,
           onSlideActionCanceled: widget.onSlideActionCanceled,
@@ -171,25 +172,26 @@ class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
         );
       case SlideActionButtonType.slideActionWithLoaderButton:
         return BaseSlideToActionWithLoaderButton(
-          slideToActionController: widget.slideToActionController ?? SlideToActionController(),
+          slideToActionController:
+              widget.slideToActionController ?? SlideToActionController(),
           height: widget.height,
           width: widget.width,
           parentBoxRadiusValue: widget.parentBoxRadiusValue,
           parentBoxBackgroundColor: widget.parentBoxBackgroundColor,
           parentBoxDisableBackgroundColor:
-          widget.parentBoxDisableBackgroundColor,
+              widget.parentBoxDisableBackgroundColor,
           parentBoxGradientBackgroundColor:
-          widget.parentBoxGradientBackgroundColor,
+              widget.parentBoxGradientBackgroundColor,
           parentBoxDisableGradientBackgroundColor:
-          widget.parentBoxDisableGradientBackgroundColor,
+              widget.parentBoxDisableGradientBackgroundColor,
           leftEdgeSpacing: widget.leftEdgeSpacing,
           rightEdgeSpacing: widget.rightEdgeSpacing,
           initialSlidingActionLabel: widget.initialSlidingActionLabel,
           finalSlidingActionLabel: widget.finalSlidingActionLabel,
           initialSlidingActionLabelTextStyle:
-          widget.initialSlidingActionLabelTextStyle,
+              widget.initialSlidingActionLabelTextStyle,
           finalSlidingActionLabelTextStyle:
-          widget.finalSlidingActionLabelTextStyle,
+              widget.finalSlidingActionLabelTextStyle,
           isEnable: widget.isEnable,
           loaderColor: widget.loaderColor,
           animationDuration: widget.animationDuration,

@@ -1,5 +1,1 @@
-enum LoaderButtonEnumStates {
-  initial,
-  loading,
-  reset
-}
+enum LoaderButtonEnumStates { initial, loading, reset }
