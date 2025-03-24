@@ -40,6 +40,7 @@ Minimum Flutter SDK: 3.0.0
 | animationDuration                       | This is the time needed for the visibility change from slide to action button to loader. By Default is `700 milliseconds`.                                                                                               |
 | onSlideActionCompleted                  | This is a callback used to indicate the end of the sliding action with success.                                                                                                                                           |
 | onSlideActionCanceled                   | This is a callback used to indicate the end of the sliding action without suceed.                                                                                                                                         |
+| SlideToActionController                 | This is used to handle the state of the button (i.e initial, loading, reset). By default is initial.  `NOTE: In case you don't pass an instance of SlideToActionController on will be created to handle the slide action but you will not be able to change button state.`|
 
 ### CircleSlidingActionButton
 | Parameters                          | Description                                                                                                           |

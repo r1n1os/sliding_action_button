@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sliding_action_button/src/utils/slide_to_action_controller.dart';
 
 class BaseSlideToActionButton extends StatefulWidget {
   ///This field will be the height of the whole widget
@@ -62,6 +63,10 @@ class BaseSlideToActionButton extends StatefulWidget {
   ///By default is True
   final bool isEnable;
 
+  ///This field is used to handle the state of the button. i.e loading, initial etc
+  ///By default is initial
+  final SlideToActionController? slideToActionController;
+
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
 
@@ -77,6 +82,7 @@ class BaseSlideToActionButton extends StatefulWidget {
       required this.onSlideActionCanceled,
       required this.slidingButtonSize,
       required this.parentBoxRadiusValue,
+      this.slideToActionController,
       this.height = 56,
       this.width = 240,
       this.leftEdgeSpacing = 0,
@@ -112,17 +118,29 @@ class BaseSlideToActionButton extends StatefulWidget {
 
 class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     with SingleTickerProviderStateMixin {
-  ///This variable is holding the current sliding position when user is dragging the button
-  double _sliderPosition = 0;
-
   ///Detecting when the user slide the button in the half of the parent box
   bool get hasSliderReachTheMiddle =>
-      _sliderPosition >= (widget.width - widget.slidingButtonSize) / 2;
+      _controller.sliderPosition >=
+      (widget.width - widget.slidingButtonSize) / 2;
+
+  SlideToActionController get _controller =>
+      widget.slideToActionController ?? SlideToActionController();
 
   @override
   void initState() {
-    _sliderPosition = widget.leftEdgeSpacing;
+    _controller.reset(widget.leftEdgeSpacing);
+    _controller.addListener(_onControllerChanged);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onControllerChanged);
+    super.dispose();
+  }
+
+  void _onControllerChanged() {
+    setState(() {});
   }
 
   @override
@@ -151,7 +169,7 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
           ),
         ),
         Positioned(
-          left: _sliderPosition,
+          left: _controller.sliderPosition,
           top: 0,
           bottom: 0,
           child: GestureDetector(
@@ -179,27 +197,42 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
   }
 
   void _onHorizontalDragUpdate(DragUpdateDetails dragDetails) {
-    setState(() {
-      _sliderPosition += dragDetails.delta.dx;
-      if (_sliderPosition > widget.width - widget.slidingButtonSize) {
-        _sliderPosition =
-            widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
-      } else if (_sliderPosition <= widget.leftEdgeSpacing) {
-        _sliderPosition = widget.leftEdgeSpacing;
+    if (!mounted) return;
+    if (_controller.sliderPosition > widget.width - widget.slidingButtonSize) {
+      setState(() {
+        _controller.updateSliderPosition(
+            widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing);
+      });
+      if (!_controller.isSlideActionCompletedCallbackCalled) {
+        widget.onSlideActionCompleted();
       }
-    });
+    } /* else if (_controller.sliderPosition <
+        widget.width + widget.leftEdgeSpacing) {
+      setState(() {
+        _controller.reset(widget.leftEdgeSpacing);
+      });
+    }*/
+    else {
+      setState(() {
+        _controller.updateSliderPosition(
+            _controller.sliderPosition + dragDetails.delta.dx);
+      });
+    }
   }
 
   void _onHorizontalDragEnd(DragEndDetails dragDetails) {
-    if (_sliderPosition >= (widget.width - widget.slidingButtonSize) / 2) {
+    if (_controller.sliderPosition >=
+        (widget.width - widget.slidingButtonSize) / 2) {
       setState(() {
-        _sliderPosition =
-            widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
+        _controller.updateSliderPosition(
+            widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing);
       });
-      widget.onSlideActionCompleted();
+      if (!_controller.isSlideActionCompletedCallbackCalled) {
+        widget.onSlideActionCompleted();
+      }
     } else {
       setState(() {
-        _sliderPosition = widget.leftEdgeSpacing;
+        _controller.reset(widget.leftEdgeSpacing);
       });
       widget.onSlideActionCanceled();
     }

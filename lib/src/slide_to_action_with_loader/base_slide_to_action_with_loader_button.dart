@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sliding_action_button/src/utils/loader_button_enum_states.dart';
+import 'package:sliding_action_button/src/utils/slide_to_action_controller.dart';
 
 class BaseSlideToActionWithLoaderButton extends StatefulWidget {
   ///This field will be the height of the whole widget
@@ -70,6 +72,10 @@ class BaseSlideToActionWithLoaderButton extends StatefulWidget {
   ///By default is 700 milliseconds
   final Duration animationDuration;
 
+  ///This field is used to handle the state of the button. i.e loading, initial etc
+  ///By default is initial
+  final SlideToActionController slideToActionController;
+
   ///This Function is used to indicate the end of the sliding action with success
   final Function() onSlideActionCompleted;
 
@@ -85,6 +91,7 @@ class BaseSlideToActionWithLoaderButton extends StatefulWidget {
     required this.onSlideActionCanceled,
     required this.slidingButtonSize,
     required this.parentBoxRadiusValue,
+    required this.slideToActionController,
     this.height = 56,
     this.width = 240,
     this.leftEdgeSpacing = 0,
@@ -123,20 +130,57 @@ class BaseSlideToActionWithLoaderButton extends StatefulWidget {
 class _BaseSlideToActionWithLoaderButtonState
     extends State<BaseSlideToActionWithLoaderButton>
     with SingleTickerProviderStateMixin {
-  ///This variable is holding the current sliding position when user is dragging the button
-  double _sliderPosition = 0;
-
-  ///This variable is used to indicate that the sliding action is completed
-  bool _hasSlidingActionCompleted = false;
-
   ///Detecting when the user slide the button in the half of the parent box
   bool get hasSliderReachTheMiddle =>
-      _sliderPosition >= (widget.width - widget.slidingButtonSize) / 2;
+      _controller.sliderPosition >=
+      (widget.width - widget.slidingButtonSize) / 2;
+
+  ///This is the private controller which used to handle the slider position
+  SlideToActionController get _controller => widget.slideToActionController;
+
+  bool get _shouldShowLoadingState =>
+      _controller.loaderButtonEnumStates == LoaderButtonEnumStates.loading;
+
+  ///This variable is used to control when to show the text on the sliding action button.
+  bool _showText = true;
 
   @override
   void initState() {
-    _sliderPosition = widget.leftEdgeSpacing;
+    _controller.reset(widget.leftEdgeSpacing);
+    _controller.addListener(_onControllerChanged);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onControllerChanged);
+    super.dispose();
+  }
+
+  void _onControllerChanged() {
+    if (_controller.loaderButtonEnumStates == LoaderButtonEnumStates.loading) {
+      setState(() {
+        _showText = false;
+      });
+    } else if (_controller.loaderButtonEnumStates ==
+            LoaderButtonEnumStates.reset &&
+        _showText == false) {
+      Future.delayed(
+          widget.animationDuration + const Duration(milliseconds: 300), () {
+        setState(() {
+          _showText = true;
+        });
+      });
+    }
+    setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(covariant BaseSlideToActionWithLoaderButton oldWidget) {
+    if (oldWidget.key != widget.key) {
+      //_controller.reset(widget.leftEdgeSpacing);
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -148,7 +192,7 @@ class _BaseSlideToActionWithLoaderButtonState
 
           ///To make the loader perfect circle when loader is activated
           ///I'm setting the width to be the same as the height
-          width: _hasSlidingActionCompleted ? widget.height : widget.width,
+          width: _shouldShowLoadingState ? widget.height : widget.width,
           duration: widget.animationDuration,
           decoration: BoxDecoration(
               gradient: widget.isEnable
@@ -160,21 +204,25 @@ class _BaseSlideToActionWithLoaderButtonState
               borderRadius: BorderRadius.circular(widget.parentBoxRadiusValue)),
           child: Align(
             alignment: Alignment.center,
-            child: _hasSlidingActionCompleted
+            child: _shouldShowLoadingState
                 ? CircularProgressIndicator(
                     color: widget.loaderColor,
                   )
-                : Text(
-                    hasSliderReachTheMiddle
-                        ? widget.finalSlidingActionLabel
-                        : widget.initialSlidingActionLabel,
-                    style: widget.initialSlidingActionLabelTextStyle,
+                : AnimatedOpacity(
+                    opacity: _showText ? 1.0 : 0.0,
+                    duration: widget.animationDuration,
+                    child: Text(
+                      hasSliderReachTheMiddle
+                          ? widget.finalSlidingActionLabel
+                          : widget.initialSlidingActionLabel,
+                      style: widget.initialSlidingActionLabelTextStyle,
+                    ),
                   ),
           ),
         ),
-        if (!_hasSlidingActionCompleted)
+        if (!_shouldShowLoadingState)
           Positioned(
-            left: _sliderPosition,
+            left: _controller.sliderPosition,
             top: 0,
             bottom: 0,
             child: GestureDetector(
@@ -202,29 +250,42 @@ class _BaseSlideToActionWithLoaderButtonState
   }
 
   void _onHorizontalDragUpdate(DragUpdateDetails dragDetails) {
-    setState(() {
-      _sliderPosition += dragDetails.delta.dx;
-      if (_sliderPosition > widget.width - widget.slidingButtonSize) {
-        _hasSlidingActionCompleted = true;
-        _sliderPosition =
-            widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
-      } else if (_sliderPosition <= widget.leftEdgeSpacing) {
-        _sliderPosition = widget.leftEdgeSpacing;
+    if (!mounted) return;
+    if (_controller.sliderPosition > widget.width - widget.slidingButtonSize) {
+      setState(() {
+        _controller.updateSliderPosition(
+            widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing);
+      });
+      if (!_controller.isSlideActionCompletedCallbackCalled) {
+        widget.onSlideActionCompleted();
       }
-    });
+    } /* else if (_controller.sliderPosition <
+        widget.width + widget.leftEdgeSpacing) {
+      setState(() {
+        _controller.reset(widget.leftEdgeSpacing);
+      });
+    }*/
+    else {
+      setState(() {
+        _controller.updateSliderPosition(
+            _controller.sliderPosition + dragDetails.delta.dx);
+      });
+    }
   }
 
   void _onHorizontalDragEnd(DragEndDetails dragDetails) {
-    if (_sliderPosition >= (widget.width - widget.slidingButtonSize) / 2) {
+    if (_controller.sliderPosition >=
+        (widget.width - widget.slidingButtonSize) / 2) {
       setState(() {
-        _hasSlidingActionCompleted = true;
-        _sliderPosition =
-            widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing;
+        _controller.updateSliderPosition(
+            widget.width - widget.slidingButtonSize - widget.rightEdgeSpacing);
       });
-      widget.onSlideActionCompleted();
+      if (!_controller.isSlideActionCompletedCallbackCalled) {
+        widget.onSlideActionCompleted();
+      }
     } else {
       setState(() {
-        _sliderPosition = widget.leftEdgeSpacing;
+        _controller.reset(widget.leftEdgeSpacing);
       });
       widget.onSlideActionCanceled();
     }
