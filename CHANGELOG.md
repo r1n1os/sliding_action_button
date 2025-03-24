@@ -1,3 +1,12 @@
+## 0.0.7
+* Updates:
+  * Introduce SlideToActionController to manage button state. (initial, loading, reset). 
+  This ensures all buttons can revert to their default state seamlessly
+* Bug Fixes:
+  * Resolved an issue where listener failed when the user fully slide the button to the end.
+* General:
+  * Update ReadMe file (Documentation).
+  
 ## 0.0.6
 * Update Example Project and ReadMe files (Update)
 * Update Example project Android (Update)
