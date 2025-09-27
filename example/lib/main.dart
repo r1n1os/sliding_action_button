@@ -258,7 +258,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 parentBoxGradientBackgroundColor: LinearGradient(
                     colors: [Colors.orange, Colors.grey.withOpacity(0.5)]),
                 parentBoxDisableGradientBackgroundColor:
-                    LinearGradient(colors: [
+                    const LinearGradient(colors: [
                   Colors.grey,
                 ]),
                 leftEdgeSpacing: 2,
