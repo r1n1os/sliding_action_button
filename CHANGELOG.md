@@ -1,3 +1,12 @@
+## 0.0.8
+* Update Example project
+    * Update Fluter SDK 3.35.4
+* Update Example project Android
+    * Project dependencies
+    * Gradle version: 8.13.0
+    * Kotlin version: 2.2.20
+    * Update targetSDK to 36
+    * Update NDK to 28.2.13676358
 ## 0.0.7
 * Updates:
   * Introduce SlideToActionController to manage button state. (initial, loading, reset). 
