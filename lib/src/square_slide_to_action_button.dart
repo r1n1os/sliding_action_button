@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:sliding_action_button/src/basic_slide_action_widgets/base_slide_to_action_button.dart';
 import 'package:sliding_action_button/src/slide_to_action_with_loader/base_slide_to_action_with_loader_button.dart';
@@ -44,11 +45,14 @@ class SquareSlideToActionButton extends StatefulWidget {
   ///In case you have Padding left
   final double rightEdgeSpacing;
 
-  /*///This field will determined the space between the square sliding button and the parent widget on the top.
+  */
+/*
+//This field will determined the space between the square sliding button and the parent widget on the top.
   final double topEdgeSpacing;
 
   ///This field will determined the space between the square sliding button and the parent widget on the bottom.
-  final double bottomEdgeSpacing;*/
+  final double bottomEdgeSpacing;*//*
+
 
   ///This field is responsible for the text appear in the parent box before the sliding action
   final String initialSlidingActionLabel;
@@ -118,8 +122,10 @@ class SquareSlideToActionButton extends StatefulWidget {
     this.squareSlidingButtonSize = 50,
     this.squareSlidingButtonRadiusValue = 10,
     this.rightEdgeSpacing = 10,
-    /*this.topEdgeSpacing = 0,
-      this.bottomEdgeSpacing = 0,*/
+    */
+/*this.topEdgeSpacing = 0,
+      this.bottomEdgeSpacing = 0,*//*
+
     this.squareSlidingButtonBackgroundColor = Colors.green,
     this.squareSlidingButtonDisableBackgroundColor = Colors.black12,
     this.leftEdgeSpacing = 0,
@@ -222,3 +228,4 @@ class _CircleSlideToActionButtonState extends State<SquareSlideToActionButton> {
     );
   }
 }
+*/

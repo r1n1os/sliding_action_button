@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:sliding_action_button/src/basic_slide_action_widgets/base_slide_to_action_button.dart';
 import 'package:sliding_action_button/src/slide_to_action_with_loader/base_slide_to_action_with_loader_button.dart';
@@ -214,3 +215,4 @@ class _CircleSlideToActionButtonState extends State<CircleSlideToActionButton> {
     );
   }
 }
+*/

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sliding_action_button/src/utils/loader_button_enum_states.dart';
+import 'package:sliding_action_button/src/utils/enums/loader_button_enum_states.dart';
 
-class SlideToActionController extends ChangeNotifier {
+/*class SlideToActionController extends ChangeNotifier {
   ///This variable is holding the current sliding position when user is dragging the button
   late double _sliderPosition = 0;
 
@@ -40,4 +40,22 @@ class SlideToActionController extends ChangeNotifier {
     _sliderPosition = leftEdgeSpacing;
     notifyListeners();
   }
+}*/
+
+/// Controls the state of [SlideToActionButton] externally.
+class SlideToActionController extends ChangeNotifier {
+  LoaderButtonEnumStates loaderButtonEnumStates = LoaderButtonEnumStates.initial;
+
+  LoaderButtonEnumStates get state => loaderButtonEnumStates;
+
+  void loading() {
+    loaderButtonEnumStates = LoaderButtonEnumStates.loading;
+    notifyListeners();
+  }
+
+  void reset([int countdown = 0]) {
+    loaderButtonEnumStates = LoaderButtonEnumStates.initial;
+    notifyListeners();
+  }
 }
+

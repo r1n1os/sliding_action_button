@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:sliding_action_button/src/utils/slide_to_action_controller.dart';
 
@@ -206,12 +207,14 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
       if (!_controller.isSlideActionCompletedCallbackCalled) {
         widget.onSlideActionCompleted();
       }
-    } /* else if (_controller.sliderPosition <
+    } */
+/* else if (_controller.sliderPosition <
         widget.width + widget.leftEdgeSpacing) {
       setState(() {
         _controller.reset(widget.leftEdgeSpacing);
       });
-    }*/
+    }*//*
+
     else {
       setState(() {
         _controller.updateSliderPosition(
@@ -238,3 +241,4 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
     }
   }
 }
+*/

@@ -40,6 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final SlideToActionController _squareSlidToActionController =
       SlideToActionController();
 
+  final SlideToActionController _slideToActionController = SlideToActionController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,216 +62,111 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(
                 height: 15,
               ),
-              CircleSlideToActionButton(
-                //slideToActionController: controller2,
-                width: 250,
-                parentBoxRadiusValue: 27,
-                circleSlidingButtonSize: 47,
-                leftEdgeSpacing: 3,
-                rightEdgeSpacing: 3,
-                initialSlidingActionLabel: 'Add To Basket',
-                finalSlidingActionLabel: 'Added To Basket',
-                circleSlidingButtonIcon: const Icon(
-                  Icons.add_shopping_cart,
-                  color: Colors.orange,
-                ),
-                parentBoxBackgroundColor: Colors.orange,
-                parentBoxDisableBackgroundColor: Colors.grey,
-                /*  parentBoxGradientBackgroundColor:
-                    LinearGradient(colors: [Colors.red, Colors.white]),
-                parentBoxDisableGradientBackgroundColor:
-                    LinearGradient(colors: [Colors.red, Colors.white]),*/
-                circleSlidingButtonBackgroundColor: Colors.white,
-                isEnable: true,
-                onSlideActionCompleted: () {
-                  print("Sliding action completed");
-                },
-                onSlideActionCanceled: () {
-                  print("Sliding action cancelled");
-                },
+              //_SectionLabel('Circle · solid colour'),
+              const SizedBox(height: 12),
+              SlideToActionButton(
+                slideButtonShape: SlideButtonShape.circle,
+                initialSlidingActionLabel: 'Slide to add to basket',
+                finalSlidingActionLabel: '✓ Added to basket',
+                enabledTrackDecoration:
+                const SliderTrackDecoration.color(Colors.orange),
+                disabledTrackDecoration:
+                const SliderTrackDecoration.color(Colors.grey),
+                thumbIcon:
+                const Icon(Icons.add_shopping_cart, color: Colors.orange),
+                onSlideActionCompleted: () => debugPrint('Circle basic: done'),
+                onSlideActionCanceled: () => debugPrint('Circle basic: cancelled'),
               ),
-              const SizedBox(
-                height: 100,
-              ),
-              const Text(
-                'Circle Slide To Action With Loader Button Example',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CircleSlideToActionButton(
-                slideToActionController: _circleSlideToActionController,
-                width: 250,
-                parentBoxRadiusValue: 27,
-                circleSlidingButtonSize: 47,
-                leftEdgeSpacing: 3,
-                initialSlidingActionLabel: 'Add To Basket',
-                finalSlidingActionLabel: 'Added To Basket',
-                circleSlidingButtonIcon: const Icon(
-                  Icons.add_shopping_cart,
-                  color: Colors.orange,
-                ),
-                parentBoxBackgroundColor: Colors.orange,
-                parentBoxDisableBackgroundColor: Colors.grey,
-                circleSlidingButtonBackgroundColor: Colors.white,
-                isEnable: true,
+
+              const SizedBox(height: 40),
+
+              // ── Circle, with loader ──────────────────────────────────────
+              //_SectionLabel('Circle · with loader (resets after 3 s)'),
+              const SizedBox(height: 12),
+              SlideToActionButton(
+                slideButtonShape: SlideButtonShape.circle,
+                slideToActionController: _slideToActionController,
                 slideActionButtonType:
-                    SlideActionButtonType.slideActionWithLoaderButton,
+                SlideActionButtonType.slideActionWithLoaderButton,
+                initialSlidingActionLabel: 'Slide to confirm order',
+                finalSlidingActionLabel: '✓ Order placed',
+                enabledTrackDecoration:
+                const SliderTrackDecoration.color(Colors.deepOrange),
+                disabledTrackDecoration:
+                const SliderTrackDecoration.color(Colors.grey),
+                thumbIcon: const Icon(Icons.check, color: Colors.deepOrange),
                 onSlideActionCompleted: () async {
-                  _circleSlideToActionController.loading();
-                  await Future.delayed(const Duration(seconds: 3), () {
-                    _circleSlideToActionController.reset(3);
-                  });
-                  print("Sliding action completed");
+                  _slideToActionController.loading();
+                  await Future.delayed(const Duration(seconds: 3));
+                  _slideToActionController.reset();
                 },
-                onSlideActionCanceled: () {
-                  print("Sliding action cancelled");
-                },
+                onSlideActionCanceled: () {},
               ),
-              const SizedBox(
-                height: 100,
-              ),
-              const Text(
-                'Circle Slide To Action Disable Button Example',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CircleSlideToActionButton(
-                slideToActionController: SlideToActionController(),
-                width: 250,
-                parentBoxRadiusValue: 27,
-                circleSlidingButtonSize: 50,
-                leftEdgeSpacing: 2,
-                rightEdgeSpacing: 4,
-                initialSlidingActionLabel: 'Add To Basket',
-                finalSlidingActionLabel: 'Added To Basket',
-                circleSlidingButtonIcon: const Icon(
-                  Icons.add_shopping_cart,
-                  color: Colors.orange,
-                ),
-                parentBoxBackgroundColor: Colors.orange,
-                parentBoxDisableBackgroundColor: Colors.grey.withOpacity(0.5),
-                circleSlidingButtonBackgroundColor: Colors.white,
-                circleSlidingButtonDisableBackgroundColor: Colors.white,
+
+              const SizedBox(height: 40),
+
+              // ── Circle, disabled ─────────────────────────────────────────
+              //_SectionLabel('Circle · disabled'),
+              const SizedBox(height: 12),
+              SlideToActionButton(
+                slideButtonShape: SlideButtonShape.circle,
                 isEnable: false,
-                onSlideActionCompleted: () {
-                  print("Sliding action completed");
-                },
-                onSlideActionCanceled: () {
-                  print("Sliding action cancelled");
-                },
+                initialSlidingActionLabel: 'Unavailable',
+                finalSlidingActionLabel: "",
+                enabledTrackDecoration:
+                const SliderTrackDecoration.color(Colors.orange),
+                disabledTrackDecoration:
+                const SliderTrackDecoration.color(Colors.grey),
+                thumbIcon: const Icon(Icons.block, color: Colors.grey),
+                onSlideActionCanceled: () {},
+                onSlideActionCompleted: () {},
               ),
-              const SizedBox(
-                height: 100,
-              ),
-              const Text(
-                'Square Slide To Action Button Example',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              SquareSlideToActionButton(
-                width: 250,
-                parentBoxRadiusValue: 15,
-                initialSlidingActionLabel: 'Add To Basket',
-                finalSlidingActionLabel: 'Added To Basket',
-                squareSlidingButtonSize: 50,
-                squareSlidingButtonIcon: const Icon(
-                  Icons.add_shopping_cart,
-                  color: Colors.orange,
+
+              const SizedBox(height: 40),
+
+              // ── Square, gradient ─────────────────────────────────────────
+              //_SectionLabel('Square · gradient track'),
+              const SizedBox(height: 12),
+              SlideToActionButton(
+                slideButtonShape: SlideButtonShape.square,
+                thumbBorderRadius: 8,
+                parentBoxRadiusValue: 14,
+                initialSlidingActionLabel: 'Slide to pay',
+                finalSlidingActionLabel: '✓ Payment sent',
+                enabledTrackDecoration: const SliderTrackDecoration.gradient(
+                  LinearGradient(colors: [Colors.purple, Colors.deepPurple]),
                 ),
-                squareSlidingButtonBackgroundColor: Colors.white,
-                parentBoxBackgroundColor: Colors.orange,
-                parentBoxDisableBackgroundColor: Colors.grey,
-                leftEdgeSpacing: 2,
-                rightEdgeSpacing: 4,
-                onSlideActionCompleted: () {
-                  print("Sliding action completed");
-                },
-                onSlideActionCanceled: () {
-                  print("Sliding action cancelled");
-                },
+                disabledTrackDecoration:
+                const SliderTrackDecoration.color(Colors.grey),
+                thumbEnabledColor: Colors.white,
+                thumbIcon: const Icon(Icons.payment, color: Colors.purple),
+                onSlideActionCompleted: () => debugPrint('Square gradient: done'),
+                onSlideActionCanceled: () =>
+                    debugPrint('Square gradient: cancelled'),
               ),
-              const SizedBox(
-                height: 100,
-              ),
-              const Text(
-                'Square Slide To Action With Loader Button Example',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              SquareSlideToActionButton(
-                slideToActionController: _squareSlidToActionController,
-                width: 250,
-                parentBoxRadiusValue: 15,
-                squareSlidingButtonSize: 50,
-                leftEdgeSpacing: 3,
-                initialSlidingActionLabel: 'Add To Basket',
-                finalSlidingActionLabel: 'Added To Basket',
-                squareSlidingButtonIcon: const Icon(
-                  Icons.add_shopping_cart,
-                  color: Colors.orange,
+
+              const SizedBox(height: 40),
+
+              // ── Square, low threshold (easy swipe) ───────────────────────
+              //_SectionLabel('Square · low threshold (60%)'),
+              const SizedBox(height: 12),
+              SlideToActionButton(
+                slideButtonShape: SlideButtonShape.square,
+                thumbBorderRadius: 10,
+                parentBoxRadiusValue: 16,
+                completionThreshold: 0.60,
+                initialSlidingActionLabel: 'Easy swipe (60%)',
+                finalSlidingActionLabel: '✓ Done!',
+                enabledTrackDecoration: const SliderTrackDecoration.gradient(
+                  LinearGradient(
+                      colors: [Colors.teal, Color.fromARGB(255, 0, 150, 100)]),
                 ),
-                parentBoxBackgroundColor: Colors.orange,
-                parentBoxDisableBackgroundColor: Colors.grey,
-                squareSlidingButtonBackgroundColor: Colors.white,
-                isEnable: true,
-                slideActionButtonType:
-                    SlideActionButtonType.slideActionWithLoaderButton,
-                onSlideActionCompleted: () async {
-                  _squareSlidToActionController.loading();
-                  await Future.delayed(const Duration(seconds: 3), () {
-                    _squareSlidToActionController.reset(3);
-                  });
-                  print("Sliding action completed");
-                },
-                onSlideActionCanceled: () {
-                  print("Sliding action cancelled");
-                },
+                disabledTrackDecoration:
+                const SliderTrackDecoration.color(Colors.grey),
+                thumbIcon: const Icon(Icons.swipe, color: Colors.teal),
+                onSlideActionCompleted: () => debugPrint('Low threshold: done'),
+                onSlideActionCanceled: () => debugPrint('Cancelled'),
               ),
-              const SizedBox(
-                height: 100,
-              ),
-              const Text(
-                'Square Slide To Action Button with Gradient Example',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              SquareSlideToActionButton(
-                //slideToActionController: SlideToActionController(),
-                width: 250,
-                parentBoxRadiusValue: 15,
-                initialSlidingActionLabel: 'Add To Basket',
-                finalSlidingActionLabel: 'Added To Basket',
-                squareSlidingButtonSize: 50,
-                squareSlidingButtonIcon: const Icon(
-                  Icons.add_shopping_cart,
-                  color: Colors.orange,
-                ),
-                squareSlidingButtonBackgroundColor: Colors.white,
-                parentBoxGradientBackgroundColor: LinearGradient(
-                    colors: [Colors.orange, Colors.grey.withOpacity(0.5)]),
-                parentBoxDisableGradientBackgroundColor:
-                    const LinearGradient(colors: [
-                  Colors.grey,
-                ]),
-                leftEdgeSpacing: 2,
-                rightEdgeSpacing: 4,
-                onSlideActionCompleted: () {
-                  print("Sliding action completed");
-                },
-                onSlideActionCanceled: () {
-                  print("Sliding action cancelled");
-                },
-              )
             ],
           ),
         ),
