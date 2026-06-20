@@ -1,14 +1,14 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 
-class SliderTrackDecoration {
+class SlideTrackDecoration {
   final Color? color;
   final Gradient? gradient;
 
-  const SliderTrackDecoration.color(Color this.color)
+  const SlideTrackDecoration.color(Color this.color)
   : gradient = null;
 
-  const SliderTrackDecoration.gradient(Gradient this.gradient)
+  const SlideTrackDecoration.gradient(Gradient this.gradient)
       : color = null;
 
   BoxDecoration toBoxDecoration({required double borderRadius}) {

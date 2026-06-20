@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sliding_action_button/sliding_action_button.dart';
-import 'package:sliding_action_button/src/utils/enums/slide_button_shapes.dart';
-import 'package:sliding_action_button/src/utils/slider_track_decoration.dart';
 
 class SlideToActionButton extends StatefulWidget {
   ///This field is configure the shape of the thumb
@@ -13,7 +11,7 @@ class SlideToActionButton extends StatefulWidget {
   final double height;
 
   ///This field will be the width of the whole widget
-  final double width;
+  final double? width;
 
   ///This field will be the width and height of the draggable button
   final double thumbSize;
@@ -25,8 +23,8 @@ class SlideToActionButton extends StatefulWidget {
   ///of parent box
   final double? parentBoxRadiusValue;
 
-  final SliderTrackDecoration enabledTrackDecoration;
-  final SliderTrackDecoration disabledTrackDecoration;
+  final SlideTrackDecoration enabledTrackDecoration;
+  final SlideTrackDecoration disabledTrackDecoration;
   final Color thumbEnabledColor;
   final Color thumbDisabledColor;
 
@@ -46,7 +44,7 @@ class SlideToActionButton extends StatefulWidget {
   final String initialSlidingActionLabel;
 
   ///This field is responsible for the text appear in the parent box after the swipe action
-  final String finalSlidingActionLabel;
+  final String? finalSlidingActionLabel;
 
   ///This will be the text styling of the label appear before the sliding action
   final TextStyle? initialSlidingActionLabelTextStyle;
@@ -57,7 +55,7 @@ class SlideToActionButton extends StatefulWidget {
 
   ///This field is used to enable or disable the circle sliding button(The slide action)
   ///By default is True
-  final bool isEnable;
+  final bool isEnabled;
 
   final double completionThreshold;
   final bool enableHapticFeedback;
@@ -79,7 +77,7 @@ class SlideToActionButton extends StatefulWidget {
   final Function() onSlideActionCompleted;
 
   ///This Function is used to indicate the end of the sliding action with cancel
-  final Function() onSlideActionCanceled;
+  final Function()? onSlideActionCanceled;
 
   ///This will be the background color of the parent box when isEnable is True
   // final Color? parentBoxBackgroundColor;
@@ -112,32 +110,32 @@ class SlideToActionButton extends StatefulWidget {
     super.key,
     required this.slideButtonShape,
     required this.initialSlidingActionLabel,
-    required this.finalSlidingActionLabel,
     required this.onSlideActionCompleted,
-    required this.onSlideActionCanceled,
+    this.finalSlidingActionLabel,
     this.slideToActionController,
     this.height = 56,
-    this.width = 240,
+    this.width,
     this.initialSlidingActionLabelTextStyle,
     this.finalSlidingActionLabelTextStyle,
     this.thumbSize = 50,
     this.thumbBorderRadius,
     this.parentBoxRadiusValue,
     this.enabledTrackDecoration =
-        const SliderTrackDecoration.color(Colors.orange),
+        const SlideTrackDecoration.color(Colors.orange),
     this.disabledTrackDecoration =
-        const SliderTrackDecoration.color(Colors.grey),
+        const SlideTrackDecoration.color(Colors.grey),
     this.thumbEnabledColor = Colors.white,
     this.thumbDisabledColor = Colors.white,
     this.thumbIcon,
     this.leftEdgeSpacing = 3,
     this.rightEdgeSpacing = 3,
-    this.isEnable = true,
+    this.isEnabled = true,
     this.completionThreshold = 0.85,
     this.enableHapticFeedback = true,
     this.animationDuration = const Duration(milliseconds: 700),
     this.slideActionButtonType = SlideActionButtonType.basicSlideActionButton,
     this.loaderColor = Colors.white,
+    this.onSlideActionCanceled,
   });
 
   @override
@@ -186,7 +184,7 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
   }
 
   void _onDragUpdate(DragUpdateDetails details) {
-    if (!widget.isEnable || _controller.state != LoaderButtonEnumStates.initial)
+    if (!widget.isEnabled || _controller.state != LoaderButtonEnumStates.initial)
       return;
     setState(() {
       _dragOffset = (_dragOffset + details.delta.dx).clamp(0, _maxDragOffset);
@@ -194,7 +192,7 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
   }
 
   void _onDragEnd(DragEndDetails d) {
-    if (!widget.isEnable || _isLoading) return;
+    if (!widget.isEnabled || _isLoading) return;
     final progress = _maxDragOffset > 0 ? _dragOffset / _maxDragOffset : 0.0;
     final velocity = d.primaryVelocity ?? 0;
     if (progress >= widget.completionThreshold || velocity > 800) {
@@ -218,131 +216,126 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
       _dragOffset = 0;
       _showFinalLabel = false;
     });
-    widget.onSlideActionCanceled.call();
+    widget.onSlideActionCanceled?.call();
   }
 
   @override
   Widget build(BuildContext context) {
     final isLTR = Directionality.of(context) == TextDirection.ltr;
 
-    return Semantics(
-      label: widget.initialSlidingActionLabel,
-      hint: 'Slide to confirm',
-      enabled: widget.isEnable,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final trackWidth = widget.width ?? constraints.maxWidth;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final trackWidth = widget.width ?? constraints.maxWidth;
 
-          _maxDragOffset = trackWidth -
-              widget.thumbSize -
-              widget.leftEdgeSpacing -
-              widget.rightEdgeSpacing;
+        _maxDragOffset = trackWidth -
+            widget.thumbSize -
+            widget.leftEdgeSpacing -
+            widget.rightEdgeSpacing;
 
-          final decoration = widget.isEnable
-              ? widget.enabledTrackDecoration
-              : widget.disabledTrackDecoration;
+        final decoration = widget.isEnabled
+            ? widget.enabledTrackDecoration
+            : widget.disabledTrackDecoration;
 
-          return SizedBox(
-            width: trackWidth,
-            height: widget.height,
-            child: Stack(
-              children: [
-                // ── Track ───────────────────────────────────────────────
-                Positioned.fill(
+        return SizedBox(
+          width: trackWidth,
+          height: widget.height,
+          child: Stack(
+            children: [
+              // ── Track ───────────────────────────────────────────────
+              Positioned.fill(
+                child: AnimatedContainer(
+                  duration: widget.animationDuration,
+                  decoration: decoration.toBoxDecoration(
+                    borderRadius: _effectiveTrackRadius,
+                  ),
+                ),
+              ),
+
+              // ── Progress fill ────────────────────────────────────────
+              Positioned(
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width:
+                    widget.leftEdgeSpacing + widget.thumbSize + _dragOffset,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.15),
+                    borderRadius:
+                        BorderRadius.circular(_effectiveTrackRadius),
+                  ),
+                ),
+              ),
+
+              // ── Label ───────────────────────────────────────────────
+              Center(
+                child: AnimatedSwitcher(
+                  duration: widget.animationDuration,
+                  child: _isLoading
+                      ? SizedBox(
+                          key: const ValueKey('loader'),
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2.5,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              widget.loaderColor,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          key: ValueKey(_showFinalLabel),
+                          _showFinalLabel
+                              ? widget.finalSlidingActionLabel ?? widget.initialSlidingActionLabel
+                              : widget.initialSlidingActionLabel,
+                          style: _showFinalLabel
+                              ? widget.finalSlidingActionLabelTextStyle :
+                                  widget.initialSlidingActionLabelTextStyle ??
+                                      const TextStyle(color: Colors.white),
+                        ),
+                ),
+              ),
+
+              // ── Thumb ───────────────────────────────────────────────
+              AnimatedPositioned(
+                duration: _dragOffset == 0
+                    ? widget.animationDuration
+                    : Duration.zero,
+                left: isLTR ? widget.leftEdgeSpacing + _dragOffset : null,
+                right: isLTR ? null : widget.leftEdgeSpacing + _dragOffset,
+                top: (widget.height - widget.thumbSize) / 2,
+                child: GestureDetector(
+                  onHorizontalDragUpdate:
+                      widget.isEnabled ? _onDragUpdate : null,
+                  onHorizontalDragEnd: widget.isEnabled ? _onDragEnd : null,
                   child: AnimatedContainer(
                     duration: widget.animationDuration,
-                    decoration: decoration.toBoxDecoration(
-                      borderRadius: _effectiveTrackRadius,
-                    ),
-                  ),
-                ),
-
-                // ── Progress fill ────────────────────────────────────────
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  bottom: 0,
-                  width:
-                      widget.leftEdgeSpacing + widget.thumbSize + _dragOffset,
-                  child: Container(
+                    width: widget.thumbSize,
+                    height: widget.thumbSize,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.15),
+                      color: widget.isEnabled
+                          ? widget.thumbEnabledColor
+                          : widget.thumbDisabledColor,
                       borderRadius:
-                          BorderRadius.circular(_effectiveTrackRadius),
+                          BorderRadius.circular(_effectiveThumbRadius),
+                      boxShadow: widget.isEnabled
+                          ? [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.15),
+                                blurRadius: 6,
+                                offset: const Offset(0, 2),
+                              )
+                            ]
+                          : null,
                     ),
+                    child: Center(child: widget.thumbIcon),
                   ),
                 ),
-
-                // ── Label ───────────────────────────────────────────────
-                Center(
-                  child: AnimatedSwitcher(
-                    duration: widget.animationDuration,
-                    child: _isLoading
-                        ? SizedBox(
-                            key: const ValueKey('loader'),
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.5,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                widget.loaderColor,
-                              ),
-                            ),
-                          )
-                        : Text(
-                            key: ValueKey(_showFinalLabel),
-                            _showFinalLabel
-                                ? widget.finalSlidingActionLabel
-                                : widget.initialSlidingActionLabel,
-                            style: _showFinalLabel
-                                ? widget.finalSlidingActionLabelTextStyle ??
-                                    widget.initialSlidingActionLabelTextStyle
-                                : const TextStyle(color: Colors.white),
-                          ),
-                  ),
-                ),
-
-                // ── Thumb ───────────────────────────────────────────────
-                AnimatedPositioned(
-                  duration: _dragOffset == 0
-                      ? widget.animationDuration
-                      : Duration.zero,
-                  left: isLTR ? widget.leftEdgeSpacing + _dragOffset : null,
-                  right: isLTR ? null : widget.leftEdgeSpacing + _dragOffset,
-                  top: (widget.height - widget.thumbSize) / 2,
-                  child: GestureDetector(
-                    onHorizontalDragUpdate:
-                        widget.isEnable ? _onDragUpdate : null,
-                    onHorizontalDragEnd: widget.isEnable ? _onDragEnd : null,
-                    child: AnimatedContainer(
-                      duration: widget.animationDuration,
-                      width: widget.thumbSize,
-                      height: widget.thumbSize,
-                      decoration: BoxDecoration(
-                        color: widget.isEnable
-                            ? widget.thumbEnabledColor
-                            : widget.thumbDisabledColor,
-                        borderRadius:
-                            BorderRadius.circular(_effectiveThumbRadius),
-                        boxShadow: widget.isEnable
-                            ? [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.15),
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 2),
-                                )
-                              ]
-                            : null,
-                      ),
-                      child: Center(child: widget.thumbIcon),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
