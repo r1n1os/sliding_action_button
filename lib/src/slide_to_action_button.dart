@@ -74,10 +74,10 @@ class SlideToActionButton extends StatefulWidget {
   final SlideToActionController? slideToActionController;
 
   ///This Function is used to indicate the end of the sliding action with success
-  final Function() onSlideActionCompleted;
+  final VoidCallback onSlideActionCompleted;
 
   ///This Function is used to indicate the end of the sliding action with cancel
-  final Function()? onSlideActionCanceled;
+  final VoidCallback? onSlideActionCanceled;
 
   ///This will be the background color of the parent box when isEnable is True
   // final Color? parentBoxBackgroundColor;
@@ -108,9 +108,9 @@ class SlideToActionButton extends StatefulWidget {
 
   const SlideToActionButton({
     super.key,
-    required this.slideButtonShape,
     required this.initialSlidingActionLabel,
     required this.onSlideActionCompleted,
+    this.slideButtonShape = SlideButtonShape.circle,
     this.finalSlidingActionLabel,
     this.slideToActionController,
     this.height = 56,
@@ -146,19 +146,28 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
   late final SlideToActionController _controller;
   bool _ownsController = false;
   double _dragOffset = 0;
-  double _maxDragOffset = 0;
   bool _showFinalLabel = false;
 
   bool get _isLoading => _controller.state == LoaderButtonEnumStates.loading;
 
-  double get _effectiveTrackRadius =>
-      widget.parentBoxRadiusValue ?? widget.height / 2;
+  double get _effectiveTrackRadius {
+    if (widget.parentBoxRadiusValue != null) return widget.parentBoxRadiusValue!;
+    switch (widget.slideButtonShape) {
+      case SlideButtonShape.circle:
+        return widget.height / 2;  // full pill shape
+      case SlideButtonShape.square:
+        return 8;                   // modern slightly rounded
+    }
+  }
 
   double get _effectiveThumbRadius {
     if (widget.thumbBorderRadius != null) return widget.thumbBorderRadius!;
-    return widget.slideButtonShape == SlideButtonShape.circle
-        ? widget.thumbSize / 2
-        : widget.thumbSize / 6;
+    switch (widget.slideButtonShape) {
+      case SlideButtonShape.circle:
+        return widget.thumbSize / 2; // perfect circle
+      case SlideButtonShape.square:
+        return 6;                     // modern slightly rounded
+    }
   }
 
   @override
@@ -173,6 +182,13 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
     _controller.addListener(_onControllerUpdate);
   }
 
+  @override
+  void dispose() {
+    _controller.removeListener(_onControllerUpdate);
+    if (_ownsController) _controller.dispose();
+    super.dispose();
+  }
+
   void _onControllerUpdate() {
     if (!mounted) return;
     setState(() {
@@ -183,29 +199,29 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
     });
   }
 
-  void _onDragUpdate(DragUpdateDetails details) {
+  void _onDragUpdate(DragUpdateDetails details, double maxDragOffset) {
     if (!widget.isEnabled || _controller.state != LoaderButtonEnumStates.initial)
       return;
     setState(() {
-      _dragOffset = (_dragOffset + details.delta.dx).clamp(0, _maxDragOffset);
+      _dragOffset = (_dragOffset + details.delta.dx).clamp(0, maxDragOffset);
     });
   }
 
-  void _onDragEnd(DragEndDetails d) {
+  void _onDragEnd(DragEndDetails d, double maxDragOffset) {
     if (!widget.isEnabled || _isLoading) return;
-    final progress = _maxDragOffset > 0 ? _dragOffset / _maxDragOffset : 0.0;
+    final progress = maxDragOffset > 0 ? _dragOffset / maxDragOffset : 0.0;
     final velocity = d.primaryVelocity ?? 0;
     if (progress >= widget.completionThreshold || velocity > 800) {
-      _complete();
+      _complete(maxDragOffset);
     } else {
       _cancel();
     }
   }
 
-  void _complete() {
+  void _complete(double maxDragOffset) {
     if (widget.enableHapticFeedback) HapticFeedback.mediumImpact();
     setState(() {
-      _dragOffset = _maxDragOffset;
+      _dragOffset = maxDragOffset;
       _showFinalLabel = true;
     });
     widget.onSlideActionCompleted.call();
@@ -227,7 +243,7 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
       builder: (context, constraints) {
         final trackWidth = widget.width ?? constraints.maxWidth;
 
-        _maxDragOffset = trackWidth -
+        final double maxDragOffset = trackWidth -
             widget.thumbSize -
             widget.leftEdgeSpacing -
             widget.rightEdgeSpacing;
@@ -288,10 +304,12 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
                           _showFinalLabel
                               ? widget.finalSlidingActionLabel ?? widget.initialSlidingActionLabel
                               : widget.initialSlidingActionLabel,
-                          style: _showFinalLabel
-                              ? widget.finalSlidingActionLabelTextStyle :
-                                  widget.initialSlidingActionLabelTextStyle ??
-                                      const TextStyle(color: Colors.white),
+                          style:_showFinalLabel
+                              ? widget.finalSlidingActionLabelTextStyle ??
+                              widget.initialSlidingActionLabelTextStyle ??
+                              const TextStyle(color: Colors.white)
+                              : widget.initialSlidingActionLabelTextStyle ??
+                              const TextStyle(color: Colors.white),
                         ),
                 ),
               ),
@@ -306,8 +324,12 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
                 top: (widget.height - widget.thumbSize) / 2,
                 child: GestureDetector(
                   onHorizontalDragUpdate:
-                      widget.isEnabled ? _onDragUpdate : null,
-                  onHorizontalDragEnd: widget.isEnabled ? _onDragEnd : null,
+                      widget.isEnabled ? (DragUpdateDetails details) {
+                    _onDragUpdate(details, maxDragOffset);
+                  }: null,
+                  onHorizontalDragEnd: widget.isEnabled ? (DragEndDetails details) {
+                    _onDragEnd(details, maxDragOffset);
+                  }  : null,
                   child: AnimatedContainer(
                     duration: widget.animationDuration,
                     width: widget.thumbSize,
@@ -339,90 +361,3 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
     );
   }
 }
-/*  @override
-  Widget build(BuildContext context) {
-    return _buildBaseSlideActionWidget();
-  }
-
-  Widget _buildBaseSlideActionWidget() {
-    switch (widget.slideActionButtonType) {
-      case SlideActionButtonType.basicSlideActionButton:
-        return BaseSlideToActionButton(
-          slideToActionController:
-              widget.slideToActionController ?? SlideToActionController(),
-          height: widget.height,
-          width: widget.width,
-          parentBoxRadiusValue: widget.parentBoxRadiusValue,
-          parentBoxBackgroundColor: widget.parentBoxBackgroundColor,
-          parentBoxDisableBackgroundColor:
-              widget.parentBoxDisableBackgroundColor,
-          parentBoxGradientBackgroundColor:
-              widget.parentBoxGradientBackgroundColor,
-          parentBoxDisableGradientBackgroundColor:
-              widget.parentBoxDisableGradientBackgroundColor,
-          leftEdgeSpacing: widget.leftEdgeSpacing,
-          rightEdgeSpacing: widget.rightEdgeSpacing,
-          initialSlidingActionLabel: widget.initialSlidingActionLabel,
-          finalSlidingActionLabel: widget.finalSlidingActionLabel,
-          initialSlidingActionLabelTextStyle:
-              widget.initialSlidingActionLabelTextStyle,
-          finalSlidingActionLabelTextStyle:
-              widget.finalSlidingActionLabelTextStyle,
-          isEnable: widget.isEnable,
-          onSlideActionCompleted: widget.onSlideActionCompleted,
-          onSlideActionCanceled: widget.onSlideActionCanceled,
-          slidingButtonSize: widget.thumbSize,
-          slideButtonWidget: _buildCircleButton(),
-        );
-      case SlideActionButtonType.slideActionWithLoaderButton:
-        return BaseSlideToActionWithLoaderButton(
-          slideToActionController:
-              widget.slideToActionController ?? SlideToActionController(),
-          height: widget.height,
-          width: widget.width,
-          parentBoxRadiusValue: widget.parentBoxRadiusValue,
-          parentBoxBackgroundColor: widget.parentBoxBackgroundColor,
-          parentBoxDisableBackgroundColor:
-              widget.parentBoxDisableBackgroundColor,
-          parentBoxGradientBackgroundColor:
-              widget.parentBoxGradientBackgroundColor,
-          parentBoxDisableGradientBackgroundColor:
-              widget.parentBoxDisableGradientBackgroundColor,
-          leftEdgeSpacing: widget.leftEdgeSpacing,
-          rightEdgeSpacing: widget.rightEdgeSpacing,
-          initialSlidingActionLabel: widget.initialSlidingActionLabel,
-          finalSlidingActionLabel: widget.finalSlidingActionLabel,
-          initialSlidingActionLabelTextStyle:
-              widget.initialSlidingActionLabelTextStyle,
-          finalSlidingActionLabelTextStyle:
-              widget.finalSlidingActionLabelTextStyle,
-          isEnable: widget.isEnable,
-          loaderColor: widget.loaderColor,
-          animationDuration: widget.animationDuration,
-          onSlideActionCompleted: widget.onSlideActionCompleted,
-          onSlideActionCanceled: widget.onSlideActionCanceled,
-          slidingButtonSize: widget.thumbSize,
-          slideButtonWidget: _buildCircleButton(),
-        );
-    }
-  }
-
-  Widget _buildCircleButton() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Container(
-          height: widget.thumbSize,
-          width: widget.thumbSize,
-          decoration: BoxDecoration(
-              color: widget.isEnable
-                  ? widget.circleSlidingButtonBackgroundColor
-                  : widget.circleSlidingButtonDisableBackgroundColor,
-              borderRadius:
-                  BorderRadius.circular(widget.circleSlidingButtonRadiusValue)),
-          child: widget.circleSlidingButtonIcon,
-        ),
-      ],
-    );
-  }
-}*/
