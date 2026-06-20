@@ -3,108 +3,114 @@ import 'package:flutter/services.dart';
 import 'package:sliding_action_button/sliding_action_button.dart';
 
 class SlideToActionButton extends StatefulWidget {
-  ///This field is configure the shape of the thumb
-  ///By default is circle
+
+  /// This field is configure both thumb and track corner radius defaults.
+  /// Overriding either [thumbBorderRadius] or [parentBoxRadiusValue] takes
+  /// precedence over the shape-derived defaults.
+  /// By default is circle
   final SlideButtonShape slideButtonShape;
 
-  ///This field will be the height of the whole widget
+  /// Height of the track container in logical pixels.
+  /// Defaults to 56.
   final double height;
 
-  ///This field will be the width of the whole widget
+  /// Width of the track container.
+  /// When null, expands to fill available width.
   final double? width;
 
-  ///This field will be the width and height of the draggable button
+  /// Width and height of the draggable thumb in logical pixels.
+  /// Defaults to 50.
   final double thumbSize;
 
-  ///This field will be the radius of the draggable button
+  /// This field will be the radius of the draggable button
+  /// When null, derived from slideButtonShape : circle → [thumbSize] / 2, square → 6dp.
   final double? thumbBorderRadius;
 
-  ///This field will be the double value for the BorderRadius.circular() attribute to configure the corners
-  ///of parent box
+  /// This field will be the double value for the BorderRadius.circular() attribute to configure the corners
+  /// of parent box.
+  /// When null, derived from [slideButtonShape]: circle → [height] / 2 (pill), square → 8dp.
   final double? parentBoxRadiusValue;
 
+  /// This field will be used to supply either [SlideTrackDecoration.fromColor] or
+  /// [SlideTrackDecoration.fromGradient] — never both when enable.
+  /// The type system enforces this at construction time.
   final SlideTrackDecoration enabledTrackDecoration;
+
+  /// This field will be used to supply either [SlideTrackDecoration.fromColor] or
+  /// [SlideTrackDecoration.fromGradient] — never both when disabled.
+  /// The type system enforces this at construction time.
   final SlideTrackDecoration disabledTrackDecoration;
+
+  /// Thumb background color when [isEnabled] is true.
   final Color thumbEnabledColor;
+
+  /// Thumb background color when [isEnabled] is false.
   final Color thumbDisabledColor;
 
   ///This will be the icon appear on the sliding button
   final Widget? thumbIcon;
 
-  ///This will be used to align the left side of circle button.
-  ///We cannot do what we do with the other sides as the left attribute of Positioned widget is used to handle the
-  ///dragging of the button
+  /// Cannot be driven by [Positioned.left] like [rightEdgeSpacing] because
+  /// [left] is already used to animate the thumb position during drag.
+  /// This is applied as static padding at the thumb's initial offset.
   final double leftEdgeSpacing;
 
-  ///This field will determined the space between the circle sliding button widget and the parent widget on the right end.
-  ///In case you have Padding left
+  /// Space between the thumb at its rightmost position and the right
+  /// edge of the track, in logical pixels. Defaults to 3.
   final double rightEdgeSpacing;
 
-  ///This field is responsible for the text appear in the parent box before the sliding action
+  /// This field is responsible for the call-to-action shown before completion.
   final String initialSlidingActionLabel;
 
-  ///This field is responsible for the text appear in the parent box after the swipe action
+  /// This field is responsible for the call-to-action shown after completion.
+  /// When null, [initialSlidingActionLabel] persists after completion.
   final String? finalSlidingActionLabel;
 
-  ///This will be the text styling of the label appear before the sliding action
+  /// This will be the text styling of the label appear before the sliding action
   final TextStyle? initialSlidingActionLabelTextStyle;
 
-  ///This will be the text styling of the label appear after the sliding action. In case this field is null the same style as the
-  ///#initialSlidingActionLabelTextStyle will be used
+  /// This will be the text styling of the label appear after the sliding action. In case this field is null the same style as the
+  /// [initialSlidingActionLabelTextStyle] will be used
   final TextStyle? finalSlidingActionLabelTextStyle;
 
-  ///This field is used to enable or disable the circle sliding button(The slide action)
-  ///By default is True
+  /// This field is used to enable or disable the  sliding button(The slide action)
+  /// By default is True
   final bool isEnabled;
 
+  /// Fraction of track width (0.0–1.0) required to trigger completion.
+  /// A fast fling (>800 px/s) bypasses this threshold entirely.
+  /// Lower values make accidental triggers more likely — don't go below 0.6.
   final double completionThreshold;
+
+  /// Fires [HapticFeedback.mediumImpact] on completion.
+  /// Disable only if your action already triggers its own system haptic.
   final bool enableHapticFeedback;
+
+  /// This field is used to controls snap-back and label crossfade speed.
+  /// 700ms is tuned for the average thumb travel distance.
   final Duration animationDuration;
 
-  ///This field indicating the basic behavior of the slide action (Type)
-  ///By default is basicSlideActionButton
+  /// This field is used to indicating the basic behavior of the slide action (Type)
+  /// By default is basicSlideActionButton
   final SlideActionButtonType slideActionButtonType;
 
-  ///This field is styling the color of the loader
-  ///ByD default is white
+  /// This field is styling the color of the loader
+  /// By default is white
   final Color loaderColor;
 
-  ///This field is used to control the circle sliding action state (Loading, resetting etc)
-  ///And controlling the slider position
+  /// This field is used to control the sliding action state (Loading, resetting etc)
+  /// When null, an internal controller is created and owned by the widget.
+  /// Pass your own instance when you need to drive [loading] or [reset]
+  /// from outside — for example, after an API call resolves.
+  /// The widget never disposes an externally provided controller.
   final SlideToActionController? slideToActionController;
 
-  ///This Function is used to indicate the end of the sliding action with success
+  /// This Function is used to indicate the end of the sliding action with success
   final VoidCallback onSlideActionCompleted;
 
-  ///This Function is used to indicate the end of the sliding action with cancel
+  /// This Function is used to indicate the end of the sliding action with cancel
+  /// When null, cancellation (drag released before threshold) is silently ignored
   final VoidCallback? onSlideActionCanceled;
-
-  ///This will be the background color of the parent box when isEnable is True
-  // final Color? parentBoxBackgroundColor;
-
-  ///This will be the background color of the parent box when isEnable is False
-  //final Color? parentBoxDisableBackgroundColor;
-
-  ///This will be the background color of the parent box in case you want to use gradient when isEnable is True.
-  ///You cannot have both parentBoxBackgroundColor and parentBoxGradientBackgroundColor
-  //final Gradient? parentBoxGradientBackgroundColor;
-
-  ///This will be the background color of the parent box in case you want to use gradient when isEnable is False.
-  ///You cannot have both parentBoxDisableBackgroundColor and parentBoxDisableGradientBackgroundColor
-  //final Gradient? parentBoxDisableGradientBackgroundColor;
-
-  ///This field will be the double value for the BorderRadius.circular() attribute
-  //final double circleSlidingButtonRadiusValue;
-
-  ///This will be the background color of the circle sliding button when isEnable = True
-  //final Color? circleSlidingButtonBackgroundColor;
-
-  ///This will be the background color of the circle sliding button when isEnable = False
-  //final Color? circleSlidingButtonDisableBackgroundColor;
-
-  ///This field is configure the time needed for container to change to loader
-  ///By default is 700 milliseconds
-  //final Duration animationDuration;
 
   const SlideToActionButton({
     super.key,
@@ -144,29 +150,44 @@ class SlideToActionButton extends StatefulWidget {
 
 class _SlideToActionButtonState extends State<SlideToActionButton> {
   late final SlideToActionController _controller;
+
+  // This variable indicating if the widget is own the controller.
+  // Never dispose controller if we don't own the controller. The caller who holds the reference need's to do it.
   bool _ownsController = false;
+
+  // Raw pixel offset of the thumb from its resting position.
+  // Clamped to [0, maxDragOffset] on every drag update.
   double _dragOffset = 0;
+
+  // Separate from controller state so the label can update independently
+  // of the loading lifecycle.
   bool _showFinalLabel = false;
 
   bool get _isLoading => _controller.state == LoaderButtonEnumStates.loading;
 
+  // This getter is giving us the radius of track (ParentBox).
+  // if [widget.parentBoxRadiusValue] is given then we use that,
+  // otherwise we use the predefine based on the [widget.slideButtonShape].
   double get _effectiveTrackRadius {
     if (widget.parentBoxRadiusValue != null) return widget.parentBoxRadiusValue!;
     switch (widget.slideButtonShape) {
       case SlideButtonShape.circle:
-        return widget.height / 2;  // full pill shape
+        return widget.height / 2;
       case SlideButtonShape.square:
-        return 8;                   // modern slightly rounded
+        return 8;
     }
   }
 
+  // This getter is giving us the radius of thumb (draggable button).
+  // if [widget.thumbBorderRadius] is given then we use that,
+  // otherwise we use the predefine based on the [widget.slideButtonShape].
   double get _effectiveThumbRadius {
     if (widget.thumbBorderRadius != null) return widget.thumbBorderRadius!;
     switch (widget.slideButtonShape) {
       case SlideButtonShape.circle:
-        return widget.thumbSize / 2; // perfect circle
+        return widget.thumbSize / 2;
       case SlideButtonShape.square:
-        return 6;                     // modern slightly rounded
+        return 6;
     }
   }
 
@@ -189,6 +210,8 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
     super.dispose();
   }
 
+  // Guards against setState after dispose — controller resets can arrive
+  // asynchronously after an API call resolves.
   void _onControllerUpdate() {
     if (!mounted) return;
     setState(() {
@@ -199,6 +222,7 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
     });
   }
 
+  // Blocks drag during loading — thumb must not move while spinner is visible.
   void _onDragUpdate(DragUpdateDetails details, double maxDragOffset) {
     if (!widget.isEnabled || _controller.state != LoaderButtonEnumStates.initial)
       return;
@@ -207,6 +231,8 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
     });
   }
 
+  // Completes on either threshold reached or fast fling.
+  // Fast fling path exists so the user doesn't have to drag the full distance.
   void _onDragEnd(DragEndDetails d, double maxDragOffset) {
     if (!widget.isEnabled || _isLoading) return;
     final progress = maxDragOffset > 0 ? _dragOffset / maxDragOffset : 0.0;
@@ -218,6 +244,8 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
     }
   }
 
+  // Snaps thumb to end before firing callback so the UI reflects
+  // completion state synchronously — even if the callback is async.
   void _complete(double maxDragOffset) {
     if (widget.enableHapticFeedback) HapticFeedback.mediumImpact();
     setState(() {
@@ -227,6 +255,7 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
     widget.onSlideActionCompleted.call();
   }
 
+  // Resetting the UI and calling the [widget.onSlideActionCanceled] in case that is not null.
   void _cancel() {
     setState(() {
       _dragOffset = 0;
@@ -238,17 +267,19 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
   @override
   Widget build(BuildContext context) {
     final isLTR = Directionality.of(context) == TextDirection.ltr;
-
     return LayoutBuilder(
       builder: (context, constraints) {
         final trackWidth = widget.width ?? constraints.maxWidth;
 
+        // Computed here, not stored as a field, to stay in sync with
+        // every layout pass. Storing it as state risks stale values
+        // after orientation changes or parent resizes.
         final double maxDragOffset = trackWidth -
             widget.thumbSize -
             widget.leftEdgeSpacing -
             widget.rightEdgeSpacing;
 
-        final decoration = widget.isEnabled
+        final SlideTrackDecoration decoration = widget.isEnabled
             ? widget.enabledTrackDecoration
             : widget.disabledTrackDecoration;
 
@@ -257,107 +288,127 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
           height: widget.height,
           child: Stack(
             children: [
-              // ── Track ───────────────────────────────────────────────
-              Positioned.fill(
-                child: AnimatedContainer(
-                  duration: widget.animationDuration,
-                  decoration: decoration.toBoxDecoration(
-                    borderRadius: _effectiveTrackRadius,
-                  ),
-                ),
-              ),
-
-              // ── Progress fill ────────────────────────────────────────
-              Positioned(
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width:
-                    widget.leftEdgeSpacing + widget.thumbSize + _dragOffset,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.15),
-                    borderRadius:
-                        BorderRadius.circular(_effectiveTrackRadius),
-                  ),
-                ),
-              ),
-
-              // ── Label ───────────────────────────────────────────────
+              _trackWidget(decoration),
+              _followingTrackWidget(),
               Center(
                 child: AnimatedSwitcher(
                   duration: widget.animationDuration,
                   child: _isLoading
-                      ? SizedBox(
-                          key: const ValueKey('loader'),
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.5,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              widget.loaderColor,
-                            ),
-                          ),
-                        )
-                      : Text(
-                          key: ValueKey(_showFinalLabel),
-                          _showFinalLabel
-                              ? widget.finalSlidingActionLabel ?? widget.initialSlidingActionLabel
-                              : widget.initialSlidingActionLabel,
-                          style:_showFinalLabel
-                              ? widget.finalSlidingActionLabelTextStyle ??
-                              widget.initialSlidingActionLabelTextStyle ??
-                              const TextStyle(color: Colors.white)
-                              : widget.initialSlidingActionLabelTextStyle ??
-                              const TextStyle(color: Colors.white),
-                        ),
+                      ? _loadingWidget()
+                      : _labelWidget()
                 ),
               ),
-
-              // ── Thumb ───────────────────────────────────────────────
-              AnimatedPositioned(
-                duration: _dragOffset == 0
-                    ? widget.animationDuration
-                    : Duration.zero,
-                left: isLTR ? widget.leftEdgeSpacing + _dragOffset : null,
-                right: isLTR ? null : widget.leftEdgeSpacing + _dragOffset,
-                top: (widget.height - widget.thumbSize) / 2,
-                child: GestureDetector(
-                  onHorizontalDragUpdate:
-                      widget.isEnabled ? (DragUpdateDetails details) {
-                    _onDragUpdate(details, maxDragOffset);
-                  }: null,
-                  onHorizontalDragEnd: widget.isEnabled ? (DragEndDetails details) {
-                    _onDragEnd(details, maxDragOffset);
-                  }  : null,
-                  child: AnimatedContainer(
-                    duration: widget.animationDuration,
-                    width: widget.thumbSize,
-                    height: widget.thumbSize,
-                    decoration: BoxDecoration(
-                      color: widget.isEnabled
-                          ? widget.thumbEnabledColor
-                          : widget.thumbDisabledColor,
-                      borderRadius:
-                          BorderRadius.circular(_effectiveThumbRadius),
-                      boxShadow: widget.isEnabled
-                          ? [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.15),
-                                blurRadius: 6,
-                                offset: const Offset(0, 2),
-                              )
-                            ]
-                          : null,
-                    ),
-                    child: Center(child: widget.thumbIcon),
-                  ),
-                ),
-              ),
+              _thumbWidget(isLTR, maxDragOffset)
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _trackWidget(SlideTrackDecoration decoration) {
+    return  Positioned.fill(
+      child: AnimatedContainer(
+        duration: widget.animationDuration,
+        decoration: decoration.toBoxDecoration(
+          borderRadius: _effectiveTrackRadius,
+        ),
+      ),
+    );
+  }
+
+  // Progress fill — subtle white overlay that widens with the thumb.
+  // Alpha 0.15 is intentionally low to avoid obscuring the label.
+  Widget _followingTrackWidget() {
+    return Positioned(
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width:
+      widget.leftEdgeSpacing + widget.thumbSize + _dragOffset,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.15),
+          borderRadius:
+          BorderRadius.circular(_effectiveTrackRadius),
+        ),
+      ),
+    );
+  }
+
+ Widget _loadingWidget() {
+    return SizedBox(
+      key: const ValueKey('loader'),
+      width: 24,
+      height: 24,
+      child: CircularProgressIndicator(
+        strokeWidth: 2.5,
+        valueColor: AlwaysStoppedAnimation<Color>(
+          widget.loaderColor,
+        ),
+      ),
+    );
+  }
+
+  // AnimatedSwitcher crossfades between initial label, final label, and spinner.
+  // ValueKey on _showFinalLabel forces a rebuild when label content changes,
+  // triggering the crossfade animation.
+  Widget _labelWidget() {
+    return Text(
+      key: ValueKey(_showFinalLabel),
+      _showFinalLabel
+          ? widget.finalSlidingActionLabel ?? widget.initialSlidingActionLabel
+          : widget.initialSlidingActionLabel,
+      style:_showFinalLabel
+          ? widget.finalSlidingActionLabelTextStyle ??
+          widget.initialSlidingActionLabelTextStyle ??
+          const TextStyle(color: Colors.white)
+          : widget.initialSlidingActionLabelTextStyle ??
+          const TextStyle(color: Colors.white),
+    );
+  }
+
+  // AnimatedPositioned only animates when snapping back to zero.
+  // During active drag, duration is zero to keep thumb in sync with finger.
+  Widget _thumbWidget(bool isLTR, double maxDragOffset) {
+    return AnimatedPositioned(
+      duration: _dragOffset == 0
+          ? widget.animationDuration
+          : Duration.zero,
+      left: isLTR ? widget.leftEdgeSpacing + _dragOffset : null,
+      right: isLTR ? null : widget.leftEdgeSpacing + _dragOffset,
+      top: (widget.height - widget.thumbSize) / 2,
+      child: GestureDetector(
+        onHorizontalDragUpdate:
+        widget.isEnabled ? (DragUpdateDetails details) {
+          _onDragUpdate(details, maxDragOffset);
+        }: null,
+        onHorizontalDragEnd: widget.isEnabled ? (DragEndDetails details) {
+          _onDragEnd(details, maxDragOffset);
+        }  : null,
+        child: AnimatedContainer(
+          duration: widget.animationDuration,
+          width: widget.thumbSize,
+          height: widget.thumbSize,
+          decoration: BoxDecoration(
+            color: widget.isEnabled
+                ? widget.thumbEnabledColor
+                : widget.thumbDisabledColor,
+            borderRadius:
+            BorderRadius.circular(_effectiveThumbRadius),
+            boxShadow: widget.isEnabled
+                ? [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.15),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              )
+            ]
+                : null,
+          ),
+          child: Center(child: widget.thumbIcon),
+        ),
+      ),
     );
   }
 }
