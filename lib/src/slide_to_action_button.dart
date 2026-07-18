@@ -134,9 +134,9 @@ class SlideToActionButton extends StatefulWidget {
     this.thumbBorderRadius,
     this.parentBoxRadiusValue,
     this.enabledTrackDecoration =
-        const SlideTrackDecoration.color(Colors.orange),
+        const SlideTrackDecoration.fromColor(Colors.orange),
     this.disabledTrackDecoration =
-        const SlideTrackDecoration.color(Colors.grey),
+        const SlideTrackDecoration.fromColor(Colors.grey),
     this.thumbEnabledColor = Colors.white,
     this.thumbDisabledColor = Colors.white,
     this.thumbIcon,
