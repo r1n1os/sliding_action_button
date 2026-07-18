@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sliding_action_button/sliding_action_button.dart';
+import 'package:sliding_action_button/src/utils/enums/loader_button_enum_states.dart';
 
 /// A slide-to-confirm button that requires the user to drag a thumb
 /// across a track to trigger an action.

@@ -63,9 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 initialSlidingActionLabel: 'Slide to add to basket',
                 finalSlidingActionLabel: '✓ Added to basket',
                 enabledTrackDecoration:
-                const SlideTrackDecoration.color(Colors.orange),
+                const SlideTrackDecoration.fromColor(Colors.orange),
                 disabledTrackDecoration:
-                const SlideTrackDecoration.color(Colors.grey),
+                const SlideTrackDecoration.fromColor(Colors.grey),
                 thumbIcon:
                 const Icon(Icons.add_shopping_cart, color: Colors.orange),
                 onSlideActionCompleted: () => debugPrint('Circle basic: done'),
@@ -84,9 +84,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 initialSlidingActionLabel: 'Slide to confirm order',
                 finalSlidingActionLabel: '✓ Order placed',
                 enabledTrackDecoration:
-                const SlideTrackDecoration.color(Colors.deepOrange),
+                const SlideTrackDecoration.fromColor(Colors.deepOrange),
                 disabledTrackDecoration:
-                const SlideTrackDecoration.color(Colors.grey),
+                const SlideTrackDecoration.fromColor(Colors.grey),
                 thumbIcon: const Icon(Icons.check, color: Colors.deepOrange),
                 onSlideActionCompleted: () async {
                   _slideToActionController.loading();
@@ -106,9 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 initialSlidingActionLabel: 'Unavailable',
                 finalSlidingActionLabel: "",
                 enabledTrackDecoration:
-                const SlideTrackDecoration.color(Colors.orange),
+                const SlideTrackDecoration.fromColor(Colors.orange),
                 disabledTrackDecoration:
-                const SlideTrackDecoration.color(Colors.grey),
+                const SlideTrackDecoration.fromColor(Colors.grey),
                 thumbIcon: const Icon(Icons.block, color: Colors.grey),
                 onSlideActionCanceled: () {},
                 onSlideActionCompleted: () {},
@@ -124,11 +124,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 parentBoxRadiusValue: 14,
                 initialSlidingActionLabel: 'Slide to pay',
                 finalSlidingActionLabel: '✓ Payment sent',
-                enabledTrackDecoration: const SlideTrackDecoration.gradient(
+                enabledTrackDecoration: const SlideTrackDecoration.fromGradient(
                   LinearGradient(colors: [Colors.purple, Colors.deepPurple]),
                 ),
                 disabledTrackDecoration:
-                const SlideTrackDecoration.color(Colors.grey),
+                const SlideTrackDecoration.fromColor(Colors.grey),
                 thumbEnabledColor: Colors.white,
                 thumbIcon: const Icon(Icons.payment, color: Colors.purple),
                 onSlideActionCompleted: () => debugPrint('Square gradient: done'),
@@ -147,12 +147,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 completionThreshold: 0.60,
                 initialSlidingActionLabel: 'Easy swipe (60%)',
                 finalSlidingActionLabel: '✓ Done!',
-                enabledTrackDecoration: const SlideTrackDecoration.gradient(
+                enabledTrackDecoration: const SlideTrackDecoration.fromGradient(
                   LinearGradient(
                       colors: [Colors.teal, Color.fromARGB(255, 0, 150, 100)]),
                 ),
                 disabledTrackDecoration:
-                const SlideTrackDecoration.color(Colors.grey),
+                const SlideTrackDecoration.fromColor(Colors.grey),
                 thumbIcon: const Icon(Icons.swipe, color: Colors.teal),
                 onSlideActionCompleted: () => debugPrint('Low threshold: done'),
                 onSlideActionCanceled: () => debugPrint('Cancelled'),
