@@ -2,12 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sliding_action_button/sliding_action_button.dart';
 
+/// A slide-to-confirm button that requires the user to drag a thumb
+/// across a track to trigger an action.
+///
+/// Prefer this over a regular button for destructive or irreversible
+/// actions — the friction of sliding reduces accidental triggers.
+///
+/// ```dart
+/// SlideToActionButton(
+///   initialSlidingActionLabel: 'Slide to confirm',
+///   onSlideActionCompleted: () => placeOrder(),
+/// )
+/// ```
+
 class SlideToActionButton extends StatefulWidget {
 
-  /// This field is configure both thumb and track corner radius defaults.
+  /// Configure both thumb and track corner radius defaults.
   /// Overriding either [thumbBorderRadius] or [parentBoxRadiusValue] takes
-  /// precedence over the shape-derived defaults.
-  /// By default is circle
+  /// precedence over the shape-derived defaults. Defaults to [SlideButtonShape.circle].
   final SlideButtonShape slideButtonShape;
 
   /// Height of the track container in logical pixels.
@@ -22,23 +34,20 @@ class SlideToActionButton extends StatefulWidget {
   /// Defaults to 50.
   final double thumbSize;
 
-  /// This field will be the radius of the draggable button
-  /// When null, derived from slideButtonShape : circle → [thumbSize] / 2, square → 6dp.
+  /// Corner radius of the draggable thumb.
+  /// When null, derived from [slideButtonShape] : circle → [thumbSize] / 2, square → 6dp.
   final double? thumbBorderRadius;
 
-  /// This field will be the double value for the BorderRadius.circular() attribute to configure the corners
-  /// of parent box.
+  /// Corner radius of the track container.
   /// When null, derived from [slideButtonShape]: circle → [height] / 2 (pill), square → 8dp.
   final double? parentBoxRadiusValue;
 
-  /// This field will be used to supply either [SlideTrackDecoration.fromColor] or
-  /// [SlideTrackDecoration.fromGradient] — never both when enable.
-  /// The type system enforces this at construction time.
+  /// Track decoration when [isEnabled] is true.
+  /// Supply either [SlideTrackDecoration.fromColor] or [SlideTrackDecoration.fromGradient].
   final SlideTrackDecoration enabledTrackDecoration;
 
-  /// This field will be used to supply either [SlideTrackDecoration.fromColor] or
-  /// [SlideTrackDecoration.fromGradient] — never both when disabled.
-  /// The type system enforces this at construction time.
+  /// Track decoration when [isEnabled] is false.
+  /// Supply either [SlideTrackDecoration.fromColor] or [SlideTrackDecoration.fromGradient].
   final SlideTrackDecoration disabledTrackDecoration;
 
   /// Thumb background color when [isEnabled] is true.
@@ -47,7 +56,7 @@ class SlideToActionButton extends StatefulWidget {
   /// Thumb background color when [isEnabled] is false.
   final Color thumbDisabledColor;
 
-  ///This will be the icon appear on the sliding button
+  /// Icon displayed inside the draggable thumb, typically an [Icon].
   final Widget? thumbIcon;
 
   /// Cannot be driven by [Positioned.left] like [rightEdgeSpacing] because
@@ -59,22 +68,21 @@ class SlideToActionButton extends StatefulWidget {
   /// edge of the track, in logical pixels. Defaults to 3.
   final double rightEdgeSpacing;
 
-  /// This field is responsible for the call-to-action shown before completion.
+  /// Label shown before the slide completes.
   final String initialSlidingActionLabel;
 
-  /// This field is responsible for the call-to-action shown after completion.
+  /// Label shown after the slide completes.
   /// When null, [initialSlidingActionLabel] persists after completion.
   final String? finalSlidingActionLabel;
 
-  /// This will be the text styling of the label appear before the sliding action
+  /// Text style for [initialSlidingActionLabel].
   final TextStyle? initialSlidingActionLabelTextStyle;
 
-  /// This will be the text styling of the label appear after the sliding action. In case this field is null the same style as the
-  /// [initialSlidingActionLabelTextStyle] will be used
+  /// Text style for [finalSlidingActionLabel].
+  /// Falls back to [initialSlidingActionLabelTextStyle], then white.
   final TextStyle? finalSlidingActionLabelTextStyle;
 
-  /// This field is used to enable or disable the  sliding button(The slide action)
-  /// By default is True
+  /// Whether the button accepts user interaction. Defaults to true.
   final bool isEnabled;
 
   /// Fraction of track width (0.0–1.0) required to trigger completion.
@@ -86,30 +94,29 @@ class SlideToActionButton extends StatefulWidget {
   /// Disable only if your action already triggers its own system haptic.
   final bool enableHapticFeedback;
 
-  /// This field is used to controls snap-back and label crossfade speed.
+  /// Controls snap-back and label crossfade speed.
   /// 700ms is tuned for the average thumb travel distance.
   final Duration animationDuration;
 
-  /// This field is used to indicating the basic behavior of the slide action (Type)
-  /// By default is basicSlideActionButton
+  /// Determines whether a loader is shown after completion.
+  /// Defaults to [SlideActionButtonType.basicSlideActionButton].
   final SlideActionButtonType slideActionButtonType;
 
-  /// This field is styling the color of the loader
-  /// By default is white
+  /// Color of the [CircularProgressIndicator]. Defaults to white.
   final Color loaderColor;
 
-  /// This field is used to control the sliding action state (Loading, resetting etc)
+  /// Controls the sliding action states (Loading, resetting etc)
   /// When null, an internal controller is created and owned by the widget.
   /// Pass your own instance when you need to drive [loading] or [reset]
   /// from outside — for example, after an API call resolves.
   /// The widget never disposes an externally provided controller.
   final SlideToActionController? slideToActionController;
 
-  /// This Function is used to indicate the end of the sliding action with success
+  /// Called when the slide completes successfully.
   final VoidCallback onSlideActionCompleted;
 
-  /// This Function is used to indicate the end of the sliding action with cancel
-  /// When null, cancellation (drag released before threshold) is silently ignored
+  /// Called when the user releases before [completionThreshold].
+  /// When null, cancellation is silently ignored.
   final VoidCallback? onSlideActionCanceled;
 
   const SlideToActionButton({
@@ -165,9 +172,8 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
 
   bool get _isLoading => _controller.state == LoaderButtonEnumStates.loading;
 
-  // This getter is giving us the radius of track (ParentBox).
-  // if [widget.parentBoxRadiusValue] is given then we use that,
-  // otherwise we use the predefine based on the [widget.slideButtonShape].
+// Square uses non-zero default intentionally — 0 radius looks harsh
+// on modern UI. 8dp matches Material 3 card and input field conventions.
   double get _effectiveTrackRadius {
     if (widget.parentBoxRadiusValue != null) return widget.parentBoxRadiusValue!;
     switch (widget.slideButtonShape) {
@@ -178,9 +184,8 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
     }
   }
 
-  // This getter is giving us the radius of thumb (draggable button).
-  // if [widget.thumbBorderRadius] is given then we use that,
-  // otherwise we use the predefine based on the [widget.slideButtonShape].
+// Square uses non-zero default intentionally — 0 radius looks harsh
+// on modern UI. 6dp matches Material 3 thumb and button conventions.
   double get _effectiveThumbRadius {
     if (widget.thumbBorderRadius != null) return widget.thumbBorderRadius!;
     switch (widget.slideButtonShape) {
@@ -306,6 +311,7 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
     );
   }
 
+  // Animates color/gradient transition smoothly when isEnabled changes.
   Widget _trackWidget(SlideTrackDecoration decoration) {
     return  Positioned.fill(
       child: AnimatedContainer(
