@@ -1,60 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:sliding_action_button/src/utils/enums/loader_button_enum_states.dart';
 
-/*class SlideToActionController extends ChangeNotifier {
-  ///This variable is holding the current sliding position when user is dragging the button
-  late double _sliderPosition = 0;
+/// Controls the state of [SlideToActionButton] from outside the widget.
+///
+/// Pass an instance to [SlideToActionButton.slideToActionController] when
+/// using [SlideActionButtonType.slideActionWithLoaderButton] to drive the
+/// loading and reset transitions after an async operation.
+///
+/// ```dart
+/// final controller = SlideToActionController();
+///
+/// SlideToActionButton(
+///   slideToActionController: controller,
+///   slideActionButtonType: SlideActionButtonType.slideActionWithLoaderButton,
+///   onSlideActionCompleted: () async {
+///     controller.loading();
+///     await myApiCall();
+///     controller.reset();
+///   },
+/// )
+/// ```
+class SlideToActionController extends ChangeNotifier {
+  LoaderButtonEnumStates _loaderButtonEnumStates = LoaderButtonEnumStates.initial;
 
-  ///This variable is a flag used to avoid callback getting called more than one
-  bool _isSlideActionCompletedCallbackCalled = false;
+  /// Current state of the button.
+  /// Read by [SlideToActionButton] on every controller update.
+  LoaderButtonEnumStates get state => _loaderButtonEnumStates;
 
-  ///This variable is holding the state of the button
-  LoaderButtonEnumStates _loaderButtonEnumStates =
-      LoaderButtonEnumStates.initial;
-
-  /// Getters
-  double get sliderPosition => _sliderPosition;
-
-  bool get isSlideActionCompletedCallbackCalled =>
-      _isSlideActionCompletedCallbackCalled;
-
-  LoaderButtonEnumStates get loaderButtonEnumStates => _loaderButtonEnumStates;
-
-  ///
-  /// IMPORTANT: The method #updateSliderPosition should be used only by the library
-  ///
-  void updateSliderPosition(double newPosition) {
-    _sliderPosition = newPosition;
-    notifyListeners();
-  }
-
+  /// Transitions the button to the loading state, showing a
+  /// [CircularProgressIndicator] in place of the label.
+  /// Call this immediately inside [SlideToActionButton.onSlideActionCompleted]
+  /// before starting the async operation.
   void loading() {
-    _isSlideActionCompletedCallbackCalled = true;
     _loaderButtonEnumStates = LoaderButtonEnumStates.loading;
     notifyListeners();
   }
 
-  void reset(double leftEdgeSpacing) {
-    _isSlideActionCompletedCallbackCalled = false;
-    _loaderButtonEnumStates = LoaderButtonEnumStates.reset;
-    _sliderPosition = leftEdgeSpacing;
-    notifyListeners();
-  }
-}*/
-
-/// Controls the state of [SlideToActionButton] externally.
-class SlideToActionController extends ChangeNotifier {
-  LoaderButtonEnumStates loaderButtonEnumStates = LoaderButtonEnumStates.initial;
-
-  LoaderButtonEnumStates get state => loaderButtonEnumStates;
-
-  void loading() {
-    loaderButtonEnumStates = LoaderButtonEnumStates.loading;
-    notifyListeners();
-  }
-
-  void reset([int countdown = 0]) {
-    loaderButtonEnumStates = LoaderButtonEnumStates.initial;
+  /// Resets the button to its initial state, snapping the thumb back
+  /// and restoring the initial label.
+  /// Call this after the async operation completes or fails.
+  void reset() {
+    _loaderButtonEnumStates = LoaderButtonEnumStates.initial;
     notifyListeners();
   }
 }
