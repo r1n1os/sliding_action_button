@@ -18,12 +18,12 @@ import 'package:flutter/material.dart';
 class SlideTrackDecoration {
   /// The solid color of the track. Null when a [gradient] is used.
   final Color? color;
+
   /// The gradient of the track. Null when a solid [color] is used.
   final Gradient? gradient;
 
   /// Creates a solid color track decoration.
-  const SlideTrackDecoration.fromColor(Color this.color)
-  : gradient = null;
+  const SlideTrackDecoration.fromColor(Color this.color) : gradient = null;
 
   /// Creates a gradient track decoration.
   const SlideTrackDecoration.fromGradient(Gradient this.gradient)

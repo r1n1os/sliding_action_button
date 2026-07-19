@@ -3,6 +3,7 @@ enum SlideActionButtonType {
   /// Fires [SlideToActionButton.onSlideActionCompleted] and shows
   /// [SlideToActionButton.finalSlidingActionLabel]. No loader is shown.
   basicSlideActionButton,
+
   /// Shows a [CircularProgressIndicator] after completion until
   /// [SlideToActionController.reset] is called.
   /// Requires a [SlideToActionController] passed to

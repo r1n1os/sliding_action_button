@@ -213,7 +213,7 @@ class _BaseSlideToActionButtonState extends State<BaseSlideToActionButton>
       setState(() {
         _controller.reset(widget.leftEdgeSpacing);
       });
-    }*//*
+    }*/ /*
 
     else {
       setState(() {

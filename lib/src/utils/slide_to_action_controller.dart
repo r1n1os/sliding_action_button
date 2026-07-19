@@ -21,7 +21,8 @@ import 'package:sliding_action_button/src/utils/enums/loader_button_enum_states.
 /// )
 /// ```
 class SlideToActionController extends ChangeNotifier {
-  LoaderButtonEnumStates _loaderButtonEnumStates = LoaderButtonEnumStates.initial;
+  LoaderButtonEnumStates _loaderButtonEnumStates =
+      LoaderButtonEnumStates.initial;
 
   /// Current state of the button.
   /// Read by [SlideToActionButton] on every controller update.
@@ -44,4 +45,3 @@ class SlideToActionController extends ChangeNotifier {
     notifyListeners();
   }
 }
-

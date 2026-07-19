@@ -8,6 +8,7 @@ enum SlideButtonShape {
   /// Thumb radius defaults to [SlideToActionButton.thumbSize] / 2.
   /// Track radius defaults to [SlideToActionButton.height] / 2.
   circle,
+
   /// Rectangular thumb and track with subtle rounding.
   /// Thumb radius defaults to 6dp.
   /// Track radius defaults to 8dp.

@@ -51,7 +51,7 @@ class SquareSlideToActionButton extends StatefulWidget {
   final double topEdgeSpacing;
 
   ///This field will determined the space between the square sliding button and the parent widget on the bottom.
-  final double bottomEdgeSpacing;*//*
+  final double bottomEdgeSpacing;*/ /*
 
 
   ///This field is responsible for the text appear in the parent box before the sliding action
@@ -124,7 +124,7 @@ class SquareSlideToActionButton extends StatefulWidget {
     this.rightEdgeSpacing = 10,
     */
 /*this.topEdgeSpacing = 0,
-      this.bottomEdgeSpacing = 0,*//*
+      this.bottomEdgeSpacing = 0,*/ /*
 
     this.squareSlidingButtonBackgroundColor = Colors.green,
     this.squareSlidingButtonDisableBackgroundColor = Colors.black12,

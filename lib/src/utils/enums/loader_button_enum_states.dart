@@ -4,6 +4,7 @@
 enum LoaderButtonEnumStates {
   /// Button is idle and ready for interaction.
   initial,
+
   /// Button is showing a [CircularProgressIndicator].
   loading,
 }

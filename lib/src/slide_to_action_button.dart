@@ -17,7 +17,6 @@ import 'package:sliding_action_button/src/utils/enums/loader_button_enum_states.
 /// ```
 
 class SlideToActionButton extends StatefulWidget {
-
   /// Configure both thumb and track corner radius defaults.
   /// Overriding either [thumbBorderRadius] or [parentBoxRadiusValue] takes
   /// precedence over the shape-derived defaults. Defaults to [SlideButtonShape.circle].
@@ -176,7 +175,8 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
 // Square uses non-zero default intentionally — 0 radius looks harsh
 // on modern UI. 8dp matches Material 3 card and input field conventions.
   double get _effectiveTrackRadius {
-    if (widget.parentBoxRadiusValue != null) return widget.parentBoxRadiusValue!;
+    if (widget.parentBoxRadiusValue != null)
+      return widget.parentBoxRadiusValue!;
     switch (widget.slideButtonShape) {
       case SlideButtonShape.circle:
         return widget.height / 2;
@@ -230,8 +230,8 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
 
   // Blocks drag during loading — thumb must not move while spinner is visible.
   void _onDragUpdate(DragUpdateDetails details, double maxDragOffset) {
-    if (!widget.isEnabled || _controller.state != LoaderButtonEnumStates.initial)
-      return;
+    if (!widget.isEnabled ||
+        _controller.state != LoaderButtonEnumStates.initial) return;
     setState(() {
       _dragOffset = (_dragOffset + details.delta.dx).clamp(0, maxDragOffset);
     });
@@ -298,11 +298,8 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
               _followingTrackWidget(),
               Center(
                 child: AnimatedSwitcher(
-                  duration: widget.animationDuration,
-                  child: _isLoading
-                      ? _loadingWidget()
-                      : _labelWidget()
-                ),
+                    duration: widget.animationDuration,
+                    child: _isLoading ? _loadingWidget() : _labelWidget()),
               ),
               _thumbWidget(isLTR, maxDragOffset)
             ],
@@ -314,7 +311,7 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
 
   // Animates color/gradient transition smoothly when isEnabled changes.
   Widget _trackWidget(SlideTrackDecoration decoration) {
-    return  Positioned.fill(
+    return Positioned.fill(
       child: AnimatedContainer(
         duration: widget.animationDuration,
         decoration: decoration.toBoxDecoration(
@@ -331,19 +328,17 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
       left: 0,
       top: 0,
       bottom: 0,
-      width:
-      widget.leftEdgeSpacing + widget.thumbSize + _dragOffset,
+      width: widget.leftEdgeSpacing + widget.thumbSize + _dragOffset,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.15),
-          borderRadius:
-          BorderRadius.circular(_effectiveTrackRadius),
+          borderRadius: BorderRadius.circular(_effectiveTrackRadius),
         ),
       ),
     );
   }
 
- Widget _loadingWidget() {
+  Widget _loadingWidget() {
     return SizedBox(
       key: const ValueKey('loader'),
       width: 24,
@@ -366,12 +361,12 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
       _showFinalLabel
           ? widget.finalSlidingActionLabel ?? widget.initialSlidingActionLabel
           : widget.initialSlidingActionLabel,
-      style:_showFinalLabel
+      style: _showFinalLabel
           ? widget.finalSlidingActionLabelTextStyle ??
-          widget.initialSlidingActionLabelTextStyle ??
-          const TextStyle(color: Colors.white)
+              widget.initialSlidingActionLabelTextStyle ??
+              const TextStyle(color: Colors.white)
           : widget.initialSlidingActionLabelTextStyle ??
-          const TextStyle(color: Colors.white),
+              const TextStyle(color: Colors.white),
     );
   }
 
@@ -379,20 +374,21 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
   // During active drag, duration is zero to keep thumb in sync with finger.
   Widget _thumbWidget(bool isLTR, double maxDragOffset) {
     return AnimatedPositioned(
-      duration: _dragOffset == 0
-          ? widget.animationDuration
-          : Duration.zero,
+      duration: _dragOffset == 0 ? widget.animationDuration : Duration.zero,
       left: isLTR ? widget.leftEdgeSpacing + _dragOffset : null,
       right: isLTR ? null : widget.leftEdgeSpacing + _dragOffset,
       top: (widget.height - widget.thumbSize) / 2,
       child: GestureDetector(
-        onHorizontalDragUpdate:
-        widget.isEnabled ? (DragUpdateDetails details) {
-          _onDragUpdate(details, maxDragOffset);
-        }: null,
-        onHorizontalDragEnd: widget.isEnabled ? (DragEndDetails details) {
-          _onDragEnd(details, maxDragOffset);
-        }  : null,
+        onHorizontalDragUpdate: widget.isEnabled
+            ? (DragUpdateDetails details) {
+                _onDragUpdate(details, maxDragOffset);
+              }
+            : null,
+        onHorizontalDragEnd: widget.isEnabled
+            ? (DragEndDetails details) {
+                _onDragEnd(details, maxDragOffset);
+              }
+            : null,
         child: AnimatedContainer(
           duration: widget.animationDuration,
           width: widget.thumbSize,
@@ -401,16 +397,15 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
             color: widget.isEnabled
                 ? widget.thumbEnabledColor
                 : widget.thumbDisabledColor,
-            borderRadius:
-            BorderRadius.circular(_effectiveThumbRadius),
+            borderRadius: BorderRadius.circular(_effectiveThumbRadius),
             boxShadow: widget.isEnabled
                 ? [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.15),
-                blurRadius: 6,
-                offset: const Offset(0, 2),
-              )
-            ]
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.15),
+                      blurRadius: 6,
+                      offset: const Offset(0, 2),
+                    )
+                  ]
                 : null,
           ),
           child: Center(child: widget.thumbIcon),

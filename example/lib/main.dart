@@ -56,7 +56,6 @@ class _DemoPageState extends State<DemoPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             // ── Circle · solid ───────────────────────────────────────────
             _SectionLabel(
               icon: Icons.circle_outlined,
@@ -117,7 +116,7 @@ class _DemoPageState extends State<DemoPage> {
             SlideToActionButton(
               slideToActionController: _controller,
               slideActionButtonType:
-              SlideActionButtonType.slideActionWithLoaderButton,
+                  SlideActionButtonType.slideActionWithLoaderButton,
               initialSlidingActionLabel: 'Slide to place order',
               finalSlidingActionLabel: '✓  Order placed',
               enabledTrackDecoration: const SlideTrackDecoration.fromColor(
@@ -212,7 +211,6 @@ class _DemoPageState extends State<DemoPage> {
               ),
               onSlideActionCompleted: () => debugPrint('Square gradient: done'),
             ),
-
           ],
         ),
       ),

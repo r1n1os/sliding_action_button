@@ -266,7 +266,7 @@ class _BaseSlideToActionWithLoaderButtonState
       setState(() {
         _controller.reset(widget.leftEdgeSpacing);
       });
-    }*//*
+    }*/ /*
 
     else {
       setState(() {
