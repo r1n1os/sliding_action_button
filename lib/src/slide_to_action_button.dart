@@ -175,8 +175,9 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
 // Square uses non-zero default intentionally — 0 radius looks harsh
 // on modern UI. 8dp matches Material 3 card and input field conventions.
   double get _effectiveTrackRadius {
-    if (widget.parentBoxRadiusValue != null)
+    if (widget.parentBoxRadiusValue != null) {
       return widget.parentBoxRadiusValue!;
+    }
     switch (widget.slideButtonShape) {
       case SlideButtonShape.circle:
         return widget.height / 2;
@@ -231,7 +232,9 @@ class _SlideToActionButtonState extends State<SlideToActionButton> {
   // Blocks drag during loading — thumb must not move while spinner is visible.
   void _onDragUpdate(DragUpdateDetails details, double maxDragOffset) {
     if (!widget.isEnabled ||
-        _controller.state != LoaderButtonEnumStates.initial) return;
+        _controller.state != LoaderButtonEnumStates.initial) {
+      return;
+    }
     setState(() {
       _dragOffset = (_dragOffset + details.delta.dx).clamp(0, maxDragOffset);
     });
