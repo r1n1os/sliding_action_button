@@ -57,7 +57,7 @@ class _DemoPageState extends State<DemoPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ── Circle · solid ───────────────────────────────────────────
-            _SectionLabel(
+            const _SectionLabel(
               icon: Icons.circle_outlined,
               title: 'Circle · Solid color',
             ),
@@ -81,7 +81,7 @@ class _DemoPageState extends State<DemoPage> {
             const SizedBox(height: 36),
 
             // ── Circle · gradient ────────────────────────────────────────
-            _SectionLabel(
+            const _SectionLabel(
               icon: Icons.circle_outlined,
               title: 'Circle · Gradient',
             ),
@@ -107,7 +107,7 @@ class _DemoPageState extends State<DemoPage> {
             const SizedBox(height: 36),
 
             // ── Circle · with loader ─────────────────────────────────────
-            _SectionLabel(
+            const _SectionLabel(
               icon: Icons.circle_outlined,
               title: 'Circle · With loader',
               subtitle: 'Resets after 3 seconds',
@@ -139,7 +139,7 @@ class _DemoPageState extends State<DemoPage> {
             const SizedBox(height: 36),
 
             // ── Circle · disabled ────────────────────────────────────────
-            _SectionLabel(
+            const _SectionLabel(
               icon: Icons.circle_outlined,
               title: 'Circle · Disabled',
             ),
@@ -163,7 +163,7 @@ class _DemoPageState extends State<DemoPage> {
             const SizedBox(height: 36),
 
             // ── Square · solid ───────────────────────────────────────────
-            _SectionLabel(
+            const _SectionLabel(
               icon: Icons.crop_square_rounded,
               title: 'Square · Solid color',
             ),
@@ -188,7 +188,7 @@ class _DemoPageState extends State<DemoPage> {
             const SizedBox(height: 36),
 
             // ── Square · gradient ────────────────────────────────────────
-            _SectionLabel(
+            const _SectionLabel(
               icon: Icons.crop_square_rounded,
               title: 'Square · Gradient',
             ),
