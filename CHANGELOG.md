@@ -1,3 +1,21 @@
+## 1.0.0
+* Breaking changes:
+  * Replaced `CircleSlideToActionButton` and `SquareSlideToActionButton` with
+    a single unified `SlideToActionButton` widget controlled by `slideButtonShape`
+  * Renamed `isEnable` to `isEnabled`
+  * `onSlideActionCanceled` is now optional
+  * `finalSlidingActionLabel` is now optional, falls back to `initialSlidingActionLabel`
+  * Replaced 4 separate color/gradient parameters with `SlideTrackDecoration`
+* New features:
+  * Added `completionThreshold` — configurable drag fraction required to trigger completion
+  * Added velocity-based completion — fast fling triggers completion regardless of position
+  * Added `enableHapticFeedback` parameter
+  * Added RTL layout support via `Directionality`
+  * Added progress fill overlay that grows as user drags
+  * Added automatic default corner radius per shape:
+    * Circle — track uses full pill radius, thumb uses full circle radius
+    * Square — track defaults to 8dp, thumb defaults to 6dp (modern rounded square look)
+    * Both can be overridden via `parentBoxRadiusValue` and `thumbBorderRadius`
 ## 0.0.8
 * Update Example project
     * Update Fluter SDK 3.35.4
