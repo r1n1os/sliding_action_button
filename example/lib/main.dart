@@ -12,155 +12,255 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Sliding Action Button',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6C63FF)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Sliding Action Button'),
+      home: const DemoPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class DemoPage extends StatefulWidget {
+  const DemoPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<DemoPage> createState() => _DemoPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _DemoPageState extends State<DemoPage> {
+  final SlideToActionController _controller = SlideToActionController();
 
-  ///This is the controller used to control the sliding action state (Loading, resetting etc)
-  final SlideToActionController _slideToActionController = SlideToActionController();
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF8F9FF),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: const Color(0xFF6C63FF),
+        foregroundColor: Colors.white,
+        title: const Text(
+          'Sliding Action Button',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        elevation: 0,
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Circle Basic Slide To Action Button Example',
-                style: TextStyle(fontWeight: FontWeight.bold),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            // ── Circle · solid ───────────────────────────────────────────
+            _SectionLabel(
+              icon: Icons.circle_outlined,
+              title: 'Circle · Solid color',
+            ),
+            const SizedBox(height: 12),
+            SlideToActionButton(
+              initialSlidingActionLabel: 'Slide to add to basket',
+              finalSlidingActionLabel: '✓  Added to basket',
+              enabledTrackDecoration: const SlideTrackDecoration.fromColor(
+                Color(0xFF6C63FF),
               ),
-              const SizedBox(
-                height: 15,
+              disabledTrackDecoration: const SlideTrackDecoration.fromColor(
+                Color(0xFFCBCBCB),
               ),
-              // --- Circle · solid colour ---
-              const SizedBox(height: 12),
-              SlideToActionButton(
-                slideButtonShape: SlideButtonShape.circle,
-                initialSlidingActionLabel: 'Slide to add to basket',
-                finalSlidingActionLabel: '✓ Added to basket',
-                enabledTrackDecoration:
-                const SlideTrackDecoration.fromColor(Colors.orange),
-                disabledTrackDecoration:
-                const SlideTrackDecoration.fromColor(Colors.grey),
-                thumbIcon:
-                const Icon(Icons.add_shopping_cart, color: Colors.orange),
-                onSlideActionCompleted: () => debugPrint('Circle basic: done'),
-                onSlideActionCanceled: () => debugPrint('Circle basic: cancelled'),
+              thumbIcon: const Icon(
+                Icons.add_shopping_cart_rounded,
+                color: Color(0xFF6C63FF),
               ),
+              onSlideActionCompleted: () => debugPrint('Circle solid: done'),
+            ),
 
-              const SizedBox(height: 40),
+            const SizedBox(height: 36),
 
-              // --- Circle · with loader (resets after 3 s) ---
-              const SizedBox(height: 12),
-              SlideToActionButton(
-                slideButtonShape: SlideButtonShape.circle,
-                slideToActionController: _slideToActionController,
-                slideActionButtonType:
-                SlideActionButtonType.slideActionWithLoaderButton,
-                initialSlidingActionLabel: 'Slide to confirm order',
-                finalSlidingActionLabel: '✓ Order placed',
-                enabledTrackDecoration:
-                const SlideTrackDecoration.fromColor(Colors.deepOrange),
-                disabledTrackDecoration:
-                const SlideTrackDecoration.fromColor(Colors.grey),
-                thumbIcon: const Icon(Icons.check, color: Colors.deepOrange),
-                onSlideActionCompleted: () async {
-                  _slideToActionController.loading();
-                  await Future.delayed(const Duration(seconds: 3));
-                  _slideToActionController.reset();
-                },
-                onSlideActionCanceled: () {},
-              ),
-
-              const SizedBox(height: 40),
-
-              // --- Circle · disabled ---
-              const SizedBox(height: 12),
-              SlideToActionButton(
-                slideButtonShape: SlideButtonShape.circle,
-                isEnabled: false,
-                initialSlidingActionLabel: 'Unavailable',
-                finalSlidingActionLabel: "",
-                enabledTrackDecoration:
-                const SlideTrackDecoration.fromColor(Colors.orange),
-                disabledTrackDecoration:
-                const SlideTrackDecoration.fromColor(Colors.grey),
-                thumbIcon: const Icon(Icons.block, color: Colors.grey),
-                onSlideActionCanceled: () {},
-                onSlideActionCompleted: () {},
-              ),
-
-              const SizedBox(height: 40),
-
-              // --- Square · gradient track ---
-              const SizedBox(height: 12),
-              SlideToActionButton(
-                slideButtonShape: SlideButtonShape.square,
-                thumbBorderRadius: 8,
-                parentBoxRadiusValue: 14,
-                initialSlidingActionLabel: 'Slide to pay',
-                finalSlidingActionLabel: '✓ Payment sent',
-                enabledTrackDecoration: const SlideTrackDecoration.fromGradient(
-                  LinearGradient(colors: [Colors.purple, Colors.deepPurple]),
+            // ── Circle · gradient ────────────────────────────────────────
+            _SectionLabel(
+              icon: Icons.circle_outlined,
+              title: 'Circle · Gradient',
+            ),
+            const SizedBox(height: 12),
+            SlideToActionButton(
+              initialSlidingActionLabel: 'Slide to confirm',
+              finalSlidingActionLabel: '✓  Confirmed',
+              enabledTrackDecoration: const SlideTrackDecoration.fromGradient(
+                LinearGradient(
+                  colors: [Color(0xFF6C63FF), Color(0xFF48CAE4)],
                 ),
-                disabledTrackDecoration:
-                const SlideTrackDecoration.fromColor(Colors.grey),
-                thumbEnabledColor: Colors.white,
-                thumbIcon: const Icon(Icons.payment, color: Colors.purple),
-                onSlideActionCompleted: () => debugPrint('Square gradient: done'),
-                onSlideActionCanceled: () =>
-                    debugPrint('Square gradient: cancelled'),
               ),
+              disabledTrackDecoration: const SlideTrackDecoration.fromColor(
+                Color(0xFFCBCBCB),
+              ),
+              thumbIcon: const Icon(
+                Icons.check_rounded,
+                color: Color(0xFF6C63FF),
+              ),
+              onSlideActionCompleted: () => debugPrint('Circle gradient: done'),
+            ),
 
-              const SizedBox(height: 40),
+            const SizedBox(height: 36),
 
-              // --- Square · low threshold (60%) ---
-              const SizedBox(height: 12),
-              SlideToActionButton(
-                slideButtonShape: SlideButtonShape.square,
-                thumbBorderRadius: 10,
-                parentBoxRadiusValue: 16,
-                completionThreshold: 0.60,
-                initialSlidingActionLabel: 'Easy swipe (60%)',
-                finalSlidingActionLabel: '✓ Done!',
-                enabledTrackDecoration: const SlideTrackDecoration.fromGradient(
-                  LinearGradient(
-                      colors: [Colors.teal, Color.fromARGB(255, 0, 150, 100)]),
+            // ── Circle · with loader ─────────────────────────────────────
+            _SectionLabel(
+              icon: Icons.circle_outlined,
+              title: 'Circle · With loader',
+              subtitle: 'Resets after 3 seconds',
+            ),
+            const SizedBox(height: 12),
+            SlideToActionButton(
+              slideToActionController: _controller,
+              slideActionButtonType:
+              SlideActionButtonType.slideActionWithLoaderButton,
+              initialSlidingActionLabel: 'Slide to place order',
+              finalSlidingActionLabel: '✓  Order placed',
+              enabledTrackDecoration: const SlideTrackDecoration.fromColor(
+                Color(0xFF2EC4B6),
+              ),
+              disabledTrackDecoration: const SlideTrackDecoration.fromColor(
+                Color(0xFFCBCBCB),
+              ),
+              thumbIcon: const Icon(
+                Icons.shopping_bag_rounded,
+                color: Color(0xFF2EC4B6),
+              ),
+              onSlideActionCompleted: () async {
+                _controller.loading();
+                await Future.delayed(const Duration(seconds: 3));
+                _controller.reset();
+              },
+            ),
+
+            const SizedBox(height: 36),
+
+            // ── Circle · disabled ────────────────────────────────────────
+            _SectionLabel(
+              icon: Icons.circle_outlined,
+              title: 'Circle · Disabled',
+            ),
+            const SizedBox(height: 12),
+            SlideToActionButton(
+              isEnabled: false,
+              initialSlidingActionLabel: 'Currently unavailable',
+              enabledTrackDecoration: const SlideTrackDecoration.fromColor(
+                Color(0xFF6C63FF),
+              ),
+              disabledTrackDecoration: const SlideTrackDecoration.fromColor(
+                Color(0xFFCBCBCB),
+              ),
+              thumbIcon: const Icon(
+                Icons.lock_outline_rounded,
+                color: Color(0xFFAAAAAA),
+              ),
+              onSlideActionCompleted: () {},
+            ),
+
+            const SizedBox(height: 36),
+
+            // ── Square · solid ───────────────────────────────────────────
+            _SectionLabel(
+              icon: Icons.crop_square_rounded,
+              title: 'Square · Solid color',
+            ),
+            const SizedBox(height: 12),
+            SlideToActionButton(
+              slideButtonShape: SlideButtonShape.square,
+              initialSlidingActionLabel: 'Slide to pay',
+              finalSlidingActionLabel: '✓  Payment sent',
+              enabledTrackDecoration: const SlideTrackDecoration.fromColor(
+                Color(0xFFFF6B6B),
+              ),
+              disabledTrackDecoration: const SlideTrackDecoration.fromColor(
+                Color(0xFFCBCBCB),
+              ),
+              thumbIcon: const Icon(
+                Icons.payment_rounded,
+                color: Color(0xFFFF6B6B),
+              ),
+              onSlideActionCompleted: () => debugPrint('Square solid: done'),
+            ),
+
+            const SizedBox(height: 36),
+
+            // ── Square · gradient ────────────────────────────────────────
+            _SectionLabel(
+              icon: Icons.crop_square_rounded,
+              title: 'Square · Gradient',
+            ),
+            const SizedBox(height: 12),
+            SlideToActionButton(
+              slideButtonShape: SlideButtonShape.square,
+              initialSlidingActionLabel: 'Slide to delete',
+              finalSlidingActionLabel: '✓  Deleted',
+              enabledTrackDecoration: const SlideTrackDecoration.fromGradient(
+                LinearGradient(
+                  colors: [Color(0xFFFF6B6B), Color(0xFFFF8E53)],
                 ),
-                disabledTrackDecoration:
-                const SlideTrackDecoration.fromColor(Colors.grey),
-                thumbIcon: const Icon(Icons.swipe, color: Colors.teal),
-                onSlideActionCompleted: () => debugPrint('Low threshold: done'),
-                onSlideActionCanceled: () => debugPrint('Cancelled'),
               ),
-            ],
-          ),
+              disabledTrackDecoration: const SlideTrackDecoration.fromColor(
+                Color(0xFFCBCBCB),
+              ),
+              thumbIcon: const Icon(
+                Icons.delete_rounded,
+                color: Color(0xFFFF6B6B),
+              ),
+              onSlideActionCompleted: () => debugPrint('Square gradient: done'),
+            ),
+
+          ],
         ),
       ),
+    );
+  }
+}
+
+// ── Section label helper ──────────────────────────────────────────────────────
+
+class _SectionLabel extends StatelessWidget {
+  const _SectionLabel({
+    required this.icon,
+    required this.title,
+    this.subtitle,
+  });
+
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: const Color(0xFF6C63FF)),
+        const SizedBox(width: 8),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: Color(0xFF2D2D2D),
+              ),
+            ),
+            if (subtitle != null)
+              Text(
+                subtitle!,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Color(0xFF9E9E9E),
+                ),
+              ),
+          ],
+        ),
+      ],
     );
   }
 }
